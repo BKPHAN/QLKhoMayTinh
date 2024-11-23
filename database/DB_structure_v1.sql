@@ -127,12 +127,10 @@ DROP TABLE IF EXISTS `chitietsanpham`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `chitietsanpham` (
   `maChiTiet` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `maLoaiSanPham` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `maMay` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `tenThuocTinh` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `giaTriThuocTinh` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`maChiTiet`),
-  CONSTRAINT `FK_ChiTietSanPham_LoaiSanPham` FOREIGN KEY (`maLoaiSanPham`) REFERENCES `loaisanpham` (`maLoaiSanPham`),
   CONSTRAINT `FK_ChiTietSanPham_SanPham` FOREIGN KEY (`maMay`) REFERENCES `sanpham` (`maMay`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
