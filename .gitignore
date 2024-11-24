@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 /dist/
-=======
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -34,4 +32,3 @@ build/
 
 ### VS Code ###
 .vscode/
->>>>>>> 21d3b96b625437d1867b24b8d8fb9b82ce3b25a5

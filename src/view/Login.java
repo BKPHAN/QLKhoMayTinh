@@ -324,19 +324,10 @@ public class Login extends javax.swing.JFrame {
                                     ad.setVisible(true);
 //                                    ad.setCurrentAcc(acc);
                                     ad.setName(acc.getFullName());
-                                } else if (role.equals("Quản lý kho")) {
-                                    QuanLiKho ql = new QuanLiKho();
-                                    ql.setVisible(true);
-                                    ql.setCurrentAcc(acc);
-                                    ql.setName(acc.getFullName());
-                                } else if (role.equals("Nhân viên nhập")) {
-                                    NhapKho ql = new NhapKho(acc);
-                                    ql.setVisible(true);
-                                    ql.setName(acc.getFullName());
-                                } else if (role.equals("Nhân viên xuất")) {
-                                    XuatKho ql = new XuatKho(acc);
-                                    ql.setVisible(true);
-                                    ql.setName(acc.getFullName());
+                                } else if (role.equals("Nhân viên")) {
+                                    NhanVien nv = new NhanVien(acc);
+                                    nv.setVisible(true);
+                                    nv.setName(acc.getFullName());
                                 }
                             } catch (UnsupportedLookAndFeelException ex) {
                                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
