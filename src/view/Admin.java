@@ -70,6 +70,8 @@ public class Admin extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         TaiKhoan1 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
+        ChamCong = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
         Account = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         MainContent = new javax.swing.JPanel();
@@ -167,6 +169,41 @@ public class Admin extends javax.swing.JFrame {
         );
 
         NavbarMenu.add(TaiKhoan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 240, -1));
+
+        ChamCong.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
+        ChamCong.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        ChamCong.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ChamCongMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                ChamCongMousePressed(evt);
+            }
+        });
+
+        jLabel13.setFont(new java.awt.Font("SF Pro Display", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_add_file_25px_2.png"))); // NOI18N
+        jLabel13.setText("CHẤM CÔNG");
+
+        javax.swing.GroupLayout ChamCongLayout = new javax.swing.GroupLayout(ChamCong);
+        ChamCong.setLayout(ChamCongLayout);
+        ChamCongLayout.setHorizontalGroup(
+            ChamCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ChamCongLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel13)
+                .addContainerGap(68, Short.MAX_VALUE))
+        );
+        ChamCongLayout.setVerticalGroup(
+            ChamCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ChamCongLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel13)
+                .addContainerGap(9, Short.MAX_VALUE))
+        );
+
+        NavbarMenu.add(ChamCong, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 240, -1));
 
         Account.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
         Account.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -275,6 +312,14 @@ public class Admin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
+    private void ChamCongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChamCongMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ChamCongMouseClicked
+
+    private void ChamCongMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChamCongMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ChamCongMousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -294,12 +339,14 @@ public class Admin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Account;
+    private javax.swing.JPanel ChamCong;
     private javax.swing.JPanel DangXuat;
     private javax.swing.JPanel MainContent;
     private javax.swing.JLabel NameUser;
     private javax.swing.JPanel NavbarMenu;
     private javax.swing.JPanel TaiKhoan1;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
