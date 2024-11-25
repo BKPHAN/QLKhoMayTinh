@@ -378,7 +378,7 @@ public class NhanVien extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("SF Pro Display", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-warehouse-25.png"))); // NOI18N
-        jLabel10.setText("TÍNH LÃI");
+        jLabel10.setText("LỢI NHUẬN");
 
         javax.swing.GroupLayout TinhLaiLayout = new javax.swing.GroupLayout(TinhLai);
         TinhLai.setLayout(TinhLaiLayout);
