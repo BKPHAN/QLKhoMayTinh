@@ -17,18 +17,28 @@ public class SearchProduct {
     public ArrayList<MayTinh> searchTatCa(String text) {
         ArrayList<MayTinh> result = new ArrayList<>();
         ArrayList<MayTinh> armt = MayTinhDAO.getInstance().selectAllExist();
+        String searchText = text.toLowerCase(); // Chuyển input tìm kiếm về chữ thường
         for (var mt : armt) {
             if (mt.getTrangThai() == 1) {
-                if (mt.getMaMay().toLowerCase().contains(text.toLowerCase()) || mt.getTenMay().toLowerCase().contains(text.toLowerCase())
-                        || mt.getTenCpu().toLowerCase().contains(text.toLowerCase())
-                        || mt.getCardManHinh().toLowerCase().contains(text.toLowerCase())
-                        || mt.getXuatXu().toLowerCase().contains(text.toLowerCase())) {
+                // Gộp tất cả các trường thành một chuỗi sử dụng concat
+                String combinedFields = mt.getMaMay()
+                                          .concat(" ")
+                                          .concat(mt.getTenMay())
+                                          .concat(" ")
+                                          .concat(mt.getTenCpu())
+                                          .concat(" ")
+                                          .concat(mt.getCardManHinh())
+                                          .concat(" ")
+                                          .concat(mt.getXuatXu())
+                                          .toLowerCase();
+                if (combinedFields.contains(searchText)) {
                     result.add(mt);
                 }
             }
         }
         return result;
     }
+    
 
     public ArrayList<MayTinh> searchMaMay(String text) {
         ArrayList<MayTinh> result = new ArrayList<>();

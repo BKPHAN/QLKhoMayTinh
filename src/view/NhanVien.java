@@ -57,7 +57,7 @@ public class NhanVien extends javax.swing.JFrame {
         XuatHang.setBackground(DefaultColor);
         PhieuXuat.setBackground(DefaultColor);
         NhaCungCap.setBackground(DefaultColor);
-        TinhLai.setBackground(DefaultColor);
+        LoiNhuan.setBackground(DefaultColor);
         ThongKe.setBackground(DefaultColor);
     }
 
@@ -87,7 +87,7 @@ public class NhanVien extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         PhieuXuat = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        TinhLai = new javax.swing.JPanel();
+        LoiNhuan = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         ThongKe = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
@@ -364,14 +364,14 @@ public class NhanVien extends javax.swing.JFrame {
 
         NavbarMenu.add(PhieuXuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 240, 40));
 
-        TinhLai.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
-        TinhLai.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TinhLai.addMouseListener(new java.awt.event.MouseAdapter() {
+        LoiNhuan.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
+        LoiNhuan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LoiNhuan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TinhLaiMouseClicked(evt);
+                LoiNhuanMouseClicked(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                TinhLaiMousePressed(evt);
+                LoiNhuanMousePressed(evt);
             }
         });
 
@@ -380,24 +380,24 @@ public class NhanVien extends javax.swing.JFrame {
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-warehouse-25.png"))); // NOI18N
         jLabel10.setText("LỢI NHUẬN");
 
-        javax.swing.GroupLayout TinhLaiLayout = new javax.swing.GroupLayout(TinhLai);
-        TinhLai.setLayout(TinhLaiLayout);
-        TinhLaiLayout.setHorizontalGroup(
-            TinhLaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(TinhLaiLayout.createSequentialGroup()
+        javax.swing.GroupLayout LoiNhuanLayout = new javax.swing.GroupLayout(LoiNhuan);
+        LoiNhuan.setLayout(LoiNhuanLayout);
+        LoiNhuanLayout.setHorizontalGroup(
+            LoiNhuanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LoiNhuanLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(60, Short.MAX_VALUE))
         );
-        TinhLaiLayout.setVerticalGroup(
-            TinhLaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(TinhLaiLayout.createSequentialGroup()
+        LoiNhuanLayout.setVerticalGroup(
+            LoiNhuanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LoiNhuanLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel10)
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
-        NavbarMenu.add(TinhLai, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 240, -1));
+        NavbarMenu.add(LoiNhuan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 240, -1));
 
         ThongKe.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
         ThongKe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -497,7 +497,7 @@ public class NhanVien extends javax.swing.JFrame {
         XuatHang.setBackground(DefaultColor);
         PhieuXuat.setBackground(DefaultColor);
         NhaCungCap.setBackground(DefaultColor);
-        TinhLai.setBackground(DefaultColor);
+        LoiNhuan.setBackground(DefaultColor);
         ThongKe.setBackground(DefaultColor);
         MainContent.removeAll();
         ProductForm p = new ProductForm();
@@ -512,7 +512,7 @@ public class NhanVien extends javax.swing.JFrame {
         XuatHang.setBackground(DefaultColor);
         PhieuXuat.setBackground(DefaultColor);
         NhaCungCap.setBackground(ClickedColor);
-        TinhLai.setBackground(DefaultColor);
+        LoiNhuan.setBackground(DefaultColor);
         ThongKe.setBackground(DefaultColor);
     }//GEN-LAST:event_NhaCungCapMousePressed
 
@@ -524,7 +524,7 @@ public class NhanVien extends javax.swing.JFrame {
         XuatHang.setBackground(DefaultColor);
         PhieuXuat.setBackground(DefaultColor);
         NhaCungCap.setBackground(DefaultColor);
-        TinhLai.setBackground(DefaultColor);
+        LoiNhuan.setBackground(DefaultColor);
         ThongKe.setBackground(DefaultColor);
     }//GEN-LAST:event_NhapHangMousePressed
 
@@ -536,7 +536,7 @@ public class NhanVien extends javax.swing.JFrame {
         XuatHang.setBackground(DefaultColor);
         PhieuXuat.setBackground(DefaultColor);
         NhaCungCap.setBackground(DefaultColor);
-        TinhLai.setBackground(DefaultColor);
+        LoiNhuan.setBackground(DefaultColor);
         ThongKe.setBackground(DefaultColor);
     }//GEN-LAST:event_PhieuNhapMousePressed
 
@@ -548,7 +548,7 @@ public class NhanVien extends javax.swing.JFrame {
         XuatHang.setBackground(ClickedColor);
         PhieuXuat.setBackground(DefaultColor);
         NhaCungCap.setBackground(DefaultColor);
-        TinhLai.setBackground(DefaultColor);
+        LoiNhuan.setBackground(DefaultColor);
         ThongKe.setBackground(DefaultColor);
     }//GEN-LAST:event_XuatHangMousePressed
 
@@ -560,7 +560,7 @@ public class NhanVien extends javax.swing.JFrame {
         XuatHang.setBackground(DefaultColor);
         PhieuXuat.setBackground(ClickedColor);
         NhaCungCap.setBackground(DefaultColor);
-        TinhLai.setBackground(DefaultColor);
+        LoiNhuan.setBackground(DefaultColor);
         ThongKe.setBackground(DefaultColor);
     }//GEN-LAST:event_PhieuXuatMousePressed
 
@@ -571,7 +571,7 @@ public class NhanVien extends javax.swing.JFrame {
         MainContent.add(ac).setVisible(true);
     }//GEN-LAST:event_SanPhamMouseClicked
 
-    private void TinhLaiMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TinhLaiMousePressed
+    private void LoiNhuanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoiNhuanMousePressed
         // TODO add your handling code here:
         SanPham.setBackground(DefaultColor);
         PhieuNhap.setBackground(DefaultColor);
@@ -579,9 +579,9 @@ public class NhanVien extends javax.swing.JFrame {
         XuatHang.setBackground(DefaultColor);
         PhieuXuat.setBackground(DefaultColor);
         NhaCungCap.setBackground(DefaultColor);
-        TinhLai.setBackground(ClickedColor);
+        LoiNhuan.setBackground(ClickedColor);
         ThongKe.setBackground(DefaultColor);
-    }//GEN-LAST:event_TinhLaiMousePressed
+    }//GEN-LAST:event_LoiNhuanMousePressed
 
     private void DangXuatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DangXuatMousePressed
         // TODO add your handling code here:
@@ -594,13 +594,13 @@ public class NhanVien extends javax.swing.JFrame {
         MainContent.add(af).setVisible(true);
     }//GEN-LAST:event_NhaCungCapMouseClicked
 
-    private void TinhLaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TinhLaiMouseClicked
+    private void LoiNhuanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoiNhuanMouseClicked
         // TODO add your handling code here:
-//        TonKhoForm px = new TonKhoForm();
-//        MainContent.removeAll();
-//        MainContent.add(px).setVisible(true);
+        LoiNhuanForm px = new LoiNhuanForm();
+        MainContent.removeAll();
+        MainContent.add(px).setVisible(true);
 
-    }//GEN-LAST:event_TinhLaiMouseClicked
+    }//GEN-LAST:event_LoiNhuanMouseClicked
 
     private void NhapHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NhapHangMouseClicked
         // TODO add your handling code here:
@@ -664,7 +664,7 @@ public class NhanVien extends javax.swing.JFrame {
         XuatHang.setBackground(DefaultColor);
         PhieuXuat.setBackground(DefaultColor);
         NhaCungCap.setBackground(DefaultColor);
-        TinhLai.setBackground(DefaultColor);
+        LoiNhuan.setBackground(DefaultColor);
     }//GEN-LAST:event_ThongKeMousePressed
 
     private void AccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccountMouseClicked
@@ -707,6 +707,7 @@ public class NhanVien extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Account;
     private javax.swing.JPanel DangXuat;
+    private javax.swing.JPanel LoiNhuan;
     private javax.swing.JPanel MainContent;
     private javax.swing.JLabel NameUser;
     private javax.swing.JPanel NavbarMenu;
@@ -716,7 +717,6 @@ public class NhanVien extends javax.swing.JFrame {
     private javax.swing.JPanel PhieuXuat;
     private javax.swing.JPanel SanPham;
     private javax.swing.JPanel ThongKe;
-    private javax.swing.JPanel TinhLai;
     private javax.swing.JPanel XuatHang;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
