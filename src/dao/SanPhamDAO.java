@@ -20,6 +20,18 @@ import model.SanPham;
  */
 public class SanPhamDAO implements DAOInterface<SanPham> {
 
+    private static SanPhamDAO instance;
+
+    private SanPhamDAO() {
+    }
+
+    public static SanPhamDAO getInstance() {
+        if (instance == null) {
+            instance = new SanPhamDAO();
+        }
+        return instance;
+    }
+
     @Override
     public int insert(SanPham t) {
         int ketQua = 0;

@@ -20,6 +20,18 @@ import model.LoaiSanPham;
  */
 public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPham> {
 
+    private static LoaiSanPhamDAO instance;
+
+    private LoaiSanPhamDAO() {
+    }
+
+    public static LoaiSanPhamDAO getInstance() {
+        if (instance == null) {
+            instance = new LoaiSanPhamDAO();
+        }
+        return instance;
+    }
+
     @Override
     public int insert(LoaiSanPham t) {
         int ketQua = 0;

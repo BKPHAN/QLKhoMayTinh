@@ -20,6 +20,18 @@ import model.ChiTietSanPham;
  */
 public class ChiTietSanPhamDAO implements DAOInterface<ChiTietSanPham> {
 
+    private static ChiTietSanPhamDAO instance;
+
+    private ChiTietSanPhamDAO() {
+    }
+
+    public static ChiTietSanPhamDAO getInstance() {
+        if (instance == null) {
+            instance = new ChiTietSanPhamDAO();
+        }
+        return instance;
+    }
+
     @Override
     public int insert(ChiTietSanPham t) {
         int ketQua = 0;
