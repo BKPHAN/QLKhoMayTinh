@@ -242,7 +242,7 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
         jPanel15.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel16.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
+        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm Kiếm"));
         jPanel16.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtNamePr.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -268,7 +268,7 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
         jScrollPane4.setViewportView(tblThongKeProduct);
 
         jPanel13.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder("Lọc theo ngày"));
+        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm Theo Ngày"));
         jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jDateChooserFromPr.setBackground(new java.awt.Color(255, 255, 255));
@@ -359,7 +359,7 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jToolBar1.setBackground(new java.awt.Color(255, 255, 255));
-        jToolBar1.setBorder(javax.swing.BorderFactory.createTitledBorder("Chức năng"));
+        jToolBar1.setBorder(javax.swing.BorderFactory.createTitledBorder("Chức Năng"));
         jToolBar1.setRollover(true);
 
         btnDetail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_eye_40px.png"))); // NOI18N
@@ -376,7 +376,7 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
         jToolBar1.add(btnDetail);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm Kiếm"));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jComboBoxLuaChon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Phiếu Nhập", "Phiếu Xuất" }));
@@ -420,7 +420,7 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tblPhieuNhap);
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Lọc theo ngày"));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm Theo Ngày"));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jDateChooserFrom.setBackground(new java.awt.Color(255, 255, 255));
@@ -456,7 +456,7 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
         jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 20, 20));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Lọc theo giá"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("TÌm Theo Giá"));
 
         jLabel3.setText("Từ");
 
@@ -584,7 +584,7 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm Kiếm"));
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jComboBoxLuaChon1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "FullName", "UserName", "Role" }));
@@ -799,7 +799,7 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
