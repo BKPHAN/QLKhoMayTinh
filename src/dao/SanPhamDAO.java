@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import database.JDBCUtil;
+import dto.SanPhamDTO;
 import model.SanPham;
 
 /**
@@ -120,7 +121,8 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
                 double tiLeLai = rs.getDouble("tiLeLai");
                 String xuatXu = rs.getString("xuatXu");
                 int trangThai = rs.getInt("trangThai");
-                SanPham sp = new SanPham(maMay, loaiMay, tenMay, soLuong, gia, tiLeLai, xuatXu, trangThai);
+                String maNhaCungCap = rs.getString("maNhaCungCap");
+                SanPham sp = new SanPham(maMay, loaiMay, tenMay, soLuong, gia, tiLeLai, xuatXu, trangThai, maNhaCungCap);
                 ketQua.add(sp);
             }
         } catch (Exception e) {
@@ -148,7 +150,8 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
                 double tiLeLai = rs.getDouble("tiLeLai");
                 String xuatXu = rs.getString("xuatXu");
                 int trangThai = rs.getInt("trangThai");
-                ketQua = new SanPham(maMay, loaiMay, tenMay, soLuong, gia, tiLeLai, xuatXu, trangThai);
+                String maNhaCungCap = rs.getString("maNhaCungCap");
+                ketQua = new SanPham(maMay, loaiMay, tenMay, soLuong, gia, tiLeLai, xuatXu, trangThai, maNhaCungCap);
             }
         } catch (Exception e) {
             // TODO: handle exception
@@ -157,4 +160,130 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
         return ketQua;
     }
 
+    public ArrayList<SanPhamDTO> searchAll(String keyword) {
+        ArrayList<SanPhamDTO> result = new ArrayList<>();
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "";
+            sql = "SELECT s.*, l.tenLoaiSanPham, n.tenNhaCungCap ";
+            sql += "FROM sanpham s ";
+            sql += "LEFT JOIN loaisanpham l ON s.loaiMay=l.maLoaiSanPham ";
+            sql += "LEFT JOIN nhacungcap n ON s.maNhaCungCap=n.maNhaCungCap ";
+            sql += "WHERE tenLoaiSanPham LIKE ? ";
+            sql += "OR maMay LIKE ? ";
+            sql += "OR tenMay LIKE ? ";
+            sql += "OR soLuong LIKE ? ";
+            sql += "OR gia LIKE ? ";
+            sql += "OR xuatXu LIKE ? ";
+            sql += "OR trangThai LIKE ? ";
+            sql += "OR tenNhaCungCap LIKE ? ";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, "%" + keyword + "%");
+            pst.setString(2, "%" + keyword + "%");
+            pst.setString(3, "%" + keyword + "%");
+            pst.setString(4, "%" + keyword + "%");
+            pst.setString(5, "%" + keyword + "%");
+            pst.setString(6, "%" + keyword + "%");
+            pst.setString(7, "%" + keyword + "%");
+            pst.setString(8, "%" + keyword + "%");
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                String maMay = rs.getString("maMay");
+                String maLoaiSanPham = rs.getString("loaiMay");
+                String tenLoaiSanPham = rs.getString("tenLoaiSanPham");
+                String tenMay = rs.getString("tenMay");
+                int soLuong = rs.getInt("soLuong");
+                double gia = rs.getDouble("gia");
+                double tiLeLai = rs.getDouble("tiLeLai");
+                String xuatXu = rs.getString("xuatXu");
+                int trangThai = rs.getInt("trangThai");
+                String maNhaCungCap = rs.getString("maNhaCungCap");
+                String tenNhaCungCap = rs.getString("tenNhaCungCap");
+                SanPhamDTO sp = new SanPhamDTO(
+                    maMay, maLoaiSanPham, tenLoaiSanPham, tenMay, 
+                    soLuong, gia, tiLeLai, xuatXu, trangThai, maNhaCungCap, tenNhaCungCap
+                );
+                result.add(sp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public ArrayList<SanPhamDTO> searchByAttribute(String attribute, String keyword) {
+        ArrayList<SanPhamDTO> result = new ArrayList<>();
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "";
+            sql = "SELECT s.*, l.tenLoaiSanPham, n.tenNhaCungCap ";
+            sql += "FROM sanpham s ";
+            sql += "LEFT JOIN loaisanpham l ON s.loaiMay=l.maLoaiSanPham ";
+            sql += "LEFT JOIN nhacungcap n ON s.maNhaCungCap=n.maNhaCungCap ";
+            sql += "WHERE " + attribute + " LIKE ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, "%" + keyword + "%");
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                String maMay = rs.getString("maMay");
+                String maLoaiSanPham = rs.getString("loaiMay");
+                String tenLoaiSanPham = rs.getString("tenLoaiSanPham");
+                String tenMay = rs.getString("tenMay");
+                int soLuong = rs.getInt("soLuong");
+                double gia = rs.getDouble("gia");
+                double tiLeLai = rs.getDouble("tiLeLai");
+                String xuatXu = rs.getString("xuatXu");
+                int trangThai = rs.getInt("trangThai");
+                String maNhaCungCap = rs.getString("maNhaCungCap");
+                String tenNhaCungCap = rs.getString("tenNhaCungCap");
+                SanPhamDTO sp = new SanPhamDTO(
+                    maMay, maLoaiSanPham, tenLoaiSanPham, tenMay,
+                    soLuong, gia, tiLeLai, xuatXu, trangThai, maNhaCungCap, tenNhaCungCap
+                );
+                result.add(sp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public SanPhamDTO getChiTietSanPham(String maSanPham) {
+        SanPhamDTO result = null;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "";
+            sql = "SELECT s.*, l.tenLoaiSanPham, n.tenNhaCungCap ";
+            sql += "FROM sanpham s ";
+            sql += "LEFT JOIN loaisanpham l ON s.loaiMay=l.maLoaiSanPham ";
+            sql += "LEFT JOIN nhacungcap n ON s.maNhaCungCap=n.maNhaCungCap ";
+            sql += "WHERE maMay=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, maSanPham);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                String maMay = rs.getString("maMay");
+                String maLoaiSanPham = rs.getString("loaiMay");
+                String tenLoaiSanPham = rs.getString("tenLoaiSanPham");
+                String tenMay = rs.getString("tenMay");
+                int soLuong = rs.getInt("soLuong");
+                double gia = rs.getDouble("gia");
+                double tiLeLai = rs.getDouble("tiLeLai");
+                String xuatXu = rs.getString("xuatXu");
+                int trangThai = rs.getInt("trangThai");
+                String maNhaCungCap = rs.getString("maNhaCungCap");
+                String tenNhaCungCap = rs.getString("tenNhaCungCap");
+                result = new SanPhamDTO(
+                    maMay, maLoaiSanPham, tenLoaiSanPham, tenMay,
+                    soLuong, gia, tiLeLai, xuatXu, trangThai,
+                    ChiTietSanPhamDAO.getInstance().getChiTietSanPhamByMaSanPham(maSanPham),
+                    maNhaCungCap, tenNhaCungCap
+                );
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

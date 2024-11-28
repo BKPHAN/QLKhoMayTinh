@@ -4,10 +4,13 @@
  */
 package view;
 
+import controller.SanPhamController;
 import controller.SearchProduct;
 import dao.LaptopDAO;
 import dao.MayTinhDAO;
 import dao.PCDAO;
+import dao.SanPhamDAO;
+import dto.SanPhamDTO;
 import java.awt.Desktop;
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -21,15 +24,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import model.Account;
 import model.Laptop;
 import model.MayTinh;
 import model.PC;
+import model.SanPham;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -71,35 +77,45 @@ public class ProductForm extends javax.swing.JInternalFrame {
 
     public final void initTable() {
         tblModel = new DefaultTableModel();
-        String[] headerTbl = new String[]{"Mã máy", "Tên máy", "Số lượng", "Đơn giá", "Bộ xử lí", "RAM", "Bộ nhớ", "Loại máy"};
+        String[] headerTbl = new String[]{"Mã máy", "Loại máy", "Tên máy", "Số lượng", "Đơn giá", "Tỉ lệ lãi", "Nhà cung cấp"};
         tblModel.setColumnIdentifiers(headerTbl);
         tblSanPham.setModel(tblModel);
-        tblSanPham.getColumnModel().getColumn(0).setPreferredWidth(5);
-        tblSanPham.getColumnModel().getColumn(1).setPreferredWidth(200);
-        tblSanPham.getColumnModel().getColumn(2).setPreferredWidth(5);
-        tblSanPham.getColumnModel().getColumn(5).setPreferredWidth(5);
-        tblSanPham.getColumnModel().getColumn(6).setPreferredWidth(5);
+
+        tblSanPham.getColumnModel().getColumn(0).setPreferredWidth(4);
+        tblSanPham.getColumnModel().getColumn(1).setPreferredWidth(50);
+        tblSanPham.getColumnModel().getColumn(2).setPreferredWidth(200);
+        tblSanPham.getColumnModel().getColumn(3).setPreferredWidth(4);
+        tblSanPham.getColumnModel().getColumn(4).setPreferredWidth(10);
+        tblSanPham.getColumnModel().getColumn(5).setPreferredWidth(4);
+        tblSanPham.getColumnModel().getColumn(6).setPreferredWidth(200);
+        
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
+        tblSanPham.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+        tblSanPham.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
+        tblSanPham.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
     }
 
     public void loadDataToTable() {
         try {
-            MayTinhDAO mtdao = new MayTinhDAO();
-            ArrayList<MayTinh> armt = mtdao.selectAll();
+            SanPhamController spController = SanPhamController.getInstance();
+            ArrayList<SanPhamDTO> spList = spController.searchAll("");
             tblModel.setRowCount(0);
-            for (MayTinh i : armt) {
+            for (SanPhamDTO i : spList) {
                 if (i.getTrangThai() == 1) {
-                    String loaimay;
-                    if (LaptopDAO.getInstance().isLaptop(i.getMaMay()) == true) {
-                        loaimay = "Laptop";
-                    } else {
-                        loaimay = "PC/Case";
-                    }
                     tblModel.addRow(new Object[]{
-                        i.getMaMay(), i.getTenMay(), i.getSoLuong(), formatter.format(i.getGia()) + "đ", i.getTenCpu(), i.getRam(), i.getRom(), loaimay
+                        i.getMaMay(), 
+                        i.getTenLoaiSanPham(), 
+                        i.getTenMay(), 
+                        i.getSoLuong(), 
+                        formatter.format(i.getGia()) + "đ",
+                        Double.toString(i.getTiLeLai()) + "%",
+                        i.getTenNhaCungCap()
                     });
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -218,7 +234,7 @@ public class ProductForm extends javax.swing.JInternalFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jComboBoxLuaChon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Mã máy", "Tên máy", "Số lượng", "Đơn giá", "RAM", "CPU", "Dung lượng", "Card màn hình", "Xuất xứ", "Đã xóa" }));
+        jComboBoxLuaChon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Mã máy", "Loại máy", "Tên máy", "Số lượng", "Đơn giá", "Xuất xứ" }));
         jComboBoxLuaChon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxLuaChonActionPerformed(evt);
@@ -390,7 +406,7 @@ public class ProductForm extends javax.swing.JInternalFrame {
                     listAccExcel.add(mt);
                     DefaultTableModel table_acc = (DefaultTableModel) tblSanPham.getModel();
                     table_acc.setRowCount(0);
-                    loadDataToTableSearch(listAccExcel);
+//                    loadDataToTableSearch(listAccExcel);
                 }
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(ProductForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -427,7 +443,7 @@ public class ProductForm extends javax.swing.JInternalFrame {
         if (tblSanPham.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm !");
         } else {
-            DetailProduct a = new DetailProduct(this, (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), rootPaneCheckingEnabled);
+            ChiTietSanPhamView a = new ChiTietSanPhamView(this, (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), rootPaneCheckingEnabled);
             a.setVisible(true);
         }
     }//GEN-LAST:event_btnDetailActionPerformed
@@ -436,7 +452,7 @@ public class ProductForm extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         String luaChon = jComboBoxLuaChon.getSelectedItem().toString();
         String content = jTextFieldSearch.getText();
-        ArrayList<MayTinh> result = searchFn(luaChon, content);
+        ArrayList<SanPhamDTO> result = searchFn(luaChon, content);
         loadDataToTableSearch(result);
     }//GEN-LAST:event_jTextFieldSearchKeyReleased
 
@@ -444,7 +460,7 @@ public class ProductForm extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         String luaChon = jComboBoxLuaChon.getSelectedItem().toString();
         String content = jTextFieldSearch.getText();
-        ArrayList<MayTinh> result = searchFn(luaChon, content);
+        ArrayList<SanPhamDTO> result = searchFn(luaChon, content);
         loadDataToTableSearch(result);
     }//GEN-LAST:event_jComboBoxLuaChonActionPerformed
 
@@ -457,46 +473,35 @@ public class ProductForm extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         String luaChon = jComboBoxLuaChon.getSelectedItem().toString();
         String content = jTextFieldSearch.getText();
-        ArrayList<MayTinh> result = searchFn(luaChon, content);
+        ArrayList<SanPhamDTO> result = searchFn(luaChon, content);
         loadDataToTableSearch(result);
     }//GEN-LAST:event_jComboBoxLuaChonPropertyChange
 
-    public ArrayList<MayTinh> searchFn(String luaChon, String content) {
-        ArrayList<MayTinh> result = new ArrayList<>();
-        SearchProduct searchPr = new SearchProduct();
+    public ArrayList<SanPhamDTO> searchFn(String luaChon, String content) {
+        ArrayList<SanPhamDTO> result = new ArrayList<>();
+        SanPhamController spController = SanPhamController.getInstance();
         switch (luaChon) {
-            case "Tất cả":
-                result = searchPr.searchTatCa(content);
-                break;
             case "Mã máy":
-                result = searchPr.searchMaMay(content);
+                result = spController.searchByAttribute("maMay", content);
+                break;
+            case "Loại máy":
+                result = spController.searchByAttribute("tenLoaiSanPham", content);
                 break;
             case "Tên máy":
-                result = searchPr.searchTenMay(content);
+                result = spController.searchByAttribute("tenMay", content);
                 break;
             case "Số lượng":
-                result = searchPr.searchSoLuong(content);
+                result = spController.searchByAttribute("soLuong", content);
                 break;
             case "Đơn giá":
-                result = searchPr.searchDonGia(content);
-                break;
-            case "RAM":
-                result = searchPr.searchRam(content);
-                break;
-            case "CPU":
-                result = searchPr.searchCpu(content);
-                break;
-            case "Dung lượng":
-                result = searchPr.searchDungLuong(content);
-                break;
-            case "Card màn hình":
-                result = searchPr.searchCard(content);
+                result = spController.searchByAttribute("gia", content);
                 break;
             case "Xuất xứ":
-                result = searchPr.searchXuatXu(content);
+                result = spController.searchByAttribute("xuatXu", content);
                 break;
-            case "Đã xóa":
-                result = searchPr.searchDaXoa(content);
+            case "Tất cả":
+            default:
+                result = spController.searchAll(content);
         }
         return result;
     }
@@ -518,6 +523,17 @@ public class ProductForm extends javax.swing.JInternalFrame {
         PC a = PCDAO.getInstance().selectById(getMayTinhSelect().getMaMay());
         return a;
     }
+    
+    public SanPhamDTO getChiTietSanPham() {
+        try {
+            int rowSelected = tblSanPham.getSelectedRow();
+            String maSanPham = tblSanPham.getValueAt(rowSelected, 0).toString();
+            return SanPhamController.getInstance().getChiTietSanPham(maSanPham);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public void xoaMayTinhSelect() {
         DefaultTableModel table_acc = (DefaultTableModel) tblSanPham.getModel();
@@ -537,21 +553,22 @@ public class ProductForm extends javax.swing.JInternalFrame {
         return acc;
     }
 
-    public void loadDataToTableSearch(ArrayList<MayTinh> result) {
+    public void loadDataToTableSearch(ArrayList<SanPhamDTO> result) {
         try {
             tblModel.setRowCount(0);
-            for (MayTinh i : result) {
-                String loaimay;
-                if (LaptopDAO.getInstance().isLaptop(i.getMaMay()) == true) {
-                    loaimay = "Laptop";
-                } else {
-                    loaimay = "PC/Case";
-                }
+            for (SanPhamDTO i : result) {
                 tblModel.addRow(new Object[]{
-                    i.getMaMay(), i.getTenMay(), i.getSoLuong(), formatter.format(i.getGia()) + "đ", i.getTenCpu(), i.getRam(), i.getRom(), loaimay
+                    i.getMaMay(),
+                    i.getTenLoaiSanPham(),
+                    i.getTenMay(),
+                    i.getSoLuong(),
+                    formatter.format(i.getGia()) + "đ",
+                    Double.toString(i.getTiLeLai()) + "%",
+                    i.getTenNhaCungCap()
                 });
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

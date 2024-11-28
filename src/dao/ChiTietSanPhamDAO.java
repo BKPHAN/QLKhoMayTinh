@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -138,6 +139,28 @@ public class ChiTietSanPhamDAO implements DAOInterface<ChiTietSanPham> {
             e.printStackTrace();
         }
         return ketQua;
+    }
+
+    public List<ChiTietSanPham> getChiTietSanPhamByMaSanPham(String maSanPham) {
+        ArrayList<ChiTietSanPham> resutl = new ArrayList<ChiTietSanPham>();
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM chitietsanpham WHERE maMay=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, maSanPham);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                String maChiTiet = rs.getString("maChiTiet");
+                String maMay = rs.getString("maMay");
+                String tenThuocTinh = rs.getString("tenThuocTinh");
+                String giaTriThuocTinh = rs.getString("giaTriThuocTinh");
+                ChiTietSanPham lsp = new ChiTietSanPham(maChiTiet, maMay, tenThuocTinh, giaTriThuocTinh);
+                resutl.add(lsp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resutl;
     }
     
 }

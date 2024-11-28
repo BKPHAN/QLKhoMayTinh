@@ -17,11 +17,12 @@ public class SanPham {
     private double tiLeLai;
     private String xuatXu;
     private int trangThai;
+    private String maNhaCungCap;
 
     public SanPham() {
     }
 
-    public SanPham(String maMay, String loaiMay, String tenMay, int soLuong, double gia, double tiLeLai, String xuatXu, int trangThai) {
+    public SanPham(String maMay, String loaiMay, String tenMay, int soLuong, double gia, double tiLeLai, String xuatXu, int trangThai, String maNhaCungCap) {
         this.maMay = maMay;
         this.loaiMay = loaiMay;
         this.tenMay = tenMay;
@@ -30,6 +31,7 @@ public class SanPham {
         this.tiLeLai = tiLeLai;
         this.xuatXu = xuatXu;
         this.trangThai = trangThai;
+        this.maNhaCungCap = maNhaCungCap;
     }
 
     public String getMaMay() {
@@ -95,6 +97,13 @@ public class SanPham {
     public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
     }
-    
+
+    public String getMaNhaCungCap() {
+        return maNhaCungCap;
+    }
+
+    public void setMaNhaCungCap(String maNhaCungCap) {
+        this.maNhaCungCap = maNhaCungCap;
+    }
     
 }
