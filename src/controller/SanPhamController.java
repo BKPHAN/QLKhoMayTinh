@@ -31,4 +31,16 @@ public class SanPhamController {
     public SanPhamDTO getChiTietSanPham(String maSanPham) {
         return spDAO.getChiTietSanPham(maSanPham);
     }
+
+    public String getNewID() {
+        return spDAO.getNewID();
+    }
+
+    public String addNewSanPham(SanPhamDTO spMoi) {
+        return spDAO.addNewSanPham(spMoi);
+    }
+
+    public int updateTrangThai(String maMay, int trangThai) {
+        return spDAO.updateTrangThai(maMay, trangThai);
+    }
 }

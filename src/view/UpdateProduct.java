@@ -30,35 +30,35 @@ public class UpdateProduct extends javax.swing.JDialog {
         this.owner = (ProductForm) parent;
         initComponents();
         setLocationRelativeTo(null);
-        if (this.owner.checklap()) {
-            Laptop a = this.owner.getDetailLapTop();
-            txtMaSanPham.setText(a.getMaMay());
-            txtTenSanPham.setText(a.getTenMay());
-            txtDonGia.setText(formatterE.format(a.getGia()));
-            txtCPU.setText(a.getTenCpu());
-            txtRAM.setText(a.getRam());
-            txtROM.setText(a.getRom());
-            txtGPU.setText(a.getCardManHinh());
-            txtXuatXu.setText(a.getXuatXu());
-            cbxloaisp.setSelectedIndex(0);
-            txtKichThuocMan.setText(Double.toString(a.getkichThuocMan()));
-            txtDungLuongPin.setText(a.getDungLuongPin());
-            txtSoLuong.setText(a.getSoLuong() + "");
-        } else {
-            PC a = this.owner.getDetailPC();
-            txtMaSanPham.setText(a.getMaMay());
-            txtTenSanPham.setText(a.getTenMay());
-            txtDonGia.setText(Double.toString(a.getGia()));
-            txtCPU.setText(a.getTenCpu());
-            txtRAM.setText(a.getRam());
-            txtROM.setText(a.getRom());
-            txtGPU.setText(a.getCardManHinh());
-            txtXuatXu.setText(a.getXuatXu());
-            cbxloaisp.setSelectedIndex(1);
-            txtMainBoard.setText(a.getMainBoard());
-            txtCongsuatNguon.setText(Integer.toString(a.getCongSuatNguon()));
-            txtSoLuong.setText(Integer.toString(a.getSoLuong()));
-        }
+//        if (this.owner.checklap()) {
+//            Laptop a = this.owner.getDetailLapTop();
+//            txtMaSanPham.setText(a.getMaMay());
+//            txtTenSanPham.setText(a.getTenMay());
+//            txtDonGia.setText(formatterE.format(a.getGia()));
+//            txtCPU.setText(a.getTenCpu());
+//            txtRAM.setText(a.getRam());
+//            txtROM.setText(a.getRom());
+//            txtGPU.setText(a.getCardManHinh());
+//            txtXuatXu.setText(a.getXuatXu());
+//            cbxloaisp.setSelectedIndex(0);
+//            txtKichThuocMan.setText(Double.toString(a.getkichThuocMan()));
+//            txtDungLuongPin.setText(a.getDungLuongPin());
+//            txtSoLuong.setText(a.getSoLuong() + "");
+//        } else {
+//            PC a = this.owner.getDetailPC();
+//            txtMaSanPham.setText(a.getMaMay());
+//            txtTenSanPham.setText(a.getTenMay());
+//            txtDonGia.setText(Double.toString(a.getGia()));
+//            txtCPU.setText(a.getTenCpu());
+//            txtRAM.setText(a.getRam());
+//            txtROM.setText(a.getRom());
+//            txtGPU.setText(a.getCardManHinh());
+//            txtXuatXu.setText(a.getXuatXu());
+//            cbxloaisp.setSelectedIndex(1);
+//            txtMainBoard.setText(a.getMainBoard());
+//            txtCongsuatNguon.setText(Integer.toString(a.getCongSuatNguon()));
+//            txtSoLuong.setText(Integer.toString(a.getSoLuong()));
+//        }
     }
     
     private UpdateProduct(JFrame jFrame, boolean b) {

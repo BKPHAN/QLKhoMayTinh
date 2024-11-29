@@ -131,5 +131,47 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPham> {
         }
         return ketQua;
     }
+
+    public LoaiSanPham findByName(String t) {
+        LoaiSanPham ketQua = null;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM loaisanpham WHERE tenLoaiSanPham=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, t);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                String maLoaiSanPham = rs.getString("maLoaiSanPham");
+                String tenLoaiSanPham = rs.getString("tenLoaiSanPham");
+                ketQua = new LoaiSanPham(maLoaiSanPham, tenLoaiSanPham);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return ketQua;
+    }
+
+    public String generateNewID() {
+        String result = null;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = """
+                SELECT CONCAT('LSP', CAST(SUBSTRING(maLoaiSanPham, 4) AS UNSIGNED) + 1) AS maLoaiSanPhamMoi
+                FROM loaisanpham
+                ORDER BY CAST(SUBSTRING(maLoaiSanPham, 4) AS UNSIGNED) DESC
+                LIMIT 1;
+            """;
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                result = rs.getString("maLoaiSanPhamMoi");
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return result;
+    }
     
 }

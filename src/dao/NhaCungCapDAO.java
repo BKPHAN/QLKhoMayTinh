@@ -129,4 +129,26 @@ public class NhaCungCapDAO implements DAOInterface<NhaCungCap> {
         }
         return ketQua;
     }
+
+    public NhaCungCap findByName(String t) {
+        NhaCungCap ketQua = null;
+        try {
+            java.sql.Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM NhaCungCap WHERE tenNhaCungCap=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, t);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                String maNhaCungCap = rs.getString("maNhaCungCap");
+                String tenNhaCungCap = rs.getString("tenNhaCungCap");
+                String sdt = rs.getString("Sdt");
+                String diaChi = rs.getString("diaChi");
+                ketQua = new NhaCungCap(maNhaCungCap, tenNhaCungCap, sdt, diaChi);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return ketQua;
+    }
 }

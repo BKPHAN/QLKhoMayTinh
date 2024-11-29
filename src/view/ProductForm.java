@@ -310,7 +310,7 @@ public class ProductForm extends javax.swing.JInternalFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
 
-        AddProduct a = new AddProduct(this, (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), rootPaneCheckingEnabled);
+        ThemSanPham a = new ThemSanPham(this, (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), rootPaneCheckingEnabled);
         a.setVisible(true);
 
     }//GEN-LAST:event_btnAddActionPerformed
@@ -320,7 +320,7 @@ public class ProductForm extends javax.swing.JInternalFrame {
         if (tblSanPham.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm cần xoá");
         } else {
-            xoaMayTinhSelect();
+            xoaSanPhamSelect();
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -505,24 +505,6 @@ public class ProductForm extends javax.swing.JInternalFrame {
         }
         return result;
     }
-
-    public boolean checklap() {
-        if (LaptopDAO.getInstance().isLaptop(getMayTinhSelect().getMaMay()) == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public Laptop getDetailLapTop() {
-        Laptop a = LaptopDAO.getInstance().selectById(getMayTinhSelect().getMaMay());
-        return a;
-    }
-
-    public PC getDetailPC() {
-        PC a = PCDAO.getInstance().selectById(getMayTinhSelect().getMaMay());
-        return a;
-    }
     
     public SanPhamDTO getChiTietSanPham() {
         try {
@@ -535,22 +517,22 @@ public class ProductForm extends javax.swing.JInternalFrame {
         return null;
     }
 
-    public void xoaMayTinhSelect() {
+    public void xoaSanPhamSelect() {
         DefaultTableModel table_acc = (DefaultTableModel) tblSanPham.getModel();
         int i_row = tblSanPham.getSelectedRow();
         int luaChon = JOptionPane.showConfirmDialog(this, "Bạn có muốn xoá sản phẩm này?", "Xoá sản phẩm",
                 JOptionPane.YES_NO_OPTION);
         if (luaChon == JOptionPane.YES_OPTION) {
-            MayTinh remove = getMayTinhSelect();
-            MayTinhDAO.getInstance().deleteTrangThai(remove.getMaMay());
+            int rowSelected = tblSanPham.getSelectedRow();
+            String maSanPham = tblSanPham.getValueAt(rowSelected, 0).toString();
+            int xoaSP = SanPhamController.getInstance().updateTrangThai(maSanPham, 0);
+            if (xoaSP == 1) {
+                JOptionPane.showMessageDialog(this, "Xóa sản phẩm thành công!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi, vui lòng thử lại!");
+            }
         }
         loadDataToTable();
-    }
-
-    public MayTinh getMayTinhSelect() {
-        int i_row = tblSanPham.getSelectedRow();
-        MayTinh acc = MayTinhDAO.getInstance().selectById(tblModel.getValueAt(i_row, 0).toString());
-        return acc;
     }
 
     public void loadDataToTableSearch(ArrayList<SanPhamDTO> result) {

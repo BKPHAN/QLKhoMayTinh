@@ -162,5 +162,50 @@ public class ChiTietSanPhamDAO implements DAOInterface<ChiTietSanPham> {
         }
         return resutl;
     }
+
+    public List<String> getTenChiTietByLoaiSanPham(String tenLoaiSanPham) {
+        ArrayList<String> resutl = new ArrayList<>();
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = """
+                SELECT DISTINCT (c.tenThuocTinh) FROM chitietsanpham c
+                LEFT JOIN sanpham s ON c.maMay=s.maMay
+                LEFT JOIN loaisanpham l ON l.maLoaiSanPham=s.loaiMay
+                WHERE l.tenLoaiSanPham=?
+            """;
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, tenLoaiSanPham);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                String tenThuocTinh = rs.getString("tenThuocTinh");
+                resutl.add(tenThuocTinh);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resutl;
+    }
+
+    public int getNewIndexID() {
+        int result = 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = """
+                        SELECT CONCAT('', CAST(SUBSTRING(maChiTiet, 5) AS UNSIGNED) + 1) AS maCTSanPhamMoi
+                        FROM chitietsanpham
+                        ORDER BY CAST(SUBSTRING(maChiTiet, 5) AS UNSIGNED) DESC
+                        LIMIT 1;
+                    """;
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                result = rs.getInt("maCTSanPhamMoi");
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return result;
+    }
     
 }

@@ -17,6 +17,13 @@ public class ChiTietSanPham {
     public ChiTietSanPham() {
     }
 
+    public ChiTietSanPham(String tenThuocTinh, String giaTriThuocTinh) {
+        this.maChiTiet = "";
+        this.maMay = "";
+        this.tenThuocTinh = tenThuocTinh;
+        this.giaTriThuocTinh = giaTriThuocTinh;
+    }
+
     public ChiTietSanPham(String maChiTiet, String maMay, String tenThuocTinh, String giaTriThuocTinh) {
         this.maChiTiet = maChiTiet;
         this.maMay = maMay;

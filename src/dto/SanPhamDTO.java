@@ -18,6 +18,9 @@ public class SanPhamDTO {
     private String maNhaCungCap;
     private String tenNhaCungCap;
 
+    public SanPhamDTO() {
+    }
+
     public SanPhamDTO(String maMay, String maLoaiSanPham, String tenLoaiSanPham, String tenMay, int soLuong, double gia, double tiLeLai, String xuatXu, int trangThai, String maNhaCungCap, String tenNhaCungCap) {
         this.maMay = maMay;
         this.maLoaiSanPham = maLoaiSanPham;
@@ -94,5 +97,54 @@ public class SanPhamDTO {
     public String getTenNhaCungCap() {
         return tenNhaCungCap;
     }
+
+    public void setMaMay(String maMay) {
+        this.maMay = maMay;
+    }
+
+    public void setMaLoaiSanPham(String maLoaiSanPham) {
+        this.maLoaiSanPham = maLoaiSanPham;
+    }
+
+    public void setTenLoaiSanPham(String tenLoaiSanPham) {
+        this.tenLoaiSanPham = tenLoaiSanPham;
+    }
+
+    public void setTenMay(String tenMay) {
+        this.tenMay = tenMay;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public void setGia(double gia) {
+        this.gia = gia;
+    }
+
+    public void setTiLeLai(double tiLeLai) {
+        this.tiLeLai = tiLeLai;
+    }
+
+    public void setXuatXu(String xuatXu) {
+        this.xuatXu = xuatXu;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public void setChiTietSanPhamList(List<ChiTietSanPham> chiTietSanPhamList) {
+        this.chiTietSanPhamList = chiTietSanPhamList;
+    }
+
+    public void setMaNhaCungCap(String maNhaCungCap) {
+        this.maNhaCungCap = maNhaCungCap;
+    }
+
+    public void setTenNhaCungCap(String tenNhaCungCap) {
+        this.tenNhaCungCap = tenNhaCungCap;
+    }
+    
     
 }

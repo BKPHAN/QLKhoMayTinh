@@ -8,11 +8,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import database.JDBCUtil;
 import dto.SanPhamDTO;
+import model.ChiTietSanPham;
 import model.SanPham;
 
 /**
@@ -285,5 +287,89 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public String getNewID() {
+        String result = null;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = """
+                SELECT CONCAT('SP', CAST(SUBSTRING(maMay, 3) AS UNSIGNED) + 1) AS maSanPhamMoi
+                FROM sanpham
+                ORDER BY CAST(SUBSTRING(maMay, 3) AS UNSIGNED) DESC
+                LIMIT 1;
+            """;
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                result = rs.getString("maSanPhamMoi");
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String addNewSanPham(SanPhamDTO spMoi) {
+        String result = "";
+        try {
+            String newID = getNewID();
+            SanPham sp = new SanPham(
+                    newID,
+                    spMoi.getMaLoaiSanPham(),
+                    spMoi.getTenMay(),
+                    spMoi.getSoLuong(),
+                    spMoi.getGia(),
+                    spMoi.getTiLeLai(),
+                    spMoi.getXuatXu(),
+                    1,
+                    spMoi.getMaNhaCungCap());
+            int insertSPResult = insert(sp);
+            if (insertSPResult != 1) {
+                return "Đã xảy ra lỗi khi thêm sản phẩm mới";
+            }
+
+            // Them chi tiet san pham
+            List<ChiTietSanPham> chiTietSanPhamList = spMoi.getChiTietSanPhamList();
+            if (chiTietSanPhamList.size() > 0) {
+                int firstIndex = ChiTietSanPhamDAO.getInstance().getNewIndexID();
+                for (int i = 0; i < chiTietSanPhamList.size(); i++) {
+                    ChiTietSanPhamDAO.getInstance().insert(new ChiTietSanPham(
+                        "CTSP" + (firstIndex + i),
+                        newID,
+                        chiTietSanPhamList.get(i).getTenThuocTinh(),
+                        chiTietSanPhamList.get(i).getGiaTriThuocTinh()
+                    ));
+                }
+            }
+
+            result = "OK";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = "Error: " + e.getMessage();
+        }
+        
+        return result;
+    }
+
+    public int updateTrangThai(String maMay, int trangThai) {
+        int ketQua = 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "UPDATE sanpham SET trangThai=? WHERE maMay=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(2, maMay);
+            pst.setInt(1, trangThai);
+            ketQua = pst.executeUpdate();
+            JDBCUtil.closeConnection(con);
+        } catch (Exception e) {
+            // TODO: handle exception
+            JOptionPane.showMessageDialog(null, "Không cập nhật được sản phẩm " + maMay, "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+        return ketQua;
     }
 }

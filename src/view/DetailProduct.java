@@ -29,35 +29,35 @@ public class DetailProduct extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         this.owner = (ProductForm) parent;
-        if (this.owner.checklap()) {
-            Laptop a = this.owner.getDetailLapTop();
-            txtMaSanPham.setText(a.getMaMay());
-            txtTenSanPham.setText(a.getTenMay());
-            txtDonGia.setText(formatter.format(a.getGia())+"đ");
-            txtCPU.setText(a.getTenCpu());
-            txtRAM.setText(a.getRam());
-            txtROM.setText(a.getRom());
-            txtGPU.setText(a.getCardManHinh());
-            txtXuatXu.setText(a.getXuatXu());
-            cbxloaisp.setSelectedIndex(0);
-            txtKichThuocMan.setText(Double.toString(a.getkichThuocMan()));
-            txtDungLuongPin.setText(a.getDungLuongPin());
-            txtSoLuong.setText(Integer.toString(a.getSoLuong()));
-        } else {
-            PC a = this.owner.getDetailPC();
-            txtMaSanPham.setText(a.getMaMay());
-            txtTenSanPham.setText(a.getTenMay());
-            txtDonGia.setText(formatter.format(a.getGia())+"đ");
-            txtCPU.setText(a.getTenCpu());
-            txtRAM.setText(a.getRam());
-            txtROM.setText(a.getRom());
-            txtGPU.setText(a.getCardManHinh());
-            txtXuatXu.setText(a.getXuatXu());
-            cbxloaisp.setSelectedIndex(1);
-            txtMainBoard.setText(a.getMainBoard());
-            txtCongsuatNguon.setText(Integer.toString(a.getCongSuatNguon()) + "W");
-            txtSoLuong.setText(Integer.toString(a.getSoLuong()));
-        }
+//        if (this.owner.checklap()) {
+//            Laptop a = this.owner.getDetailLapTop();
+//            txtMaSanPham.setText(a.getMaMay());
+//            txtTenSanPham.setText(a.getTenMay());
+//            txtDonGia.setText(formatter.format(a.getGia())+"đ");
+//            txtCPU.setText(a.getTenCpu());
+//            txtRAM.setText(a.getRam());
+//            txtROM.setText(a.getRom());
+//            txtGPU.setText(a.getCardManHinh());
+//            txtXuatXu.setText(a.getXuatXu());
+//            cbxloaisp.setSelectedIndex(0);
+//            txtKichThuocMan.setText(Double.toString(a.getkichThuocMan()));
+//            txtDungLuongPin.setText(a.getDungLuongPin());
+//            txtSoLuong.setText(Integer.toString(a.getSoLuong()));
+//        } else {
+//            PC a = this.owner.getDetailPC();
+//            txtMaSanPham.setText(a.getMaMay());
+//            txtTenSanPham.setText(a.getTenMay());
+//            txtDonGia.setText(formatter.format(a.getGia())+"đ");
+//            txtCPU.setText(a.getTenCpu());
+//            txtRAM.setText(a.getRam());
+//            txtROM.setText(a.getRom());
+//            txtGPU.setText(a.getCardManHinh());
+//            txtXuatXu.setText(a.getXuatXu());
+//            cbxloaisp.setSelectedIndex(1);
+//            txtMainBoard.setText(a.getMainBoard());
+//            txtCongsuatNguon.setText(Integer.toString(a.getCongSuatNguon()) + "W");
+//            txtSoLuong.setText(Integer.toString(a.getSoLuong()));
+//        }
     }
     
 
