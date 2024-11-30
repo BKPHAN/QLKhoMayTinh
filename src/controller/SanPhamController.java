@@ -40,6 +40,10 @@ public class SanPhamController {
         return spDAO.addNewSanPham(spMoi);
     }
 
+    public String updateSanPham(SanPhamDTO sp) {
+        return spDAO.updateSanPham(sp);
+    }
+
     public int updateTrangThai(String maMay, int trangThai) {
         return spDAO.updateTrangThai(maMay, trangThai);
     }

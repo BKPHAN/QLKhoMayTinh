@@ -35,7 +35,7 @@ import model.NhaCungCap;
  *
  * @author Tran Nhat Sinh
  */
-public class ThemSanPham extends javax.swing.JDialog {
+public class SuaSanPham extends javax.swing.JDialog {
 
     /**
      * Creates new form ThemSP
@@ -48,15 +48,18 @@ public class ThemSanPham extends javax.swing.JDialog {
     
     private List<JPanel> defaultAttributeList = new ArrayList<>();
     
-    private List<JPanel> attributeListByLoaiSanPham = new ArrayList<>();
+    private List<JPanel> ctspList = new ArrayList<>();
     
-    private List<JPanel> newAttributeList = new ArrayList<>();
+    private String maSanPham;
 
-    public ThemSanPham(javax.swing.JInternalFrame parent, javax.swing.JFrame owner, boolean modal) {
+    public SuaSanPham(javax.swing.JInternalFrame parent, javax.swing.JFrame owner, boolean modal) {
         super(owner, modal);
         this.owner = (ProductForm) parent;
         initComponents();
         setLocationRelativeTo(null);
+        SanPhamDTO sp = this.owner.getChiTietSanPham();
+        this.maSanPham = sp.getMaMay();
+        List<ChiTietSanPham> chiTietSanPhamList = sp.getChiTietSanPhamList();
         
         jPanel1.setLayout(new BorderLayout());
         listPanel = new JPanel();
@@ -78,18 +81,21 @@ public class ThemSanPham extends javax.swing.JDialog {
                 .collect(Collectors.toList());
         lspList.add("Thêm loại sản phẩm mới");
         String[] lspComboboxData = lspList.stream().toArray(String[]::new);
-        loaiSanPhamCbb = addLabelAndComboboxToListPane("Loại sản phẩm", 
+        loaiSanPhamCbb = addLabelAndComboboxToListPane(
+                "Loại sản phẩm", 
+                sp.getTenLoaiSanPham(),
                 lspComboboxData,
                 this::cbxloaispItemStateChanged, 
                 listPanel,
                 defaultAttributeList
         );
+        loaiSanPhamCbb.setEnabled(false);
         
-        addLabelAndTextFieldToListPane("Tên sản phẩm", "", listPanel, defaultAttributeList);
-        addLabelAndTextFieldToListPane("Đơn giá", "", listPanel, defaultAttributeList);
-        addLabelAndTextFieldToListPane("Số lượng", "", listPanel, defaultAttributeList);
-        addLabelAndTextFieldToListPane("Tỉ lệ lãi", "", listPanel, defaultAttributeList);
-        addLabelAndTextFieldToListPane("Xuất xứ", "", listPanel, defaultAttributeList);
+        addLabelAndTextFieldToListPane("Tên sản phẩm", sp.getTenMay(), listPanel, defaultAttributeList);
+        addLabelAndTextFieldToListPane("Đơn giá", String.valueOf(sp.getGia()), listPanel, defaultAttributeList);
+        addLabelAndTextFieldToListPane("Số lượng", String.valueOf(sp.getSoLuong()), listPanel, defaultAttributeList);
+        addLabelAndTextFieldToListPane("Tỉ lệ lãi", String.valueOf(sp.getTiLeLai()), listPanel, defaultAttributeList);
+        addLabelAndTextFieldToListPane("Xuất xứ", sp.getXuatXu(), listPanel, defaultAttributeList);
         
         List<String> nccList = NhaCungCapDAO
                 .getInstance().selectAll()
@@ -98,18 +104,23 @@ public class ThemSanPham extends javax.swing.JDialog {
                 .collect(Collectors.toList());
         String[] nccComboboxData = nccList.stream().toArray(String[]::new);
         addLabelAndComboboxToListPane(
-                "Nhà cung cấp", 
+                "Nhà cung cấp",
+                sp.getTenNhaCungCap(),
                 nccComboboxData,
                 null,
                 listPanel, 
                 defaultAttributeList
         );
         
-        if (lspList.size() > 0) {
-            List<String> thuocTinhList = ChiTietSanPhamDAO.getInstance().getTenChiTietByLoaiSanPham(lspList.get(0));
-            for (String thuocTinh: thuocTinhList) {
-                addLabelAndTextFieldToListPane(thuocTinh, "", listPanel, attributeListByLoaiSanPham);
-            }  
+        if (chiTietSanPhamList.size() > 0) {
+            for (ChiTietSanPham item: chiTietSanPhamList) {
+                addLabelAndTextFieldToListPane(
+                    item.getTenThuocTinh(),
+                    item.getGiaTriThuocTinh(),
+                    listPanel,
+                    ctspList
+                );
+            }
         }
     }
     
@@ -119,19 +130,6 @@ public class ThemSanPham extends javax.swing.JDialog {
             // them loai san pham
             ThemLoaiSanPham a = new ThemLoaiSanPham(this, (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), rootPaneCheckingEnabled);
             a.setVisible(true);
-        } else {
-            // remove old attributes;
-            for (JPanel item: attributeListByLoaiSanPham) {
-                listPanel.remove(item);
-            }
-            attributeListByLoaiSanPham = new ArrayList<>();
-            // auto generate attributes
-            List<String> thuocTinhList = ChiTietSanPhamDAO.getInstance().getTenChiTietByLoaiSanPham(value);
-            for (String thuocTinh: thuocTinhList) {
-                addLabelAndTextFieldToListPane(thuocTinh, "", listPanel, attributeListByLoaiSanPham);
-            }
-            listPanel.revalidate();
-            listPanel.repaint();
         }
     }  
     
@@ -185,7 +183,8 @@ public class ThemSanPham extends javax.swing.JDialog {
     
     private JComboBox addLabelAndComboboxToListPane(
             String key, 
-            String[] value, 
+            String value,
+            String[] data, 
             ActionListener handleChage, 
             JPanel listPanel,
             List<JPanel> attributeList
@@ -201,7 +200,8 @@ public class ThemSanPham extends javax.swing.JDialog {
         JComboBox combobox = new JComboBox<>();
         combobox.setPreferredSize(new Dimension(200, 32)); // Kích thước JTextField
         combobox.setBackground(Color.WHITE);
-        combobox.setModel(new javax.swing.DefaultComboBoxModel<>(value));
+        combobox.setModel(new javax.swing.DefaultComboBoxModel<>(data));
+        combobox.setSelectedItem(value);
         if (handleChage != null) {
             combobox.addActionListener(handleChage);
         }
@@ -215,12 +215,6 @@ public class ThemSanPham extends javax.swing.JDialog {
     }
     
     public void addNewAndSelectLoaiSanPham(String lsp) {
-        for (JPanel item: attributeListByLoaiSanPham) {
-            listPanel.remove(item);
-        }
-        attributeListByLoaiSanPham = new ArrayList<>();
-        listPanel.revalidate();
-        listPanel.repaint();
         loaiSanPhamCbb.insertItemAt(lsp, loaiSanPhamCbb.getItemCount() - 1);
         loaiSanPhamCbb.setSelectedItem(lsp);
     }
@@ -254,7 +248,7 @@ public class ThemSanPham extends javax.swing.JDialog {
         return result;
     }
 
-    private ThemSanPham(JFrame jFrame, boolean b) {
+    private SuaSanPham(JFrame jFrame, boolean b) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -271,28 +265,28 @@ public class ThemSanPham extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        addProductBtn = new javax.swing.JButton();
+        editProductBtn = new javax.swing.JButton();
         cancelBtn = new javax.swing.JButton();
         addAttributeBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Thêm sản phẩm mới");
+        setTitle("Cập nhật thông tin sản phẩm");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
 
         jLabel1.setFont(new java.awt.Font("SF Pro Display", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("THÊM SẢN PHẨM MỚI");
+        jLabel1.setText("CẬP NHẬT THÔNG TIN SẢN PHẨM");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(317, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(238, 238, 238)
                 .addComponent(jLabel1)
-                .addGap(315, 315, 315))
+                .addContainerGap(245, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -317,10 +311,10 @@ public class ThemSanPham extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 880, 410));
 
-        addProductBtn.setText("Thêm sản phẩm");
-        addProductBtn.addActionListener(new java.awt.event.ActionListener() {
+        editProductBtn.setText("Cập nhật sản phẩm");
+        editProductBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addProductBtnActionPerformed(evt);
+                editProductBtnActionPerformed(evt);
             }
         });
 
@@ -346,17 +340,17 @@ public class ThemSanPham extends javax.swing.JDialog {
                 .addGap(14, 14, 14)
                 .addComponent(addAttributeBtn)
                 .addGap(144, 144, 144)
-                .addComponent(addProductBtn)
+                .addComponent(editProductBtn)
                 .addGap(62, 62, 62)
                 .addComponent(cancelBtn)
-                .addContainerGap(355, Short.MAX_VALUE))
+                .addContainerGap(337, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addProductBtn)
+                    .addComponent(editProductBtn)
                     .addComponent(cancelBtn)
                     .addComponent(addAttributeBtn))
                 .addGap(21, 21, 21))
@@ -367,7 +361,7 @@ public class ThemSanPham extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductBtnActionPerformed
+    private void editProductBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProductBtnActionPerformed
         // TODO add your handling code here:
         
         try {
@@ -377,30 +371,26 @@ public class ThemSanPham extends javax.swing.JDialog {
             if (!checkInput) return;
             
             List<ChiTietSanPham> chiTietSanPhamList = new ArrayList<>();
-            for (JPanel item: attributeListByLoaiSanPham) {
+            for (JPanel item: ctspList) {
                 String[] data = getKeyAndValueFromJPanel(item);
-                if (data.length != 2 || data[0].isBlank() || data[1].isBlank()) continue;
+                if (data.length != 2 || data[0].isBlank()) continue;
                 chiTietSanPhamList.add(new ChiTietSanPham(data[0], data[1]));
             }
             
-            for (JPanel item: newAttributeList) {
-                String[] data = getKeyAndValueFromJPanel(item);
-                if (data.length != 2 || data[0].isBlank() || data[1].isBlank()) continue;
-                chiTietSanPhamList.add(new ChiTietSanPham(data[0], data[1]));
-            }
             spMoi.setChiTietSanPhamList(chiTietSanPhamList);
-            String addSPResult = SanPhamController.getInstance().addNewSanPham(spMoi);
-            if (addSPResult.equals("OK")) {
-                JOptionPane.showMessageDialog(this, "Thêm sản phẩm mới thành công!");
+            spMoi.setMaMay(this.maSanPham);
+            String updateSPResult = SanPhamController.getInstance().updateSanPham(spMoi);
+            if (updateSPResult.equals("OK")) {
+                JOptionPane.showMessageDialog(this, "Cập nhật thông tin sản phẩm thành công!");
                 owner.loadDataToTable();
                 this.dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + addSPResult + " !");
+                JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + updateSPResult + " !");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }//GEN-LAST:event_addProductBtnActionPerformed
+    }//GEN-LAST:event_editProductBtnActionPerformed
 
     private void setDataToSanPham(SanPhamDTO spMoi) {
         for (JPanel item: defaultAttributeList) {
@@ -515,7 +505,7 @@ public class ThemSanPham extends javax.swing.JDialog {
     
     private void addAttributeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAttributeBtnActionPerformed
         // TODO add your handling code here:
-        addTextFieldToListPane(listPanel, newAttributeList);
+        addTextFieldToListPane(listPanel, ctspList);
         listPanel.revalidate();
         listPanel.repaint();
     }//GEN-LAST:event_addAttributeBtnActionPerformed
@@ -539,14 +529,18 @@ public class ThemSanPham extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ThemSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SuaSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ThemSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SuaSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ThemSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SuaSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ThemSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SuaSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -555,7 +549,7 @@ public class ThemSanPham extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ThemSanPham dialog = new ThemSanPham(new javax.swing.JFrame(), true);
+                SuaSanPham dialog = new SuaSanPham(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -569,8 +563,8 @@ public class ThemSanPham extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addAttributeBtn;
-    private javax.swing.JButton addProductBtn;
     private javax.swing.JButton cancelBtn;
+    private javax.swing.JButton editProductBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
