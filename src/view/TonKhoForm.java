@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import model.Laptop;
 import model.MayTinh;
 import model.PC;
+import model.SanPham;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -345,7 +346,7 @@ public class TonKhoForm extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         String luaChon = jComboBoxLuaChon.getSelectedItem().toString();
         String content = jTextFieldSearch.getText();
-        ArrayList<MayTinh> result = searchFn(luaChon, content);
+        ArrayList<SanPham> result = searchFn(luaChon, content);
         loadDataToTableSearch(result);
     }//GEN-LAST:event_jTextFieldSearchKeyReleased
 
@@ -353,7 +354,7 @@ public class TonKhoForm extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         String luaChon = jComboBoxLuaChon.getSelectedItem().toString();
         String content = jTextFieldSearch.getText();
-        ArrayList<MayTinh> result = searchFn(luaChon, content);
+        ArrayList<SanPham> result = searchFn(luaChon, content);
         loadDataToTableSearch(result);
     }//GEN-LAST:event_jComboBoxLuaChonActionPerformed
 
@@ -397,10 +398,10 @@ public class TonKhoForm extends javax.swing.JInternalFrame {
         return acc;
     }
 
-    public void loadDataToTableSearch(ArrayList<MayTinh> result) {
+    public void loadDataToTableSearch(ArrayList<SanPham> result) {
         try {
             tblModel.setRowCount(0);
-            for (MayTinh i : result) {
+            for (SanPham i : result) {
                 if (i.getTrangThai() == 1) {
                     String loaimay;
                     if (LaptopDAO.getInstance().isLaptop(i.getMaMay()) == true) {
@@ -409,7 +410,7 @@ public class TonKhoForm extends javax.swing.JInternalFrame {
                         loaimay = "PC/Case";
                     }
                     tblModel.addRow(new Object[]{
-                        i.getMaMay(), i.getTenMay(), i.getSoLuong(), formatter.format(i.getGia()) + "đ", i.getTenCpu(), i.getRam(), i.getRom(), loaimay
+                        i.getMaMay(), i.getTenMay(), i.getSoLuong(), formatter.format(i.getGia()) + "đ", i.getTenMay(), i.getTenMay(), i.getTenMay(), loaimay
                     });
                 }
             }
@@ -417,8 +418,8 @@ public class TonKhoForm extends javax.swing.JInternalFrame {
         }
     }
 
-    public ArrayList<MayTinh> searchFn(String luaChon, String content) {
-        ArrayList<MayTinh> result = new ArrayList<>();
+    public ArrayList<SanPham> searchFn(String luaChon, String content) {
+        ArrayList<SanPham> result = new ArrayList<>();
         SearchProduct searchPr = new SearchProduct();
         switch (luaChon) {
             case "Tất cả":
@@ -436,23 +437,23 @@ public class TonKhoForm extends javax.swing.JInternalFrame {
             case "Đơn giá":
                 result = searchPr.searchDonGia(content);
                 break;
-            case "RAM":
-                result = searchPr.searchRam(content);
-                break;
-            case "CPU":
-                result = searchPr.searchCpu(content);
-                break;
-            case "Dung lượng":
-                result = searchPr.searchDungLuong(content);
-                break;
-            case "Card màn hình":
-                result = searchPr.searchCard(content);
-                break;
-            case "Xuất xứ":
-                result = searchPr.searchXuatXu(content);
-                break;
-            case "Đã xóa":
-                result = searchPr.searchDaXoa(content);
+//            case "RAM":
+//                result = searchPr.searchRam(content);
+//                break;
+//            case "CPU":
+//                result = searchPr.searchCpu(content);
+//                break;
+//            case "Dung lượng":
+//                result = searchPr.searchDungLuong(content);
+//                break;
+//            case "Card màn hình":
+//                result = searchPr.searchCard(content);
+//                break;
+//            case "Xuất xứ":
+//                result = searchPr.searchXuatXu(content);
+//                break;
+//            case "Đã xóa":
+//                result = searchPr.searchDaXoa(content);
         }
         return result;
     }

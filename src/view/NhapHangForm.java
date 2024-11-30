@@ -34,6 +34,7 @@ import model.MayTinh;
 import model.NhaCungCap;
 import model.Phieu;
 import model.PhieuNhap;
+import model.SanPham;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -450,7 +451,7 @@ public class NhapHangForm extends javax.swing.JInternalFrame {
                     if (mtl != null) {
                         mtl.setSoLuong(mtl.getSoLuong() + soluong);
                     } else {
-                        MayTinh mt = SearchProduct.getInstance().searchId((String) tblSanPham.getValueAt(i_row, 0));
+                        SanPham mt = SearchProduct.getInstance().searchId((String) tblSanPham.getValueAt(i_row, 0));
                         ChiTietPhieu ctp = new ChiTietPhieu(MaPhieu, mt.getMaMay(), soluong, mt.getGia());
                         CTPhieu.add(ctp);
                     }

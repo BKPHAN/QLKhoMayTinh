@@ -624,11 +624,6 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
                 "Họ và tên", "Email", "Tên người dùng", "Vai trò", "Tình trạng"
             }
         ));
-        tblAccount.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblAccountMouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(tblAccount);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -960,20 +955,6 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
         }
         loadDataToTableAcc(result);
     }//GEN-LAST:event_jTextFieldSearch1KeyReleased
-
-    private void tblAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAccountMouseClicked
-        // TODO add your handling code here:
-        if (evt.getClickCount() == 2) {
-            DefaultTableModel tblAcc = (DefaultTableModel) tblAccount.getModel();
-            if (tblAccount.getSelectedRow() == -1) {
-                JOptionPane.showMessageDialog(this, "Vui lòng chọn tài khoản");
-            } else {
-                CTThongKeAcc tk;
-                tk = new CTThongKeAcc(this, (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), rootPaneCheckingEnabled);
-                tk.setVisible(true);
-            }
-        }
-    }//GEN-LAST:event_tblAccountMouseClicked
 
     private void txtNamePrKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNamePrKeyReleased
         try {

@@ -125,14 +125,14 @@ public class SearchProduct {
 //    }
 
 
-//    public MayTinh searchId(String text) {
-//        MayTinh result = new MayTinh();
-//        ArrayList<MayTinh> armt = MayTinhDAO.getInstance().selectAllExist();
-//        for (var mt : armt) {
-//            if (mt.getMaMay().toLowerCase().contains(text.toLowerCase())) {
-//                return mt;
-//            }
-//        }
-//        return null;
-//    }
+    public SanPham searchId(String text) {
+        SanPham result = new SanPham();
+        ArrayList<SanPham> armt = SanPhamDAO.getInstance().selectAll();
+        for (var mt : armt) {
+            if (mt.getMaMay().toLowerCase().contains(text.toLowerCase())) {
+                return mt;
+            }
+        }
+        return null;
+    }
 }

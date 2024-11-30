@@ -24,6 +24,7 @@ import model.ChiTietPhieu;
 import model.MayTinh;
 import model.NhaCungCap;
 import model.PhieuXuat;
+import model.SanPham;
 
 /**
  *
@@ -477,7 +478,7 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
                             mtl.setSoLuong(mtl.getSoLuong() + soluong);
                         }
                     } else {
-                        MayTinh mt = SearchProduct.getInstance().searchId((String) tblSanPham.getValueAt(i_row, 0));
+                        SanPham mt = SearchProduct.getInstance().searchId((String) tblSanPham.getValueAt(i_row, 0));
                         ChiTietPhieu ctp = new ChiTietPhieu(phieuxuat.getMaPhieu(), mt.getMaMay(), soluong, mt.getGia());
                         CTPhieu.add(ctp);
                     }
