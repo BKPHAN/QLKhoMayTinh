@@ -4,11 +4,13 @@
  */
 package view;
 
+import controller.SanPhamController;
 import controller.SearchProduct;
 import dao.LaptopDAO;
 import dao.MayTinhDAO;
 import dao.PCDAO;
 import dao.SanPhamDAO;
+import dto.SanPhamDTO;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -294,7 +296,7 @@ public class LoiNhuanForm extends javax.swing.JInternalFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
 
-        AddProduct a = new AddProduct(this, (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), rootPaneCheckingEnabled);
+        ThemSanPham a = new ThemSanPham(this, (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), rootPaneCheckingEnabled);
         a.setVisible(true);
 
     }//GEN-LAST:event_btnAddActionPerformed
@@ -313,7 +315,7 @@ public class LoiNhuanForm extends javax.swing.JInternalFrame {
         if (tblSanPham.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm cần sửa");
         } else {
-            UpdateProduct a = new UpdateProduct(this, (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), rootPaneCheckingEnabled);
+            SuaSanPham a = new SuaSanPham(this, (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), rootPaneCheckingEnabled);
             a.setVisible(true);
         }
     }//GEN-LAST:event_btnEditActionPerformed
@@ -383,11 +385,22 @@ public class LoiNhuanForm extends javax.swing.JInternalFrame {
         if (tblSanPham.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm !");
         } else {
-            DetailProduct a = new DetailProduct(this, (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), rootPaneCheckingEnabled);
+            ChiTietSanPhamView a = new ChiTietSanPhamView(this, (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), rootPaneCheckingEnabled);
             a.setVisible(true);
         }
     }//GEN-LAST:event_btnDetailActionPerformed
 
+    public SanPhamDTO getChiTietSanPham() {
+        try {
+            int rowSelected = tblSanPham.getSelectedRow();
+            String maSanPham = tblSanPham.getValueAt(rowSelected, 0).toString();
+            return SanPhamController.getInstance().getChiTietSanPham(maSanPham);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
     private void jTextFieldSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldSearchKeyReleased
         // TODO add your handling code here:
         String luaChon = jComboBoxLuaChon.getSelectedItem().toString();

@@ -5,10 +5,8 @@
 package view;
 
 import controller.SanPhamController;
-import controller.SearchProduct;
-import dao.LaptopDAO;
-import dao.MayTinhDAO;
-import dao.PCDAO;
+import dao.LoaiSanPhamDAO;
+import dao.NhaCungCapDAO;
 import dao.SanPhamDAO;
 import dto.SanPhamDTO;
 import java.awt.Desktop;
@@ -32,9 +30,8 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import model.Account;
-import model.Laptop;
-import model.MayTinh;
-import model.PC;
+import model.LoaiSanPham;
+import model.NhaCungCap;
 import model.SanPham;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -378,7 +375,8 @@ public class ProductForm extends javax.swing.JInternalFrame {
         FileInputStream excelFIS = null;
         BufferedInputStream excelBIS = null;
         XSSFWorkbook excelJTableImport = null;
-        ArrayList<MayTinh> listAccExcel = new ArrayList<MayTinh>();
+        ArrayList<SanPham> listAccExcel = new ArrayList<SanPham>();
+        ArrayList<SanPhamDTO> spDTOList = new ArrayList<SanPhamDTO>();
         JFileChooser jf = new JFileChooser();
         int result = jf.showOpenDialog(null);
         jf.setDialogTitle("Open file");
@@ -393,21 +391,53 @@ public class ProductForm extends javax.swing.JInternalFrame {
                 for (int row = 1; row <= excelSheet.getLastRowNum(); row++) {
                     XSSFRow excelRow = excelSheet.getRow(row);
                     String maMay = excelRow.getCell(0).getStringCellValue();
-                    String tenMay = excelRow.getCell(1).getStringCellValue();
-                    int soLuong = (int) excelRow.getCell(2).getNumericCellValue();
-                    String giaFomat = excelRow.getCell(3).getStringCellValue().replaceAll(",", "");
+                    String tenLoaiSanPham = excelRow.getCell(1).getStringCellValue();
+                    LoaiSanPham lsp = LoaiSanPhamDAO.getInstance().findByName(tenLoaiSanPham);
+                    if (lsp == null) continue;
+                    String maLoaiSanPham = lsp.getMaLoaiSanPham();
+                    String tenMay = excelRow.getCell(2).getStringCellValue();
+                    int soLuong = Integer.parseInt(excelRow.getCell(3).getStringCellValue());
+                    String giaFomat = excelRow.getCell(4).getStringCellValue().replaceAll(",", "");
                     int viTri = giaFomat.length() - 1;
                     String giaoke = giaFomat.substring(0, viTri) + giaFomat.substring(viTri + 1);
                     double donGia = Double.parseDouble(giaoke);
-                    String boXuLi = excelRow.getCell(4).getStringCellValue();
-                    String ram = excelRow.getCell(5).getStringCellValue();
-                    String boNho = excelRow.getCell(6).getStringCellValue();
-                    MayTinh mt = new MayTinh(maMay, tenMay, soLuong, donGia, boXuLi, ram, "", "", boNho, 1);
-                    listAccExcel.add(mt);
+                    double tiLeLai = Double.parseDouble(excelRow.getCell(5).getStringCellValue().replaceAll("%", ""));
+                    String tenNhaCungCap = excelRow.getCell(6).getStringCellValue();
+                    NhaCungCap ncc = NhaCungCapDAO.getInstance().findByName(tenNhaCungCap);
+                    if (ncc == null) continue;
+                    String maNhaCungCap = ncc.getMaNhaCungCap();
+                    SanPham sp = new SanPham(
+                            maMay,
+                            maLoaiSanPham,
+                            tenMay,
+                            soLuong,
+                            donGia,
+                            tiLeLai,
+                            "",
+                            1,
+                            maNhaCungCap
+                    );
+                    listAccExcel.add(sp);
+                    
+                    SanPhamDTO spDTO = new SanPhamDTO(
+                            maMay,
+                            maLoaiSanPham,
+                            tenLoaiSanPham,
+                            tenMay,
+                            soLuong,
+                            donGia,
+                            tiLeLai,
+                            "",
+                            1,
+                            maNhaCungCap,
+                            tenNhaCungCap
+                    );
+                    spDTOList.add(spDTO);
                     DefaultTableModel table_acc = (DefaultTableModel) tblSanPham.getModel();
                     table_acc.setRowCount(0);
-//                    loadDataToTableSearch(listAccExcel);
+                    
                 }
+                loadDataToTableSearch(spDTOList);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(ProductForm.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -415,20 +445,8 @@ public class ProductForm extends javax.swing.JInternalFrame {
             }
         }
         for (int i = 0; i < listAccExcel.size(); i++) {
-            MayTinh mayTinh = listAccExcel.get(i);
-            if (mayTinh.getMaMay().contains("LP")) {
-                Laptop lapNew = new Laptop(0, "", mayTinh.getMaMay(),
-                        mayTinh.getTenMay(), mayTinh.getSoLuong(), mayTinh.getGia(), mayTinh.getTenCpu(),
-                        mayTinh.getRam(), mayTinh.getXuatXu(), mayTinh.getCardManHinh(), mayTinh.getRom(), 1);
-                LaptopDAO.getInstance().insert(lapNew);
-            } else if (mayTinh.getMaMay().contains("PC")) {
-                PC pcNew = new PC("", 0, mayTinh.getMaMay(), mayTinh.getTenMay(), mayTinh.getSoLuong(),
-                        mayTinh.getGia(), mayTinh.getTenCpu(), mayTinh.getRam(), mayTinh.getXuatXu(), mayTinh.getCardManHinh(),
-                        mayTinh.getRom(), mayTinh.getTrangThai());
-                PCDAO.getInstance().insert(pcNew);
-            } else {
-                JOptionPane.showMessageDialog(this, "Mã máy " + mayTinh.getMaMay() + " không phù hợp !", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-            }
+            SanPham sp = listAccExcel.get(i);
+            SanPhamDAO.getInstance().insert(sp);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
