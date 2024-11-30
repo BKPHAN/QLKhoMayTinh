@@ -18,4 +18,4 @@ ADD CONSTRAINT `FK_ChiTietPhieuXuat_SanPham`
   FOREIGN KEY (`maMay`)
   REFERENCES `sanpham` (`maMay`);
 
-DROP TABLE `quanlimaytinh`.`maytinh`;
+DROP TABLE `maytinh`;
