@@ -290,7 +290,7 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
     }
 
     public String getNewID() {
-        String result = null;
+        String result = "SP0";
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = """

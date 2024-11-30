@@ -153,7 +153,7 @@ public class LoaiSanPhamDAO implements DAOInterface<LoaiSanPham> {
     }
 
     public String generateNewID() {
-        String result = null;
+        String result = "LSP0";
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = """
