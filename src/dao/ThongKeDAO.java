@@ -42,7 +42,7 @@ public class ThongKeDAO {
                     + "	GROUP BY maMay\n"
                     + ") t2\n"
                     + "ON t1.maMay = t2.maMay\n"
-                    + "JOIN MayTinh ON t1.maMay = MayTinh.maMay";
+                    + "JOIN SanPham ON t1.maMay = SanPham.maMay";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setTimestamp(1, new Timestamp(timeStart.getTime()));
             pst.setTimestamp(2, new Timestamp(timeEnd.getTime()));
@@ -80,7 +80,7 @@ public class ThongKeDAO {
                     + "	GROUP BY maMay\n"
                     + ") t2\n"
                     + "ON t1.maMay = t2.maMay\n"
-                    + "JOIN MayTinh ON t1.maMay = MayTinh.maMay";
+                    + "JOIN SanPham ON t1.maMay = SanPham.maMay";
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
