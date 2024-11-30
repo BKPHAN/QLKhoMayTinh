@@ -208,4 +208,26 @@ public class ChiTietSanPhamDAO implements DAOInterface<ChiTietSanPham> {
         return result;
     }
     
+    public ChiTietSanPham findByMaMayAndTenThuocTinh(String maMayParam, String tenThuocTinhParam) {
+        ChiTietSanPham ketQua = null;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM chitietsanpham WHERE maMay=? AND tenThuocTinh=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, maMayParam);
+            pst.setString(2, tenThuocTinhParam);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                String maChiTiet = rs.getString("maChiTiet");
+                String maMay = rs.getString("maMay");
+                String tenThuocTinh = rs.getString("tenThuocTinh");
+                String giaTriThuocTinh = rs.getString("giaTriThuocTinh");
+                ketQua = new ChiTietSanPham(maChiTiet, maMay, tenThuocTinh, giaTriThuocTinh);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return ketQua;
+    }
 }

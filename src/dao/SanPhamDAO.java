@@ -354,6 +354,62 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
         return result;
     }
 
+    public String updateSanPham(SanPhamDTO spMoi) {
+        String result = "";
+        try {
+            SanPham sp = new SanPham(
+                    spMoi.getMaMay(),
+                    spMoi.getMaLoaiSanPham(),
+                    spMoi.getTenMay(),
+                    spMoi.getSoLuong(),
+                    spMoi.getGia(),
+                    spMoi.getTiLeLai(),
+                    spMoi.getXuatXu(),
+                    1,
+                    spMoi.getMaNhaCungCap());
+            int updateSPResult = update(sp);
+            if (updateSPResult != 1) {
+                return "Đã xảy ra lỗi khi cập nhật thông tin sản phẩm!";
+            }
+
+            // Them chi tiet san pham
+            List<ChiTietSanPham> chiTietSanPhamList = spMoi.getChiTietSanPhamList();
+            if (chiTietSanPhamList.size() > 0) {
+                ChiTietSanPhamDAO ctspDao = ChiTietSanPhamDAO.getInstance();
+                for (int i = 0; i < chiTietSanPhamList.size(); i++) {
+                    ChiTietSanPham checkExist = ctspDao.findByMaMayAndTenThuocTinh(
+                        spMoi.getMaMay(), 
+                        chiTietSanPhamList.get(i).getTenThuocTinh()
+                    );
+                    if (checkExist != null) {
+                        if (chiTietSanPhamList.get(i).getGiaTriThuocTinh().isBlank()) {
+                            ctspDao.delete(checkExist);
+                        } else {
+                            checkExist.setGiaTriThuocTinh(chiTietSanPhamList.get(i).getGiaTriThuocTinh());
+                            ctspDao.update(checkExist);
+                        }
+                    } else {
+                        String newID = "CTSP" + String.valueOf(ctspDao.getNewIndexID());
+                        ctspDao.insert(new ChiTietSanPham(
+                            newID,
+                            spMoi.getMaMay(),
+                            chiTietSanPhamList.get(i).getTenThuocTinh(),
+                            chiTietSanPhamList.get(i).getGiaTriThuocTinh()
+                        ));
+                    }
+                }
+            }
+
+            result = "OK";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = "Error: " + e.getMessage();
+        }
+
+        return result;
+    }
+
     public int updateTrangThai(String maMay, int trangThai) {
         int ketQua = 0;
         try {
