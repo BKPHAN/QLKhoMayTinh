@@ -19,7 +19,7 @@ public class SanPham {
     private int trangThai;
     private String maNhaCungCap;
 
-    public SanPham() {
+    private SanPham() {
     }
 
     public SanPham(String maMay, String loaiMay, String tenMay, int soLuong, double gia, double tiLeLai, String xuatXu, int trangThai, String maNhaCungCap) {
