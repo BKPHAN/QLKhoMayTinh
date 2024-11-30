@@ -9,13 +9,10 @@ import dao.AccountDAO;
 import dao.ChiTietPhieuNhapDAO;
 import dao.ChiTietPhieuXuatDAO;
 import dao.MayTinhDAO;
-import dao.NhaCungCapDAO;
 import dao.PhieuNhapDAO;
 import dao.PhieuXuatDAO;
 import java.sql.Timestamp;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import model.ChiTietPhieu;
 import model.Phieu;
@@ -47,13 +44,13 @@ public class CTThongKe extends javax.swing.JDialog {
         setWidthTable();
     }
 
-    public void setWidthTable() {
+    private void setWidthTable() {
         tblChiTietPhieu.getColumnModel().getColumn(0).setPreferredWidth(5);
         tblChiTietPhieu.getColumnModel().getColumn(1).setPreferredWidth(10);
         tblChiTietPhieu.getColumnModel().getColumn(2).setPreferredWidth(250);
     }
 
-    public void loadDataToTableProduct() {
+    private void loadDataToTableProduct() {
         try {
             DefaultTableModel tblCTPhieumd = (DefaultTableModel) tblChiTietPhieu.getModel();
             tblCTPhieumd.setRowCount(0);

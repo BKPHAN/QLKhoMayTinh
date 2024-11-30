@@ -8,6 +8,7 @@ import controller.SearchProduct;
 import dao.LaptopDAO;
 import dao.MayTinhDAO;
 import dao.PCDAO;
+import dao.SanPhamDAO;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -26,6 +27,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import model.Laptop;
 import model.MayTinh;
+import model.SanPham;
 import model.PC;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
@@ -61,52 +63,57 @@ public class LoiNhuanForm extends javax.swing.JInternalFrame {
 
     public final void initTable() {
         tblModel = new DefaultTableModel();
-        String[] headerTbl = new String[]{"STT", "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Giá nhập", "Giá Xuất", "Lợi Nhuận"};
+        String[] headerTbl = new String[]{"STT", "Mã sản phẩm", "Loại sản phẩm", "Tên sản phẩm", "Số lượng", "Giá nhập", "Giá Xuất", "Lợi Nhuận"};
         tblModel.setColumnIdentifiers(headerTbl);
         tblSanPham.setModel(tblModel);
         tblSanPham.getColumnModel().getColumn(0).setPreferredWidth(5);
         tblSanPham.getColumnModel().getColumn(1).setPreferredWidth(10);
-        tblSanPham.getColumnModel().getColumn(2).setPreferredWidth(200);
-        tblSanPham.getColumnModel().getColumn(3).setPreferredWidth(10);
+        tblSanPham.getColumnModel().getColumn(3).setPreferredWidth(200);
+        tblSanPham.getColumnModel().getColumn(4).setPreferredWidth(10);
 //        tblSanPham.getColumnModel().getColumn(6).setPreferredWidth(5);
     }
 
     public void loadDataToTable() {
         try {
-            MayTinhDAO mtdao = new MayTinhDAO();
-            ArrayList<MayTinh> armt = mtdao.selectAllE();
+            SanPhamDAO spdao = new SanPhamDAO();
+            ArrayList<SanPham> armt = spdao.selectAll();
             tblModel.setRowCount(0);
             int index = 1; // Biến đếm cho số thứ tự
-            for (MayTinh i : armt) {
+            for (SanPham i : armt) {
                 if (i.getTrangThai() == 1) {
                     int gia_xuat;
-                    if (LaptopDAO.getInstance().isLaptop(i.getMaMay()) == true) {
-                        gia_xuat = (int) (i.getGia() * 1.10);
-                    } else {
-                        gia_xuat = (int) (i.getGia() * 1.05);
-                    }
+                    int loi_nhuan;
+                    gia_xuat = (int) (i.getGia() + i.getGia() * i.getTiLeLai() / 100);
+                    loi_nhuan = (int) (gia_xuat - i.getGia()) * i.getSoLuong();
                     tblModel.addRow(new Object[]{
-                        index++, i.getMaMay(), i.getTenMay(), i.getSoLuong(), formatter.format(i.getGia()) + "đ", formatter.format(gia_xuat) + "đ", formatter.format((gia_xuat - i.getGia())*i.getSoLuong()) + "đ"
+                        index++, i.getMaMay(), i.getLoaiMay(), i.getTenMay(), i.getSoLuong(), formatter.format(i.getGia()) + "đ", formatter.format(gia_xuat) + "đ", formatter.format(loi_nhuan) + "đ"
                     });
                 }
             }
             // Gọi căn chỉnh cột sau khi thêm dữ liệu
-            alignColumnsToRight();
+            alignColumns();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // can chinh cot trong bang
-    private void alignColumnsToRight() {
+    // can chinh cot trong bangtblSanPham.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+    private void alignColumns() {
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 
+        // Căn giữa các cột 4, 5, 6, 7 (tính từ 0)
+        tblSanPham.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tblSanPham.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tblSanPham.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tblSanPham.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
         // Căn phải các cột 4, 5, 6, 7 (tính từ 0)
-        tblSanPham.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
         tblSanPham.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
         tblSanPham.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
         tblSanPham.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
+        tblSanPham.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
     }
 
     /**
@@ -386,7 +393,7 @@ public class LoiNhuanForm extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         String luaChon = jComboBoxLuaChon.getSelectedItem().toString();
         String content = jTextFieldSearch.getText();
-        ArrayList<MayTinh> result = searchFn(luaChon, content);
+        ArrayList<SanPham> result = searchFn(luaChon, content);
         loadDataToTableSearch(result);
     }//GEN-LAST:event_jTextFieldSearchKeyReleased
 
@@ -394,7 +401,7 @@ public class LoiNhuanForm extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         String luaChon = jComboBoxLuaChon.getSelectedItem().toString();
         String content = jTextFieldSearch.getText();
-        ArrayList<MayTinh> result = searchFn(luaChon, content);
+        ArrayList<SanPham> result = searchFn(luaChon, content);
         loadDataToTableSearch(result);
     }//GEN-LAST:event_jComboBoxLuaChonActionPerformed
 
@@ -438,31 +445,29 @@ public class LoiNhuanForm extends javax.swing.JInternalFrame {
         return acc;
     }
 
-    public void loadDataToTableSearch(ArrayList<MayTinh> result) {
+    public void loadDataToTableSearch(ArrayList<SanPham> result) {
         try {
             tblModel.setRowCount(0);
             int index = 1; // Biến đếm cho số thứ tự
-            for (MayTinh i : result) {
+            for (SanPham i : result) {
                 if (i.getTrangThai() == 1) {
                     int gia_xuat;
-                    if (LaptopDAO.getInstance().isLaptop(i.getMaMay()) == true) {
-                        gia_xuat = (int) (i.getGia() * 1.10);
-                    } else {
-                        gia_xuat = (int) (i.getGia() * 1.05);
-                    }
+                    int loi_nhuan;
+                    gia_xuat = (int) (i.getGia() + i.getGia() * i.getTiLeLai() / 100);
+                    loi_nhuan = (int) (gia_xuat - i.getGia()) * i.getSoLuong();
                     tblModel.addRow(new Object[]{
-                        index++, i.getMaMay(), i.getTenMay(), i.getSoLuong(), formatter.format(i.getGia()) + "đ", formatter.format(gia_xuat) + "đ", formatter.format((gia_xuat - i.getGia())*i.getSoLuong()) + "đ"
+                        index++, i.getMaMay(), i.getLoaiMay(), i.getTenMay(), i.getSoLuong(), formatter.format(i.getGia()) + "đ", formatter.format(gia_xuat) + "đ", formatter.format(loi_nhuan) + "đ"
                     });
                 }
             }
             // Gọi căn chỉnh cột sau khi thêm dữ liệu
-            alignColumnsToRight();
+            alignColumns();
         } catch (Exception e) {
         }
     }
 
-    public ArrayList<MayTinh> searchFn(String luaChon, String content) {
-        ArrayList<MayTinh> result = new ArrayList<>();
+    public ArrayList<SanPham> searchFn(String luaChon, String content) {
+        ArrayList<SanPham> result = new ArrayList<>();
         SearchProduct searchPr = new SearchProduct();
         switch (luaChon) {
             case "Tất cả":
@@ -480,11 +485,6 @@ public class LoiNhuanForm extends javax.swing.JInternalFrame {
             case "Giá nhập":
                 result = searchPr.searchDonGia(content);
                 break;
-            case "Giá xuất":
-                result = searchPr.searchRam(content);
-                break;
-            case "Đã xóa":
-                result = searchPr.searchDaXoa(content);
         }
         return result;
     }

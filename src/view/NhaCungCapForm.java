@@ -110,6 +110,7 @@ public class NhaCungCapForm extends javax.swing.JInternalFrame {
         jSeparator1 = new javax.swing.JToolBar.Separator();
         exportExcel = new javax.swing.JButton();
         importExcel = new javax.swing.JButton();
+        btnDetail = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         cbxlLuaChon = new javax.swing.JComboBox<>();
         txtSearchForm = new javax.swing.JTextField();
@@ -271,7 +272,21 @@ public class NhaCungCapForm extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(importExcel);
 
-        jPanel2.add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 390, 90));
+        btnDetail.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        btnDetail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_eye_40px.png"))); // NOI18N
+        btnDetail.setText("Xem chi tiết");
+        btnDetail.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDetail.setFocusable(false);
+        btnDetail.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnDetail.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDetailActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnDetail);
+
+        jPanel2.add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 430, 90));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
@@ -279,7 +294,7 @@ public class NhaCungCapForm extends javax.swing.JInternalFrame {
 
         cbxlLuaChon.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
         cbxlLuaChon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Mã nhà cung cấp", "Tên nhà cung cấp", "Số điện thoại", "Địa chỉ" }));
-        jPanel3.add(cbxlLuaChon, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 150, 40));
+        jPanel3.add(cbxlLuaChon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 150, 40));
 
         txtSearchForm.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
         txtSearchForm.addActionListener(new java.awt.event.ActionListener() {
@@ -295,7 +310,7 @@ public class NhaCungCapForm extends javax.swing.JInternalFrame {
                 txtSearchFormKeyReleased(evt);
             }
         });
-        jPanel3.add(txtSearchForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 400, 40));
+        jPanel3.add(txtSearchForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 380, 40));
 
         btnReset.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
         btnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_reset_25px_1.png"))); // NOI18N
@@ -305,9 +320,9 @@ public class NhaCungCapForm extends javax.swing.JInternalFrame {
                 btnResetActionPerformed(evt);
             }
         });
-        jPanel3.add(btnReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 30, 120, 40));
+        jPanel3.add(btnReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 120, 40));
 
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, 760, 90));
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 710, 90));
 
         jScrollPane1.setBorder(null);
 
@@ -445,7 +460,7 @@ public class NhaCungCapForm extends javax.swing.JInternalFrame {
             for (NhaCungCap nhaCungCap : listAccExcel) {
                 k = NhaCungCapDAO.getInstance().insert(nhaCungCap);
             }
-            if(k!=0) {
+            if (k != 0) {
                 JOptionPane.showMessageDialog(this, "Import thành công !");
             }
         } catch (Exception e) {
@@ -492,9 +507,25 @@ public class NhaCungCapForm extends javax.swing.JInternalFrame {
         loadDataToTable(result);
     }//GEN-LAST:event_txtSearchFormKeyReleased
 
+    private void btnDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailActionPerformed
+        // TODO add your handling code here:
+        if (tblNCC.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn  nhà cung cấp!");
+        } else {
+            CTThongKeAcc a = new CTThongKeAcc(this, (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), rootPaneCheckingEnabled);
+            a.setVisible(true);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDetailActionPerformed
 
+    public NhaCungCap findNhaCC() {
+        int i_row = tblNCC.getSelectedRow();
+        String text = tblModel.getValueAt(i_row, 0).toString();
+        NhaCungCap NhaCCId = NhaCungCapDAO.getInstance().selectById(text);
+        return NhaCCId;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnDetail;
     private javax.swing.JButton btnReset;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbxlLuaChon;

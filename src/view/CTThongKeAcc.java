@@ -8,16 +8,21 @@ import dao.AccountDAO;
 import dao.ChiTietPhieuNhapDAO;
 import dao.ChiTietPhieuXuatDAO;
 import dao.MayTinhDAO;
+import dao.SanPhamDAO;
 import dao.PhieuNhapDAO;
 import dao.PhieuXuatDAO;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import model.Account;
 import model.ChiTietPhieu;
 import model.Phieu;
 import model.PhieuNhap;
 import model.PhieuXuat;
+import model.NhaCungCap;
+import model.SanPham;
 
 /**
  *
@@ -28,41 +33,53 @@ public class CTThongKeAcc extends javax.swing.JDialog {
     /**
      * Creates new form CTPhieuDialog
      */
-    private ThongKeForm pa;
+    private NhaCungCapForm parent;
 
     public CTThongKeAcc(javax.swing.JInternalFrame parent, javax.swing.JFrame owner, boolean modal) {
         super(owner, modal);
-        this.pa = (ThongKeForm) parent;
+        this.parent = (NhaCungCapForm) parent;
         initComponents();
         setLocationRelativeTo(null);
-        String maAcc = pa.getMaAcc();
-        Account ac = AccountDAO.getInstance().selectById(maAcc);
-        labelNguoiTao.setText(ac.getFullName());
-        loadDataToTablePhieu(maAcc);
+        NhaCungCap pn = this.parent.findNhaCC();
+        labelTenNhaCC.setText(pn.getTenNhaCungCap());
+        loadDataToTableProduct(pn.getMaNhaCungCap());
         setWidthTable();
+        alignColumns();
     }
 
-    public void setWidthTable() {
-        tblChiTietPhieu.getColumnModel().getColumn(0).setPreferredWidth(5);
-        tblChiTietPhieu.getColumnModel().getColumn(1).setPreferredWidth(10);
-        tblChiTietPhieu.getColumnModel().getColumn(2).setPreferredWidth(250);
+    private void setWidthTable() {
+        tblChiTietSanPham.getColumnModel().getColumn(0).setPreferredWidth(5);
+        tblChiTietSanPham.getColumnModel().getColumn(1).setPreferredWidth(10);
+        tblChiTietSanPham.getColumnModel().getColumn(2).setPreferredWidth(10);
+        tblChiTietSanPham.getColumnModel().getColumn(3).setPreferredWidth(250);
     }
+    // can chinh cot trong bangtblSanPham.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+    private void alignColumns() {
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 
-    public void loadDataToTablePhieu(String maAcc) {
-        DefaultTableModel tblAcc = (DefaultTableModel) tblChiTietPhieu.getModel();
-        ArrayList<Phieu> result = new ArrayList<Phieu>();
-        for (Phieu phieu : PhieuNhapDAO.getInstance().selectAllAccount(maAcc)) {
-            if (phieu.getNguoiTao().equals(maAcc)) {
-                result.add(phieu);
+        // Căn giữa các cột 0,1,2,3 (tính từ 0)
+        tblChiTietSanPham.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tblChiTietSanPham.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tblChiTietSanPham.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tblChiTietSanPham.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+    }
+    private void loadDataToTableProduct(String maNhaCC) {
+        try {
+            DefaultTableModel tblCTSanPham = (DefaultTableModel) tblChiTietSanPham.getModel();
+            tblCTSanPham.setRowCount(0);
+            ArrayList<SanPham> CTSanPham = SanPhamDAO.getInstance().selectAll();
+            for (int i = 0; i < CTSanPham.size(); i++) {
+                if (maNhaCC.equals(CTSanPham.get(i).getMaNhaCungCap())) {
+                    tblCTSanPham.addRow(new Object[]{
+                        i + 1,
+                        CTSanPham.get(i).getMaMay(), CTSanPham.get(i).getLoaiMay(), CTSanPham.get(i).getTenMay()
+                    });
+                }
             }
-        }
-        for (int i=0;i<result.size();i++) {
-            tblAcc.addRow(new Object[]{
-                i+1,
-                result.get(i).getMaPhieu(),
-                pa.getFormatDate().format(result.get(i).getThoiGianTao()),
-                pa.getFormatter().format(result.get(i).getTongTien()) + "đ"
-            });
+        } catch (Exception e) {
         }
     }
 
@@ -79,9 +96,9 @@ public class CTThongKeAcc extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblChiTietPhieu = new javax.swing.JTable();
+        tblChiTietSanPham = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
-        labelNguoiTao = new javax.swing.JLabel();
+        labelTenNhaCC = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Chi tiết phiếu");
@@ -93,7 +110,7 @@ public class CTThongKeAcc extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("SF Pro Display", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText(" PHIẾU ");
+        jLabel1.setText("Thông tin sản phẩm");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -112,22 +129,22 @@ public class CTThongKeAcc extends javax.swing.JDialog {
                 .addGap(14, 14, 14))
         );
 
-        tblChiTietPhieu.setFont(new java.awt.Font("SF Pro Display", 0, 16)); // NOI18N
-        tblChiTietPhieu.setModel(new javax.swing.table.DefaultTableModel(
+        tblChiTietSanPham.setFont(new java.awt.Font("SF Pro Display", 0, 16)); // NOI18N
+        tblChiTietSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "STT", "Mã phiếu", "Thời gian", "Thành tiền"
+                "STT", "Mã sản phẩm", "Loại sản phẩm", "Tên sản phẩm"
             }
         ));
-        jScrollPane1.setViewportView(tblChiTietPhieu);
+        jScrollPane1.setViewportView(tblChiTietSanPham);
 
         jLabel4.setFont(new java.awt.Font("SF Pro Display", 0, 16)); // NOI18N
-        jLabel4.setText("Người tạo:");
+        jLabel4.setText("Nhà Cung Cấp");
 
-        labelNguoiTao.setFont(new java.awt.Font("SF Pro Display", 0, 16)); // NOI18N
-        labelNguoiTao.setText("jLabel7");
+        labelTenNhaCC.setFont(new java.awt.Font("SF Pro Display", 0, 16)); // NOI18N
+        labelTenNhaCC.setText("jLabel7");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -138,9 +155,9 @@ public class CTThongKeAcc extends javax.swing.JDialog {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(labelNguoiTao, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelTenNhaCC, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addGap(21, 21, 21))
@@ -152,7 +169,7 @@ public class CTThongKeAcc extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(labelNguoiTao))
+                    .addComponent(labelTenNhaCC))
                 .addGap(38, 38, 38)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -213,7 +230,7 @@ public class CTThongKeAcc extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel labelNguoiTao;
-    private javax.swing.JTable tblChiTietPhieu;
+    private javax.swing.JLabel labelTenNhaCC;
+    private javax.swing.JTable tblChiTietSanPham;
     // End of variables declaration//GEN-END:variables
 }

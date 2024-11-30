@@ -15,9 +15,9 @@ public class JDBCUtil {
 			// Dang ky MySQL Driver voi DriverManager
 			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 			//Cac thong so
-			String url = "jdbc:mySQL://localhost:3306/qlkhoold";
+			String url = "jdbc:mySQL://localhost:3307/qlkhoold";
 			String userName = "root";
-			String password = "123456";
+			String password = "14121997";
 			//Tao ket noi 
 			c = DriverManager.getConnection(url, userName, password);
 		} catch (Exception e) {

@@ -25,7 +25,7 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
 
     private static SanPhamDAO instance;
 
-    private SanPhamDAO() {
+    public SanPhamDAO() {
     }
 
     public static SanPhamDAO getInstance() {
