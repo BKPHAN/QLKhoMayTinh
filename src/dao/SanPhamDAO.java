@@ -202,8 +202,8 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
                 String maNhaCungCap = rs.getString("maNhaCungCap");
                 String tenNhaCungCap = rs.getString("tenNhaCungCap");
                 SanPhamDTO sp = new SanPhamDTO(
-                    maMay, maLoaiSanPham, tenLoaiSanPham, tenMay, 
-                    soLuong, gia, tiLeLai, xuatXu, trangThai, maNhaCungCap, tenNhaCungCap
+                        maMay, maLoaiSanPham, tenLoaiSanPham, tenMay,
+                        soLuong, gia, tiLeLai, xuatXu, trangThai, maNhaCungCap, tenNhaCungCap
                 );
                 result.add(sp);
             }
@@ -239,8 +239,8 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
                 String maNhaCungCap = rs.getString("maNhaCungCap");
                 String tenNhaCungCap = rs.getString("tenNhaCungCap");
                 SanPhamDTO sp = new SanPhamDTO(
-                    maMay, maLoaiSanPham, tenLoaiSanPham, tenMay,
-                    soLuong, gia, tiLeLai, xuatXu, trangThai, maNhaCungCap, tenNhaCungCap
+                        maMay, maLoaiSanPham, tenLoaiSanPham, tenMay,
+                        soLuong, gia, tiLeLai, xuatXu, trangThai, maNhaCungCap, tenNhaCungCap
                 );
                 result.add(sp);
             }
@@ -276,10 +276,10 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
                 String maNhaCungCap = rs.getString("maNhaCungCap");
                 String tenNhaCungCap = rs.getString("tenNhaCungCap");
                 result = new SanPhamDTO(
-                    maMay, maLoaiSanPham, tenLoaiSanPham, tenMay,
-                    soLuong, gia, tiLeLai, xuatXu, trangThai,
-                    ChiTietSanPhamDAO.getInstance().getChiTietSanPhamByMaSanPham(maSanPham),
-                    maNhaCungCap, tenNhaCungCap
+                        maMay, maLoaiSanPham, tenLoaiSanPham, tenMay,
+                        soLuong, gia, tiLeLai, xuatXu, trangThai,
+                        ChiTietSanPhamDAO.getInstance().getChiTietSanPhamByMaSanPham(maSanPham),
+                        maNhaCungCap, tenNhaCungCap
                 );
             }
         } catch (Exception e) {
@@ -336,10 +336,10 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
                 int firstIndex = ChiTietSanPhamDAO.getInstance().getNewIndexID();
                 for (int i = 0; i < chiTietSanPhamList.size(); i++) {
                     ChiTietSanPhamDAO.getInstance().insert(new ChiTietSanPham(
-                        "CTSP" + (firstIndex + i),
-                        newID,
-                        chiTietSanPhamList.get(i).getTenThuocTinh(),
-                        chiTietSanPhamList.get(i).getGiaTriThuocTinh()
+                            "CTSP" + (firstIndex + i),
+                            newID,
+                            chiTietSanPhamList.get(i).getTenThuocTinh(),
+                            chiTietSanPhamList.get(i).getGiaTriThuocTinh()
                     ));
                 }
             }
@@ -350,7 +350,7 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
             e.printStackTrace();
             result = "Error: " + e.getMessage();
         }
-        
+
         return result;
     }
 
@@ -378,8 +378,8 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
                 ChiTietSanPhamDAO ctspDao = ChiTietSanPhamDAO.getInstance();
                 for (int i = 0; i < chiTietSanPhamList.size(); i++) {
                     ChiTietSanPham checkExist = ctspDao.findByMaMayAndTenThuocTinh(
-                        spMoi.getMaMay(), 
-                        chiTietSanPhamList.get(i).getTenThuocTinh()
+                            spMoi.getMaMay(),
+                            chiTietSanPhamList.get(i).getTenThuocTinh()
                     );
                     if (checkExist != null) {
                         if (chiTietSanPhamList.get(i).getGiaTriThuocTinh().isBlank()) {
@@ -391,10 +391,10 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
                     } else {
                         String newID = "CTSP" + String.valueOf(ctspDao.getNewIndexID());
                         ctspDao.insert(new ChiTietSanPham(
-                            newID,
-                            spMoi.getMaMay(),
-                            chiTietSanPhamList.get(i).getTenThuocTinh(),
-                            chiTietSanPhamList.get(i).getGiaTriThuocTinh()
+                                newID,
+                                spMoi.getMaMay(),
+                                chiTietSanPhamList.get(i).getTenThuocTinh(),
+                                chiTietSanPhamList.get(i).getGiaTriThuocTinh()
                         ));
                     }
                 }
@@ -424,6 +424,36 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
             // TODO: handle exception
             JOptionPane.showMessageDialog(null, "Không cập nhật được sản phẩm " + maMay, "Lỗi",
                     JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+        return ketQua;
+    }
+
+    
+    public ArrayList<SanPhamDTO> getSanPhamToCTXuat() {
+        ArrayList<SanPhamDTO> ketQua = new ArrayList<SanPhamDTO>();
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT s.*, ctx.soLuong FROM sanpham s join chitietphieuxuat ctx on s.maMay = ctx.maMay";
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                String maMay = rs.getString("maMay");
+                String loaiMay = rs.getString("loaiMay");
+                String tenMay = rs.getString("tenMay");
+                int soLuong = rs.getInt("soLuong");
+                int soLuongXuat = rs.getInt("soLuong");
+                double gia = rs.getDouble("gia");
+                double tiLeLai = rs.getDouble("tiLeLai");
+                String xuatXu = rs.getString("xuatXu");
+                int trangThai = rs.getInt("trangThai");
+                String maNhaCungCap = rs.getString("maNhaCungCap");
+                String tenNhaCungCap = rs.getString("tenNhaCungCap");
+                SanPhamDTO sp = new SanPhamDTO(maMay, loaiMay, tenMay, soLuong, soLuongXuat, gia, tiLeLai, xuatXu, trangThai, maNhaCungCap, tenNhaCungCap);
+                ketQua.add(sp);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
             e.printStackTrace();
         }
         return ketQua;

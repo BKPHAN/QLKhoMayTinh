@@ -5,11 +5,13 @@ import java.util.List;
 import model.ChiTietSanPham;
 
 public class SanPhamDTO {
+
     private String maMay;
     private String maLoaiSanPham;
     private String tenLoaiSanPham;
     private String tenMay;
     private int soLuong;
+    private int soLuongXuat;
     private double gia;
     private double tiLeLai;
     private String xuatXu;
@@ -50,6 +52,20 @@ public class SanPhamDTO {
         this.tenNhaCungCap = tenNhaCungCap;
     }
 
+    public SanPhamDTO(String maMay, String maLoaiSanPham, String tenMay, int soLuong, int soLuongXuat, double gia, double tiLeLai, String xuatXu, int trangThai, String maNhaCungCap, String tenNhaCungCap) {
+        this.maMay = maMay;
+        this.maLoaiSanPham = maLoaiSanPham;
+        this.tenMay = tenMay;
+        this.soLuong = soLuong;
+        this.soLuongXuat = soLuongXuat;
+        this.gia = gia;
+        this.tiLeLai = tiLeLai;
+        this.xuatXu = xuatXu;
+        this.trangThai = trangThai;
+        this.maNhaCungCap = maNhaCungCap;
+        this.tenNhaCungCap = tenNhaCungCap;
+    }
+
     public String getMaMay() {
         return maMay;
     }
@@ -68,6 +84,10 @@ public class SanPhamDTO {
 
     public int getSoLuong() {
         return soLuong;
+    }
+
+    public int getSoLuongXuat() {
+        return soLuongXuat;
     }
 
     public double getGia() {
@@ -118,6 +138,10 @@ public class SanPhamDTO {
         this.soLuong = soLuong;
     }
 
+    public void setSoLuongXuat(int soLuongXuat) {
+        this.soLuongXuat = soLuongXuat;
+    }
+
     public void setGia(double gia) {
         this.gia = gia;
     }
@@ -145,6 +169,5 @@ public class SanPhamDTO {
     public void setTenNhaCungCap(String tenNhaCungCap) {
         this.tenNhaCungCap = tenNhaCungCap;
     }
-    
-    
+
 }
