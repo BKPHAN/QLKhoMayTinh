@@ -75,8 +75,7 @@ public class LoiNhuanForm extends javax.swing.JInternalFrame {
 
     public void loadDataToTable() {
         try {
-            SanPhamDAO spdao = new SanPhamDAO();
-            ArrayList<SanPham> armt = spdao.selectAll();
+            ArrayList<SanPham> armt = SanPhamDAO.getInstance().selectAll();
             tblModel.setRowCount(0);
             int index = 1; // Biến đếm cho số thứ tự
             for (SanPham i : armt) {
