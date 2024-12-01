@@ -230,7 +230,6 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
         btnResetThongKePr = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
-        btnDetail = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jComboBoxLuaChon = new javax.swing.JComboBox<>();
@@ -395,19 +394,6 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
         jToolBar1.setBackground(new java.awt.Color(255, 255, 255));
         jToolBar1.setBorder(javax.swing.BorderFactory.createTitledBorder("Chức Năng"));
         jToolBar1.setRollover(true);
-
-        btnDetail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_eye_40px.png"))); // NOI18N
-        btnDetail.setText("Xem chi tiết");
-        btnDetail.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnDetail.setFocusable(false);
-        btnDetail.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnDetail.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnDetail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDetailActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnDetail);
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_spreadsheet_file_40px.png"))); // NOI18N
         jButton6.setText("Xuất Excel");
@@ -872,16 +858,6 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jComboBoxLuaChonActionPerformed
 
-    private void btnDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailActionPerformed
-        // TODO add your handling code here:
-        if (tblCTLoiNhuan.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn phiếu !");
-        } else {
-            CTThongKe a = new CTThongKe(this, (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), rootPaneCheckingEnabled);
-            a.setVisible(true);
-        }
-    }//GEN-LAST:event_btnDetailActionPerformed
-
     private void btnResetThongKePrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetThongKePrActionPerformed
         // TODO add your handling code here:
         txtNamePr.setText("");
@@ -998,7 +974,6 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDetail;
     private javax.swing.JButton btnResetThongKePr;
     private javax.swing.JTextField giaDen;
     private javax.swing.JTextField giaTu;

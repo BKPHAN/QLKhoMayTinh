@@ -35,11 +35,11 @@ public class CTThongKe extends javax.swing.JDialog {
         this.parent = (ThongKeForm) parent;
         initComponents();
         setLocationRelativeTo(null);
-        Phieu pn = this.parent.findPhieu();
-        labelMaPhieu.setText(pn.getMaPhieu());
-        labelNguoiTao.setText(AccountDAO.getInstance().selectById(pn.getNguoiTao()).getFullName());
-        labelTongTien.setText(this.parent.getFormatter().format(pn.getTongTien()) + "đ");
-        labelThoiGianTao.setText(this.parent.getFormatDate().format(pn.getThoiGianTao()));
+//        Phieu pn = this.parent.findPhieu();
+//        labelMaPhieu.setText(pn.getMaPhieu());
+//        labelNguoiTao.setText(AccountDAO.getInstance().selectById(pn.getNguoiTao()).getFullName());
+//        labelTongTien.setText(this.parent.getFormatter().format(pn.getTongTien()) + "đ");
+//        labelThoiGianTao.setText(this.parent.getFormatDate().format(pn.getThoiGianTao()));
         loadDataToTableProduct();
         setWidthTable();
     }
@@ -54,33 +54,33 @@ public class CTThongKe extends javax.swing.JDialog {
         try {
             DefaultTableModel tblCTPhieumd = (DefaultTableModel) tblChiTietPhieu.getModel();
             tblCTPhieumd.setRowCount(0);
-            Phieu pn = this.parent.findPhieu();
-            String check = pn.getMaPhieu();
-            if (check.contains("PX")) {
-                ArrayList<ChiTietPhieu> CTPhieu = ChiTietPhieuXuatDAO.getInstance().selectAll(check);
-                for (int i = 0; i < CTPhieu.size(); i++) {
-                    tblCTPhieumd.addRow(new Object[]{
-                        i + 1,
-                        CTPhieu.get(i).getMaMay(),
-                        MayTinhDAO.getInstance().selectById(CTPhieu.get(i).getMaMay()).getTenMay(),
-                        CTPhieu.get(i).getSoLuong(),
-                        parent.getFormatter().format(CTPhieu.get(i).getDonGia()) + "đ",
-                        parent.getFormatter().format(CTPhieu.get(i).getDonGia() * CTPhieu.get(i).getSoLuong()) + "đ"
-                    });
-                }
-            } else {
-                ArrayList<ChiTietPhieu> CTPhieu = ChiTietPhieuNhapDAO.getInstance().selectAll(check);
-                for (int i = 0; i < CTPhieu.size(); i++) {
-                    tblCTPhieumd.addRow(new Object[]{
-                        i + 1,
-                        CTPhieu.get(i).getMaMay(),
-                        MayTinhDAO.getInstance().selectById(CTPhieu.get(i).getMaMay()).getTenMay(),
-                        CTPhieu.get(i).getSoLuong(),
-                        parent.getFormatter().format(CTPhieu.get(i).getDonGia()) + "đ",
-                        parent.getFormatter().format(CTPhieu.get(i).getDonGia() * CTPhieu.get(i).getSoLuong()) + "đ"
-                    });
-                }
-            }
+//            Phieu pn = this.parent.findPhieu();
+//            String check = pn.getMaPhieu();
+//            if (check.contains("PX")) {
+//                ArrayList<ChiTietPhieu> CTPhieu = ChiTietPhieuXuatDAO.getInstance().selectAll(check);
+//                for (int i = 0; i < CTPhieu.size(); i++) {
+//                    tblCTPhieumd.addRow(new Object[]{
+//                        i + 1,
+//                        CTPhieu.get(i).getMaMay(),
+//                        MayTinhDAO.getInstance().selectById(CTPhieu.get(i).getMaMay()).getTenMay(),
+//                        CTPhieu.get(i).getSoLuong(),
+//                        parent.getFormatter().format(CTPhieu.get(i).getDonGia()) + "đ",
+//                        parent.getFormatter().format(CTPhieu.get(i).getDonGia() * CTPhieu.get(i).getSoLuong()) + "đ"
+//                    });
+//                }
+//            } else {
+//                ArrayList<ChiTietPhieu> CTPhieu = ChiTietPhieuNhapDAO.getInstance().selectAll(check);
+//                for (int i = 0; i < CTPhieu.size(); i++) {
+//                    tblCTPhieumd.addRow(new Object[]{
+//                        i + 1,
+//                        CTPhieu.get(i).getMaMay(),
+//                        MayTinhDAO.getInstance().selectById(CTPhieu.get(i).getMaMay()).getTenMay(),
+//                        CTPhieu.get(i).getSoLuong(),
+//                        parent.getFormatter().format(CTPhieu.get(i).getDonGia()) + "đ",
+//                        parent.getFormatter().format(CTPhieu.get(i).getDonGia() * CTPhieu.get(i).getSoLuong()) + "đ"
+//                    });
+//                }
+//            }
 
         } catch (Exception e) {
         }
@@ -283,8 +283,8 @@ public class CTThongKe extends javax.swing.JDialog {
 
     private void btnExportPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportPDFActionPerformed
         // TODO add your handling code here:
-        WritePDF writepdf = new WritePDF();
-        writepdf.writePhieuNhap(this.parent.findPhieu().getMaPhieu());
+//        WritePDF writepdf = new WritePDF();
+//        writepdf.writePhieuNhap(this.parent.findPhieu().getMaPhieu());
     }//GEN-LAST:event_btnExportPDFActionPerformed
 
     /**
