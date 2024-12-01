@@ -40,7 +40,7 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "INSERT INTO sanpham (maMay, loaiMay, tenMay, soLuong, gia, tiLeLai, xuatXu, trangThai) VALUES (?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO sanpham (maMay, loaiMay, tenMay, soLuong, gia, tiLeLai, xuatXu, trangThai, maNhaCungCap) VALUES (?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, t.getMaMay());
             pst.setString(2, t.getLoaiMay());
@@ -50,6 +50,7 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
             pst.setDouble(6, t.getTiLeLai());
             pst.setString(7, t.getXuatXu());
             pst.setInt(8, t.getTrangThai());
+            pst.setString(9, t.getMaNhaCungCap());
             ketQua = pst.executeUpdate();
             JDBCUtil.closeConnection(con);
         } catch (Exception e) {
@@ -66,9 +67,9 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "UPDATE sanpham SET loaiMay=?, tenMay=?, soLuong=?, gia=?, tiLeLai=?, xuatXu=?, trangThai=? WHERE maMay=?";
+            String sql = "UPDATE sanpham SET loaiMay=?, tenMay=?, soLuong=?, gia=?, tiLeLai=?, xuatXu=?, trangThai=?, maNhaCungCap=? WHERE maMay=?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(8, t.getMaMay());
+            pst.setString(9, t.getMaMay());
             pst.setString(1, t.getLoaiMay());
             pst.setString(2, t.getTenMay());
             pst.setInt(3, t.getSoLuong());
@@ -76,6 +77,7 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
             pst.setDouble(5, t.getTiLeLai());
             pst.setString(6, t.getXuatXu());
             pst.setInt(7, t.getTrangThai());
+            pst.setString(8, t.getMaNhaCungCap());
             ketQua = pst.executeUpdate();
             JDBCUtil.closeConnection(con);
         } catch (Exception e) {

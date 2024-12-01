@@ -50,15 +50,14 @@ public class SuaSanPham extends javax.swing.JDialog {
     
     private List<JPanel> ctspList = new ArrayList<>();
     
-    private String maSanPham;
+    private SanPhamDTO sp;
 
     public SuaSanPham(javax.swing.JInternalFrame parent, javax.swing.JFrame owner, boolean modal) {
         super(owner, modal);
         this.owner = (ProductForm) parent;
         initComponents();
         setLocationRelativeTo(null);
-        SanPhamDTO sp = this.owner.getChiTietSanPham();
-        this.maSanPham = sp.getMaMay();
+        sp = this.owner.getChiTietSanPham();
         List<ChiTietSanPham> chiTietSanPhamList = sp.getChiTietSanPhamList();
         
         jPanel1.setLayout(new BorderLayout());
@@ -93,7 +92,7 @@ public class SuaSanPham extends javax.swing.JDialog {
         
         addLabelAndTextFieldToListPane("Tên sản phẩm", sp.getTenMay(), listPanel, defaultAttributeList);
         addLabelAndTextFieldToListPane("Đơn giá", String.valueOf(sp.getGia()), listPanel, defaultAttributeList);
-        addLabelAndTextFieldToListPane("Số lượng", String.valueOf(sp.getSoLuong()), listPanel, defaultAttributeList);
+//        addLabelAndTextFieldToListPane("Số lượng", String.valueOf(sp.getSoLuong()), listPanel, defaultAttributeList);
         addLabelAndTextFieldToListPane("Tỉ lệ lãi", String.valueOf(sp.getTiLeLai()), listPanel, defaultAttributeList);
         addLabelAndTextFieldToListPane("Xuất xứ", sp.getXuatXu(), listPanel, defaultAttributeList);
         
@@ -384,7 +383,8 @@ public class SuaSanPham extends javax.swing.JDialog {
             }
             
             spMoi.setChiTietSanPhamList(chiTietSanPhamList);
-            spMoi.setMaMay(this.maSanPham);
+            spMoi.setMaMay(this.sp.getMaMay());
+            spMoi.setSoLuong(this.sp.getSoLuong());
             String updateSPResult = SanPhamController.getInstance().updateSanPham(spMoi);
             if (updateSPResult.equals("OK")) {
                 JOptionPane.showMessageDialog(this, "Cập nhật thông tin sản phẩm thành công!");

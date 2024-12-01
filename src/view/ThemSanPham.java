@@ -87,7 +87,7 @@ public class ThemSanPham extends javax.swing.JDialog {
         
         addLabelAndTextFieldToListPane("Tên sản phẩm", "", listPanel, defaultAttributeList);
         addLabelAndTextFieldToListPane("Đơn giá", "", listPanel, defaultAttributeList);
-        addLabelAndTextFieldToListPane("Số lượng", "", listPanel, defaultAttributeList);
+//        addLabelAndTextFieldToListPane("Số lượng", "", listPanel, defaultAttributeList);
         addLabelAndTextFieldToListPane("Tỉ lệ lãi", "", listPanel, defaultAttributeList);
         addLabelAndTextFieldToListPane("Xuất xứ", "", listPanel, defaultAttributeList);
         
@@ -395,6 +395,7 @@ public class ThemSanPham extends javax.swing.JDialog {
                 chiTietSanPhamList.add(new ChiTietSanPham(data[0], data[1]));
             }
             spMoi.setChiTietSanPhamList(chiTietSanPhamList);
+            spMoi.setSoLuong(0);
             String addSPResult = SanPhamController.getInstance().addNewSanPham(spMoi);
             if (addSPResult.equals("OK")) {
                 JOptionPane.showMessageDialog(this, "Thêm sản phẩm mới thành công!");
@@ -484,10 +485,10 @@ public class ThemSanPham extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập tên máy!");
             return false;
         }
-        if (spMoi.getSoLuong() == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng!");
-            return false;
-        }
+//        if (spMoi.getSoLuong() == -1) {
+//            JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng!");
+//            return false;
+//        }
         if (spMoi.getSoLuong() == -2) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng đúng định dạng!");
             return false;
