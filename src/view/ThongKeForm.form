@@ -305,13 +305,13 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                              <Component id="jLabel7" min="-2" pref="138" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="soLuong" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Component id="jLabel7" min="-2" pref="261" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="soLuong" min="-2" pref="200" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jLabel2" min="-2" pref="118" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="tongTien" min="-2" pref="305" max="-2" attributes="0"/>
+                              <Component id="jLabel2" min="-2" pref="179" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="tongTien" min="-2" pref="285" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -337,9 +337,9 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel7" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
-                          <Component id="soLuong" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                           <Component id="jLabel2" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                           <Component id="tongTien" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
+                          <Component id="soLuong" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="203" max="-2" attributes="0"/>
                   </Group>
@@ -616,7 +616,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="SF Pro Display" size="18" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="T&#x1ed4;NG TI&#x1ec0;N"/>
+                <Property name="text" type="java.lang.String" value="T&#x1ed4;NG L&#x1ee2;I NHU&#x1eac;N"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="soLuong">
@@ -632,7 +632,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="SF Pro Display" size="18" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="T&#x1ed4;NG PHI&#x1ebe;U "/>
+                <Property name="text" type="java.lang.String" value="T&#x1ed4;NG S&#x1ea2;N PH&#x1ea8;M &#x110;&#xc3; B&#xc1;N"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="tongTien">

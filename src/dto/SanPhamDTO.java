@@ -11,7 +11,7 @@ public class SanPhamDTO {
     private String tenLoaiSanPham;
     private String tenMay;
     private int soLuong;
-    private int soLuongXuat;
+    private int soLuongNhap;
     private double gia;
     private double tiLeLai;
     private String xuatXu;
@@ -52,18 +52,17 @@ public class SanPhamDTO {
         this.tenNhaCungCap = tenNhaCungCap;
     }
 
-    public SanPhamDTO(String maMay, String maLoaiSanPham, String tenMay, int soLuong, int soLuongXuat, double gia, double tiLeLai, String xuatXu, int trangThai, String maNhaCungCap, String tenNhaCungCap) {
+    public SanPhamDTO(String maMay, String maLoaiSanPham, String tenMay, int soLuong,  int soLuongNhap, double gia, double tiLeLai, String xuatXu, int trangThai, String maNhaCungCap) {
         this.maMay = maMay;
         this.maLoaiSanPham = maLoaiSanPham;
         this.tenMay = tenMay;
         this.soLuong = soLuong;
-        this.soLuongXuat = soLuongXuat;
+        this.soLuongNhap = soLuongNhap;
         this.gia = gia;
         this.tiLeLai = tiLeLai;
         this.xuatXu = xuatXu;
         this.trangThai = trangThai;
         this.maNhaCungCap = maNhaCungCap;
-        this.tenNhaCungCap = tenNhaCungCap;
     }
 
     public String getMaMay() {
@@ -86,8 +85,8 @@ public class SanPhamDTO {
         return soLuong;
     }
 
-    public int getSoLuongXuat() {
-        return soLuongXuat;
+    public int getSoLuongNhap() {
+        return soLuongNhap;
     }
 
     public double getGia() {
@@ -138,8 +137,8 @@ public class SanPhamDTO {
         this.soLuong = soLuong;
     }
 
-    public void setSoLuongXuat(int soLuongXuat) {
-        this.soLuongXuat = soLuongXuat;
+    public void setSoLuongNhap(int soLuongNhap) {
+        this.soLuongNhap = soLuongNhap;
     }
 
     public void setGia(double gia) {

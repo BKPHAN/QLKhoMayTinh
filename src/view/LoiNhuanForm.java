@@ -65,7 +65,7 @@ public class LoiNhuanForm extends javax.swing.JInternalFrame {
 
     public final void initTable() {
         tblModel = new DefaultTableModel();
-        String[] headerTbl = new String[]{"STT", "Mã sản phẩm", "Loại sản phẩm", "Tên sản phẩm", "Số lượng", "Giá nhập", "Giá Xuất", "Lợi Nhuận"};
+        String[] headerTbl = new String[]{"STT", "Mã sản phẩm", "Loại sản phẩm", "Tên sản phẩm", "Số lượng Nhap", "Giá nhập", "Giá Xuất", "Lợi Nhuận"};
         tblModel.setColumnIdentifiers(headerTbl);
         tblSanPham.setModel(tblModel);
         tblSanPham.getColumnModel().getColumn(0).setPreferredWidth(5);
@@ -75,19 +75,19 @@ public class LoiNhuanForm extends javax.swing.JInternalFrame {
 //        tblSanPham.getColumnModel().getColumn(6).setPreferredWidth(5);
     }
 
-    public void loadDataToTable() {
+    private void loadDataToTable() {
         try {
-            ArrayList<SanPham> armt = SanPhamDAO.getInstance().selectAll();
+            ArrayList<SanPhamDTO> armt = SanPhamDAO.getInstance().getSanPhamToCTNhap();
             tblModel.setRowCount(0);
             int index = 1; // Biến đếm cho số thứ tự
-            for (SanPham i : armt) {
+            for (SanPhamDTO i : armt) {
                 if (i.getTrangThai() == 1) {
                     int gia_xuat;
                     int loi_nhuan;
                     gia_xuat = (int) (i.getGia() + i.getGia() * i.getTiLeLai() / 100);
-                    loi_nhuan = (int) (gia_xuat - i.getGia()) * i.getSoLuong();
+                    loi_nhuan = (int) (gia_xuat - i.getGia()) * i.getSoLuongNhap();
                     tblModel.addRow(new Object[]{
-                        index++, i.getMaMay(), i.getLoaiMay(), i.getTenMay(), i.getSoLuong(), formatter.format(i.getGia()) + "đ", formatter.format(gia_xuat) + "đ", formatter.format(loi_nhuan) + "đ"
+                        index++, i.getMaMay(), i.getMaLoaiSanPham(), i.getTenMay(), i.getSoLuongNhap(), formatter.format(i.getGia()) + "đ", formatter.format(gia_xuat) + "đ", formatter.format(loi_nhuan) + "đ"
                     });
                 }
             }
@@ -400,7 +400,7 @@ public class LoiNhuanForm extends javax.swing.JInternalFrame {
         }
         return null;
     }
-    
+
     private void jTextFieldSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldSearchKeyReleased
         // TODO add your handling code here:
         String luaChon = jComboBoxLuaChon.getSelectedItem().toString();
@@ -501,7 +501,7 @@ public class LoiNhuanForm extends javax.swing.JInternalFrame {
         return result;
     }
 
-    public void changeTextFind() {
+    private void changeTextFind() {
         jTextFieldSearch.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {

@@ -24,14 +24,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import model.PhieuNhap;
-import java.util.Iterator;
 import javax.swing.JFileChooser;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -91,7 +89,7 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
 
     public final void initTable() {
         tblModel = new DefaultTableModel();
-        String[] headerTbl = new String[]{"STT", "Mã sản phẩm", "Loại sản phẩm", "Tên sản phẩm", "Số lượng nhập", "Giá nhập","Số lượng xuất", "Giá Xuất", "Lợi Nhuận"};
+        String[] headerTbl = new String[]{"STT", "Mã sản phẩm", "Loại sản phẩm", "Tên sản phẩm", "Số lượng nhập", "Số lượng xuất", "Giá nhập", "Giá Xuất", "Lợi Nhuận"};
         tblModel.setColumnIdentifiers(headerTbl);
         tblCTLoiNhuan.setModel(tblModel);
         tblCTLoiNhuan.getColumnModel().getColumn(0).setPreferredWidth(5);
@@ -102,22 +100,31 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
             ArrayList<SanPhamDTO> armt = SanPhamDAO.getInstance().getSanPhamToCTXuat();
             tblModel.setRowCount(0);
             int index = 1; // Biến đếm cho số thứ tự
+            int sumMoney = 0;
+            int sumCount = 0;
             for (SanPhamDTO i : armt) {
                 if (i.getTrangThai() == 1) {
                     int gia_xuat;
                     int loi_nhuan;
+                    int soLuongXuat;
+                    soLuongXuat = (int) (i.getSoLuongNhap() - i.getSoLuong());
                     gia_xuat = (int) (i.getGia() + i.getGia() * i.getTiLeLai() / 100);
-                    loi_nhuan = (int) (gia_xuat - i.getGia()) * i.getSoLuong();
+                    loi_nhuan = (int) ((gia_xuat - i.getGia()) * soLuongXuat);
                     tblModel.addRow(new Object[]{
-                        index++, i.getMaMay(), i.getMaLoaiSanPham(), i.getTenMay(), i.getSoLuong(), i.getSoLuongXuat(), formatter.format(i.getGia()) + "đ", formatter.format(gia_xuat) + "đ", formatter.format(loi_nhuan) + "đ"
+                        index++, i.getMaMay(), i.getMaLoaiSanPham(), i.getTenMay(), i.getSoLuongNhap(), soLuongXuat, formatter.format(i.getGia()) + "đ", formatter.format(gia_xuat) + "đ", formatter.format(loi_nhuan) + "đ"
                     });
+                    sumCount += soLuongXuat;
+                    sumMoney += loi_nhuan;
                 }
             }
+            soLuong.setText(sumCount + " Sản phẩm");
+            tongTien.setText(formatter.format(sumMoney) + "đ");
             // Gọi căn chỉnh cột sau khi thêm dữ liệu
             alignColumns();
         } catch (Exception e) {
         }
     }
+
     // can chinh cot trong bangtblSanPham.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
     private void alignColumns() {
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
@@ -137,6 +144,7 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
         tblCTLoiNhuan.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
         tblCTLoiNhuan.getColumnModel().getColumn(8).setCellRenderer(rightRenderer);
     }
+
     private void loadDataToTableSearch(ArrayList<Phieu> result) {
         try {
             tblModel.setRowCount(0);
@@ -545,13 +553,13 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
         );
 
         jLabel2.setFont(new java.awt.Font("SF Pro Display", 1, 18)); // NOI18N
-        jLabel2.setText("TỔNG TIỀN");
+        jLabel2.setText("TỔNG LỢI NHUẬN");
 
         soLuong.setFont(new java.awt.Font("SF Pro Display", 1, 18)); // NOI18N
         soLuong.setText("0");
 
         jLabel7.setFont(new java.awt.Font("SF Pro Display", 1, 18)); // NOI18N
-        jLabel7.setText("TỔNG PHIẾU ");
+        jLabel7.setText("TỔNG SẢN PHẨM ĐÃ BÁN");
 
         tongTien.setFont(new java.awt.Font("SF Pro Display", 1, 18)); // NOI18N
         tongTien.setForeground(new java.awt.Color(255, 0, 51));
@@ -580,13 +588,13 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(37, 37, 37)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(soLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(soLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(tongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(13, 13, 13)))
                 .addContainerGap())
         );
@@ -606,9 +614,9 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(soLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(soLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(203, 203, 203))
         );
 
@@ -1042,87 +1050,87 @@ public class ThongKeForm extends javax.swing.JInternalFrame {
                 break;
         }
 
-        Iterator<Phieu> itr = result.iterator();
-        if (jDateChooserFrom.getDate() != null || jDateChooserTo.getDate() != null) {
-            Date from;
-            Date to;
-            if (jDateChooserFrom.getDate() != null && jDateChooserTo.getDate() == null) {
-                from = ConvertDate.getInstance().ChangeFrom(jDateChooserFrom.getDate());
-                to = ConvertDate.getInstance().ChangeTo(new Date());
-                while (itr.hasNext()) {
-                    Phieu phieu = itr.next();
-                    if (!checkDate(phieu.getThoiGianTao(), from, to)) {
-                        itr.remove();
-                    }
-                }
-            } else if (jDateChooserTo.getDate() != null && jDateChooserFrom.getDate() == null) {
-                String sDate1 = "01/01/2022";
-                from = ConvertDate.getInstance().ChangeFrom(new SimpleDateFormat("dd/MM/yyyy").parse(sDate1));
-                to = ConvertDate.getInstance().ChangeTo(jDateChooserTo.getDate());
-                while (itr.hasNext()) {
-                    Phieu phieu = itr.next();
-                    if (!checkDate(phieu.getThoiGianTao(), from, to)) {
-                        itr.remove();
-                    }
-                }
-            } else {
-                from = ConvertDate.getInstance().ChangeFrom(jDateChooserFrom.getDate());
-                to = ConvertDate.getInstance().ChangeTo(jDateChooserTo.getDate());
-                while (itr.hasNext()) {
-                    Phieu phieu = itr.next();
-                    if (!checkDate(phieu.getThoiGianTao(), from, to)) {
-                        itr.remove();
-                    }
-                }
-            }
-        }
-
-        ArrayList<Phieu> result1 = new ArrayList<>();
-        if (giaTu.getText().length() > 0 || giaDen.getText().length() > 0) {
-            double a;
-            double b;
-
-            if (giaTu.getText().length() > 0 && giaDen.getText().length() == 0) {
-                a = Double.parseDouble(giaTu.getText());
-                for (int i = 0; i < result.size(); i++) {
-                    if (result.get(i).getTongTien() >= a) {
-                        result1.add(result.get(i));
-                    }
-                }
-            } else if (giaTu.getText().length() == 0 && giaDen.getText().length() > 0) {;
-                b = Double.parseDouble(giaDen.getText());
-                for (int i = 0; i < result.size(); i++) {
-                    if (result.get(i).getTongTien() <= b) {
-                        result1.add(result.get(i));
-                    }
-                }
-            } else if (giaTu.getText().length() > 0 && giaDen.getText().length() > 0) {
-                a = Double.parseDouble(giaTu.getText());
-                b = Double.parseDouble(giaDen.getText());
-                for (int i = 0; i < result.size(); i++) {
-                    if (result.get(i).getTongTien() >= a && result.get(i).getTongTien() <= b) {
-                        result1.add(result.get(i));
-                    }
-                }
-            }
-        }
-        if (giaTu.getText().length() > 0 || giaDen.getText().length() > 0) {
-            loadDataToTableSearch(result1);
-            double sum = 0;
-            for (Phieu phieu : result1) {
-                sum += phieu.getTongTien();
-            }
-            soLuong.setText(result1.size() + "");
-            tongTien.setText(formatter.format(sum) + "đ");
-        } else {
-            loadDataToTableSearch(result);
-            double sum = 0;
-            for (Phieu phieu : result) {
-                sum += phieu.getTongTien();
-            }
-            soLuong.setText(result.size() + "");
-            tongTien.setText(formatter.format(sum) + "đ");
-        }
+//        Iterator<Phieu> itr = result.iterator();
+//        if (jDateChooserFrom.getDate() != null || jDateChooserTo.getDate() != null) {
+//            Date from;
+//            Date to;
+//            if (jDateChooserFrom.getDate() != null && jDateChooserTo.getDate() == null) {
+//                from = ConvertDate.getInstance().ChangeFrom(jDateChooserFrom.getDate());
+//                to = ConvertDate.getInstance().ChangeTo(new Date());
+//                while (itr.hasNext()) {
+//                    Phieu phieu = itr.next();
+//                    if (!checkDate(phieu.getThoiGianTao(), from, to)) {
+//                        itr.remove();
+//                    }
+//                }
+//            } else if (jDateChooserTo.getDate() != null && jDateChooserFrom.getDate() == null) {
+//                String sDate1 = "01/01/2022";
+//                from = ConvertDate.getInstance().ChangeFrom(new SimpleDateFormat("dd/MM/yyyy").parse(sDate1));
+//                to = ConvertDate.getInstance().ChangeTo(jDateChooserTo.getDate());
+//                while (itr.hasNext()) {
+//                    Phieu phieu = itr.next();
+//                    if (!checkDate(phieu.getThoiGianTao(), from, to)) {
+//                        itr.remove();
+//                    }
+//                }
+//            } else {
+//                from = ConvertDate.getInstance().ChangeFrom(jDateChooserFrom.getDate());
+//                to = ConvertDate.getInstance().ChangeTo(jDateChooserTo.getDate());
+//                while (itr.hasNext()) {
+//                    Phieu phieu = itr.next();
+//                    if (!checkDate(phieu.getThoiGianTao(), from, to)) {
+//                        itr.remove();
+//                    }
+//                }
+//            }
+//        }
+//
+//        ArrayList<Phieu> result1 = new ArrayList<>();
+//        if (giaTu.getText().length() > 0 || giaDen.getText().length() > 0) {
+//            double a;
+//            double b;
+//
+//            if (giaTu.getText().length() > 0 && giaDen.getText().length() == 0) {
+//                a = Double.parseDouble(giaTu.getText());
+//                for (int i = 0; i < result.size(); i++) {
+//                    if (result.get(i).getTongTien() >= a) {
+//                        result1.add(result.get(i));
+//                    }
+//                }
+//            } else if (giaTu.getText().length() == 0 && giaDen.getText().length() > 0) {;
+//                b = Double.parseDouble(giaDen.getText());
+//                for (int i = 0; i < result.size(); i++) {
+//                    if (result.get(i).getTongTien() <= b) {
+//                        result1.add(result.get(i));
+//                    }
+//                }
+//            } else if (giaTu.getText().length() > 0 && giaDen.getText().length() > 0) {
+//                a = Double.parseDouble(giaTu.getText());
+//                b = Double.parseDouble(giaDen.getText());
+//                for (int i = 0; i < result.size(); i++) {
+//                    if (result.get(i).getTongTien() >= a && result.get(i).getTongTien() <= b) {
+//                        result1.add(result.get(i));
+//                    }
+//                }
+//            }
+//        }
+//        if (giaTu.getText().length() > 0 || giaDen.getText().length() > 0) {
+//            loadDataToTableSearch(result1);
+//            double sum = 0;
+//            for (Phieu phieu : result1) {
+//                sum += phieu.getTongTien();
+//            }
+//            soLuong.setText(result1.size() + "");
+//            tongTien.setText(formatter.format(sum) + "đ");
+//        } else {
+//            loadDataToTableSearch(result);
+//            double sum = 0;
+//            for (Phieu phieu : result) {
+//                sum += phieu.getTongTien();
+//            }
+//            soLuong.setText(result.size() + "");
+//            tongTien.setText(formatter.format(sum) + "đ");
+//        }
     }
 
     public void filterThongKeSanPham() throws ParseException {

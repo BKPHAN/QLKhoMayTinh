@@ -429,27 +429,53 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
         return ketQua;
     }
 
-    
-    public ArrayList<SanPhamDTO> getSanPhamToCTXuat() {
-        ArrayList<SanPhamDTO> ketQua = new ArrayList<SanPhamDTO>();
+    public ArrayList<SanPhamDTO> getSanPhamToCTNhap() {
+        ArrayList<SanPhamDTO> result = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "SELECT s.*, ctx.soLuong FROM sanpham s join chitietphieuxuat ctx on s.maMay = ctx.maMay";
+            String sql = "SELECT s.*, SUM(ctn.soLuong) as soLuongNhap FROM sanpham s join chitietphieunhap ctn on s.maMay = ctn.maMay GROUP BY s.maMay, s.loaiMay";
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 String maMay = rs.getString("maMay");
                 String loaiMay = rs.getString("loaiMay");
                 String tenMay = rs.getString("tenMay");
-                int soLuong = rs.getInt("soLuong");
-                int soLuongXuat = rs.getInt("soLuong");
+                int soLuongTon = rs.getInt("soLuong");
+                int soLuongNhap = rs.getInt("soLuongNhap");
                 double gia = rs.getDouble("gia");
                 double tiLeLai = rs.getDouble("tiLeLai");
                 String xuatXu = rs.getString("xuatXu");
                 int trangThai = rs.getInt("trangThai");
                 String maNhaCungCap = rs.getString("maNhaCungCap");
-                String tenNhaCungCap = rs.getString("tenNhaCungCap");
-                SanPhamDTO sp = new SanPhamDTO(maMay, loaiMay, tenMay, soLuong, soLuongXuat, gia, tiLeLai, xuatXu, trangThai, maNhaCungCap, tenNhaCungCap);
+                SanPhamDTO sp = new SanPhamDTO(maMay, loaiMay, tenMay, soLuongTon, soLuongNhap , gia, tiLeLai, xuatXu, trangThai, maNhaCungCap);
+                result.add(sp);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public ArrayList<SanPhamDTO> getSanPhamToCTXuat() {
+        ArrayList<SanPhamDTO> ketQua = new ArrayList<>();
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT s.*, (SUM(ctx.soLuong)+s.soLuong) as soLuongNhap FROM sanpham s join chitietphieuxuat ctx on s.maMay = ctx.maMay GROUP BY s.maMay, s.loaiMay";
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                String maMay = rs.getString("maMay");
+                String loaiMay = rs.getString("loaiMay");
+                String tenMay = rs.getString("tenMay");
+                int soLuongTon = rs.getInt("soLuong");
+                int soLuongNhap = rs.getInt("soLuongNhap");
+                double gia = rs.getDouble("gia");
+                double tiLeLai = rs.getDouble("tiLeLai");
+                String xuatXu = rs.getString("xuatXu");
+                int trangThai = rs.getInt("trangThai");
+                String maNhaCungCap = rs.getString("maNhaCungCap");
+                SanPhamDTO sp = new SanPhamDTO(maMay, loaiMay, tenMay, soLuongTon, soLuongNhap, gia, tiLeLai, xuatXu, trangThai, maNhaCungCap);
                 ketQua.add(sp);
             }
         } catch (Exception e) {
