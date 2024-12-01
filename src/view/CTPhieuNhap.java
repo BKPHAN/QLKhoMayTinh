@@ -4,10 +4,10 @@
  */
 package view;
 
+import controller.SanPhamController;
 import controller.WritePDF;
 import dao.AccountDAO;
 import dao.ChiTietPhieuNhapDAO;
-import dao.MayTinhDAO;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -68,7 +68,7 @@ public class CTPhieuNhap extends javax.swing.JDialog {
                 tblCTPhieumd.addRow(new Object[]{
                     i + 1, 
                     CTPhieu.get(i).getMaMay(),
-                    MayTinhDAO.getInstance().selectById(CTPhieu.get(i).getMaMay()).getTenMay(),
+                    SanPhamController.getInstance().selectById(CTPhieu.get(i).getMaMay()).getTenMay(),
                     CTPhieu.get(i).getSoLuong(),
                     parent.getFormatter().format(CTPhieu.get(i).getDonGia()) + "đ",
                     parent.getFormatter().format(CTPhieu.get(i).getDonGia() * CTPhieu.get(i).getSoLuong()) + "đ"

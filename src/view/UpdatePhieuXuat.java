@@ -5,13 +5,14 @@
 package view;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import controller.SanPhamController;
 import controller.SearchProduct;
 import dao.AccountDAO;
 import dao.ChiTietPhieuXuatDAO;
 import java.sql.Timestamp;
-import dao.MayTinhDAO;
 import dao.NhaCungCapDAO;
 import dao.PhieuXuatDAO;
+import dto.SanPhamDTO;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -21,7 +22,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import model.ChiTietPhieu;
-import model.MayTinh;
 import model.NhaCungCap;
 import model.PhieuXuat;
 import model.SanPham;
@@ -37,7 +37,7 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
      */
     private DefaultTableModel tblModel;
     DecimalFormat formatter = new DecimalFormat("###,###,###");
-    private ArrayList<MayTinh> allProduct;
+    private ArrayList<SanPhamDTO> allProduct;
     private PhieuXuat phieuxuat;
     private ArrayList<ChiTietPhieu> CTPhieu;
     private ArrayList<ChiTietPhieu> CTPhieuOld;
@@ -50,7 +50,7 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         // Lay thong tin 
-        allProduct = MayTinhDAO.getInstance().selectAllExist();
+        allProduct = SanPhamController.getInstance().selectAllExist();
         this.parent = (PhieuXuatForm) parent;
         this.phieuxuat = this.parent.getPhieuXuatSelect();
         CTPhieu = ChiTietPhieuXuatDAO.getInstance().selectAll(phieuxuat.getMaPhieu());
@@ -88,7 +88,7 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
         tblSanPham.setDefaultEditor(Object.class, null);
     }
 
-    private void loadDataToTableProduct(ArrayList<MayTinh> arrProd) {
+    private void loadDataToTableProduct(ArrayList<SanPhamDTO> arrProd) {
         try {
             tblModel.setRowCount(0);
             for (var i : arrProd) {
@@ -108,7 +108,7 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
         return tt;
     }
 
-    public MayTinh findMayTinh(String maMay) {
+    public SanPhamDTO findSanPham(String maMay) {
         for (var i : allProduct) {
             if (maMay.equals(i.getMaMay())) {
                 return i;
@@ -133,7 +133,7 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
 
             for (int i = 0; i < CTPhieu.size(); i++) {
                 tblNhapHangmd.addRow(new Object[]{
-                    i + 1, CTPhieu.get(i).getMaMay(), findMayTinh(CTPhieu.get(i).getMaMay()).getTenMay(), CTPhieu.get(i).getSoLuong(), formatter.format(CTPhieu.get(i).getDonGia()) + "đ"
+                    i + 1, CTPhieu.get(i).getMaMay(), findSanPham(CTPhieu.get(i).getMaMay()).getTenMay(), CTPhieu.get(i).getSoLuong(), formatter.format(CTPhieu.get(i).getDonGia()) + "đ"
                 });
             }
         } catch (Exception e) {
@@ -392,11 +392,11 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
         } else {
             // Set so luong san pham cua tung loai ve ban dau        
             for (var ct : CTPhieuOld) {
-                MayTinhDAO.getInstance().updateSoLuong(ct.getMaMay(), MayTinhDAO.getInstance().selectById(ct.getMaMay()).getSoLuong() + ct.getSoLuong());
+                SanPhamController.getInstance().updateSoLuong(ct.getMaMay(), SanPhamController.getInstance().selectById(ct.getMaMay()).getSoLuong() + ct.getSoLuong());
                 System.out.println(ct.getSoLuong());
             }
             for (var ct : CTPhieu) {
-                MayTinhDAO.getInstance().updateSoLuong(ct.getMaMay(), MayTinhDAO.getInstance().selectById(ct.getMaMay()).getSoLuong() - ct.getSoLuong());
+                SanPhamController.getInstance().updateSoLuong(ct.getMaMay(), SanPhamController.getInstance().selectById(ct.getMaMay()).getSoLuong() - ct.getSoLuong());
                 System.out.println(ct.getSoLuong());
             }
             // Lay thoi gian hien tai
@@ -442,7 +442,7 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
                 int soLuong;
                 try {
                     soLuong = Integer.parseInt(newSL);
-                    if (soLuong > findMayTinh(CTPhieu.get(i_row).getMaMay()).getSoLuong()) {
+                    if (soLuong > findSanPham(CTPhieu.get(i_row).getMaMay()).getSoLuong()) {
                         JOptionPane.showMessageDialog(this, "Số lượng không đủ !");
                     } else {
                         CTPhieu.get(i_row).setSoLuong(soLuong);
@@ -472,7 +472,7 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
                 } else {
                     ChiTietPhieu mtl = findCTPhieu((String) tblSanPham.getValueAt(i_row, 0));
                     if (mtl != null) {
-                        if (findMayTinh((String) tblSanPham.getValueAt(i_row, 0)).getSoLuong() < mtl.getSoLuong() + soluong) {
+                        if (findSanPham((String) tblSanPham.getValueAt(i_row, 0)).getSoLuong() < mtl.getSoLuong() + soluong) {
                             JOptionPane.showMessageDialog(this, "Số lượng máy không đủ !");
                         } else {
                             mtl.setSoLuong(mtl.getSoLuong() + soluong);
@@ -493,8 +493,8 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
         // TODO add your handling code here:
         DefaultTableModel tblsp = (DefaultTableModel) tblSanPham.getModel();
         String textSearch = txtSearch.getText().toLowerCase();
-        ArrayList<MayTinh> Mtkq = new ArrayList<>();
-        for (MayTinh i : allProduct) {
+        ArrayList<SanPhamDTO> Mtkq = new ArrayList<>();
+        for (SanPhamDTO i : allProduct) {
             if (i.getMaMay().concat(i.getTenMay()).toLowerCase().contains(textSearch)) {
                 Mtkq.add(i);
             }

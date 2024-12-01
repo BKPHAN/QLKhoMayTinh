@@ -5,13 +5,14 @@
 package view;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import controller.SanPhamController;
 import controller.SearchProduct;
 import dao.AccountDAO;
 import java.sql.Timestamp;
 import dao.ChiTietPhieuNhapDAO;
-import dao.MayTinhDAO;
 import dao.NhaCungCapDAO;
 import dao.PhieuNhapDAO;
+import dto.SanPhamDTO;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -21,7 +22,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import model.ChiTietPhieu;
-import model.MayTinh;
 import model.NhaCungCap;
 import model.PhieuNhap;
 import model.SanPham;
@@ -37,7 +37,7 @@ public class UpdatePhieuNhap extends javax.swing.JDialog {
      */
     private DefaultTableModel tblModel;
     DecimalFormat formatter = new DecimalFormat("###,###,###");
-    private ArrayList<MayTinh> allProduct;
+    private ArrayList<SanPhamDTO> allProduct;
     private PhieuNhap phieunhap;
     private ArrayList<ChiTietPhieu> CTPhieu;
     private ArrayList<ChiTietPhieu> CTPhieuOld;
@@ -50,7 +50,7 @@ public class UpdatePhieuNhap extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         // Lay thong tin 
-        allProduct = MayTinhDAO.getInstance().selectAllExist();
+        allProduct = SanPhamController.getInstance().selectAllExist();
         this.parent = (PhieuNhapForm) parent;
         this.phieunhap = this.parent.getPhieuNhapSelect();
         CTPhieu = ChiTietPhieuNhapDAO.getInstance().selectAll(phieunhap.getMaPhieu());
@@ -101,7 +101,7 @@ public class UpdatePhieuNhap extends javax.swing.JDialog {
         tblSanPham.setDefaultEditor(Object.class, null);
     }
 
-    private void loadDataToTableProduct(ArrayList<MayTinh> arrProd) {
+    private void loadDataToTableProduct(ArrayList<SanPhamDTO> arrProd) {
         try {
             tblModel.setRowCount(0);
             for (var i : arrProd) {
@@ -121,7 +121,7 @@ public class UpdatePhieuNhap extends javax.swing.JDialog {
         return tt;
     }
 
-    public MayTinh findMayTinh(String maMay) {
+    public SanPhamDTO findSanPham(String maMay) {
         for (var i : allProduct) {
             if (maMay.equals(i.getMaMay())) {
                 return i;
@@ -146,7 +146,7 @@ public class UpdatePhieuNhap extends javax.swing.JDialog {
 
             for (int i = 0; i < CTPhieu.size(); i++) {
                 tblNhapHangmd.addRow(new Object[]{
-                    i + 1, CTPhieu.get(i).getMaMay(), findMayTinh(CTPhieu.get(i).getMaMay()).getTenMay(), CTPhieu.get(i).getSoLuong(), formatter.format(CTPhieu.get(i).getDonGia()) + "đ"
+                    i + 1, CTPhieu.get(i).getMaMay(), findSanPham(CTPhieu.get(i).getMaMay()).getTenMay(), CTPhieu.get(i).getSoLuong(), formatter.format(CTPhieu.get(i).getDonGia()) + "đ"
                 });
             }
         } catch (Exception e) {
@@ -399,11 +399,11 @@ public class UpdatePhieuNhap extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn sản phẩm để nhập hàng !","Cảnh báo", JOptionPane.WARNING_MESSAGE);
         } else {
             for (var ct : CTPhieuOld) {
-                MayTinhDAO.getInstance().updateSoLuong(ct.getMaMay(), MayTinhDAO.getInstance().selectById(ct.getMaMay()).getSoLuong() - ct.getSoLuong());
+                SanPhamController.getInstance().updateSoLuong(ct.getMaMay(), SanPhamController.getInstance().selectById(ct.getMaMay()).getSoLuong() - ct.getSoLuong());
                 System.out.println(ct.getSoLuong());
             }
             for (var ct : CTPhieu) {
-                MayTinhDAO.getInstance().updateSoLuong(ct.getMaMay(), MayTinhDAO.getInstance().selectById(ct.getMaMay()).getSoLuong() + ct.getSoLuong());
+                SanPhamController.getInstance().updateSoLuong(ct.getMaMay(), SanPhamController.getInstance().selectById(ct.getMaMay()).getSoLuong() + ct.getSoLuong());
                 System.out.println(ct.getSoLuong());
             }
             // Lay thoi gian hien tai
@@ -483,8 +483,8 @@ public class UpdatePhieuNhap extends javax.swing.JDialog {
         // TODO add your handling code here:
         DefaultTableModel tblsp = (DefaultTableModel) tblSanPham.getModel();
         String textSearch = txtSearch.getText().toLowerCase();
-        ArrayList<MayTinh> Mtkq = new ArrayList<>();
-        for (MayTinh i : allProduct) {
+        ArrayList<SanPhamDTO> Mtkq = new ArrayList<>();
+        for (SanPhamDTO i : allProduct) {
             if (i.getMaMay().concat(i.getTenMay()).toLowerCase().contains(textSearch)) {
                 Mtkq.add(i);
             }

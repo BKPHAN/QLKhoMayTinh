@@ -3,7 +3,8 @@ package controller;
 import java.util.ArrayList;
 
 import dao.SanPhamDAO;
-import dto.SanPhamDTO;;
+import dto.SanPhamDTO;
+import model.SanPham;;
 
 public class SanPhamController {
     private static SanPhamController instance;
@@ -46,5 +47,21 @@ public class SanPhamController {
 
     public int updateTrangThai(String maMay, int trangThai) {
         return spDAO.updateTrangThai(maMay, trangThai);
+    }
+
+    public ArrayList<SanPhamDTO> selectAllExist() {
+        return spDAO.selectAllExist();
+    }
+
+    public int updateSoLuong(String maMay, int soluong) {
+        return spDAO.updateSoLuong(maMay, soluong);
+    }
+
+    public SanPham selectById(String t) {
+        return spDAO.selectById(t);
+    }
+
+    public int getSl() {
+        return spDAO.getSl();
     }
 }

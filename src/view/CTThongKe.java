@@ -8,7 +8,6 @@ import controller.WritePDF;
 import dao.AccountDAO;
 import dao.ChiTietPhieuNhapDAO;
 import dao.ChiTietPhieuXuatDAO;
-import dao.MayTinhDAO;
 import dao.PhieuNhapDAO;
 import dao.PhieuXuatDAO;
 import java.sql.Timestamp;

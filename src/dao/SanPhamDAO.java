@@ -458,4 +458,42 @@ public class SanPhamDAO implements DAOInterface<SanPham> {
         }
         return ketQua;
     }
+
+    public ArrayList<SanPhamDTO> selectAllExist() {
+        return searchByAttribute("trangThai", "1");
+    }
+
+    public int updateSoLuong(String maMay, int soluong) {
+        int ketQua = 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "UPDATE SanPham SET soLuong=? WHERE maMay=? ";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setInt(1, soluong);
+            pst.setString(2, maMay);
+            ketQua = pst.executeUpdate();
+            JDBCUtil.closeConnection(con);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ketQua;
+    }
+
+    public int getSl() {
+        int soluong = 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM SanPham WHERE trangThai = 1";
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                soluong++;
+            }
+            JDBCUtil.closeConnection(con);
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return soluong;
+    }
 }
