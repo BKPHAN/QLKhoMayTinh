@@ -620,7 +620,7 @@ public class NhanVien extends javax.swing.JFrame {
     private void XuatHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_XuatHangMouseClicked
         // TODO add your handling code here:
         XuatHangForm xh = new XuatHangForm();
-        xh.setNguoiTao(this.currentAcc.getFullName());
+        xh.setNguoiTao(this.currentAcc.getUser());
         MainContent.removeAll();
         MainContent.add(xh).setVisible(true);
     }//GEN-LAST:event_XuatHangMouseClicked
