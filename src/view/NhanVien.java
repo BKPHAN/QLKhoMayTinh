@@ -5,6 +5,7 @@
 package view;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import dao.ChamCongDAO;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -643,6 +644,7 @@ public class NhanVien extends javax.swing.JFrame {
             this.dispose();
             Login a = new Login();
             a.setVisible(true);
+            ChamCongDAO.getInstance().chamcong(currentAcc.getUser());
         } else {
             DangXuat.setBackground(DefaultColor);
         }

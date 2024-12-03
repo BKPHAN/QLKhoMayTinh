@@ -5,6 +5,7 @@
 package view;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import dao.ChamCongDAO;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -275,6 +276,7 @@ public class Admin extends javax.swing.JFrame {
             this.dispose();
             Login a = new Login();
             a.setVisible(true);
+            ChamCongDAO.getInstance().chamcong(currentAcc.getUser());
         } else {
             DangXuat.setBackground(DefaultColor);
         }
@@ -290,6 +292,7 @@ public class Admin extends javax.swing.JFrame {
     private void TaiKhoan1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TaiKhoan1MousePressed
         // TODO add your handling code here:
         TaiKhoan1.setBackground(ClickedColor);
+        ChamCong.setBackground(DefaultColor);
     }//GEN-LAST:event_TaiKhoan1MousePressed
 
     private void AccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccountMouseClicked
@@ -314,6 +317,11 @@ public class Admin extends javax.swing.JFrame {
 
     private void ChamCongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChamCongMouseClicked
         // TODO add your handling code here:
+        ChamCongForm cc = new ChamCongForm(currentAcc);
+        MainContent.removeAll();
+        MainContent.add(cc).setVisible(true);
+        TaiKhoan1.setBackground(DefaultColor);
+        ChamCong.setBackground(ClickedColor);
     }//GEN-LAST:event_ChamCongMouseClicked
 
     private void ChamCongMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChamCongMousePressed

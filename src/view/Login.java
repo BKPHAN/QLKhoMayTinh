@@ -9,6 +9,8 @@ import com.mysql.cj.protocol.Resultset;
 import com.sun.jdi.connect.spi.Connection;
 import controller.BCrypt;
 import dao.AccountDAO;
+import dao.ChamCongDAO;
+
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
@@ -297,7 +299,17 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+               new Login().setVisible(true);
+                // Account acc = AccountDAO.getInstance().selectById("admin");    
+                // Admin nv;
+                // try {
+                //     nv = new Admin(acc);
+                //     nv.setVisible(true);
+                //     nv.setName(acc.getFullName());
+                // } catch (UnsupportedLookAndFeelException ex) {
+                //     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                // }
+                
             }
         });
     }
@@ -316,6 +328,7 @@ public class Login extends javax.swing.JFrame {
                     if (BCrypt.checkpw(passwordcheck, acc.getPassword())) {
                         if (acc.getStatus() == 1) {
                             try {
+                                ChamCongDAO.getInstance().chamcong(acc.getUser());
                                 JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
                                 this.dispose();
                                 String role = acc.getRole();
