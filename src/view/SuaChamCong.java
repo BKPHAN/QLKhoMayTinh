@@ -4,41 +4,15 @@
  */
 package view;
 
-import controller.LoaiSanPhamController;
 import dao.ChamCongDAO;
-import dao.ChiTietSanPhamDAO;
-import dao.LaptopDAO;
-import dao.LoaiSanPhamDAO;
-import dao.MayTinhDAO;
-import dao.PCDAO;
 import dto.ChamCongDTO;
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 import model.ChamCong;
-import model.Laptop;
-import model.LoaiSanPham;
-import model.MayTinh;
-import model.PC;
 
 /**
  *
@@ -352,61 +326,6 @@ public class SuaChamCong extends javax.swing.JDialog {
     private void startSecTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startSecTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_startSecTxtActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public String createIdPC() {
-        ArrayList<MayTinh> mtAll = MayTinhDAO.getInstance().selectAll();
-        ArrayList<MayTinh> pcAll = new ArrayList<MayTinh>();
-        for (MayTinh mayTinh : mtAll) {
-            if (mayTinh.getMaMay().contains("PC")) {
-                pcAll.add(mayTinh);
-            }
-        }
-        int i = pcAll.size();
-        String check ="check";
-        while(check.length()!=0){
-            i++;
-            for (MayTinh mayTinh : pcAll) {
-                if(mayTinh.getMaMay().equals("PC"+i)){
-                    check="";
-                }
-            }
-            if(check.length()==0){
-                check ="check";
-            } else {
-                check = "";
-            }
-        }
-        return "PC" + i;
-    }
-
-    public String createIdLT() {
-        ArrayList<MayTinh> mtAll = MayTinhDAO.getInstance().selectAll();
-        ArrayList<MayTinh> lpAll = new ArrayList<MayTinh>();
-        for (MayTinh mayTinh : mtAll) {
-            if (mayTinh.getMaMay().contains("LP")) {
-                lpAll.add(mayTinh);
-            }
-        }
-        int i = lpAll.size();
-        String check ="check";
-        while(check.length()!=0){
-            i++;
-            for (MayTinh mayTinh : lpAll) {
-                if(mayTinh.getMaMay().equals("LP"+i)){
-                    check="";
-                }
-            }
-            if(check.length()==0){
-                check ="check";
-            } else {
-                check = "";
-            }
-        }
-        return "LP" + i;
-    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
