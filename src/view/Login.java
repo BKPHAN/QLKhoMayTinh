@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -69,6 +70,7 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        registerLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Đăng nhập vào phần mềm");
@@ -204,6 +206,18 @@ public class Login extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 420, -1, -1));
 
+        registerLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        registerLabel.setForeground(new java.awt.Color(255, 255, 255));
+        registerLabel.setText("Chưa có tài khoản? Đăng ký tài khoản mới");
+        registerLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        registerLabel.setPreferredSize(new java.awt.Dimension(148, 24));
+        registerLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registerLabelMouseClicked(evt);
+            }
+        });
+        jPanel1.add(registerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 470, 380, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -290,6 +304,13 @@ public class Login extends javax.swing.JFrame {
         rcv.setVisible(true);
     }//GEN-LAST:event_jLabel7MouseClicked
 
+    private void registerLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerLabelMouseClicked
+        // TODO add your handling code here:
+        AddAccount a;
+        a = new AddAccount(this, (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), rootPaneCheckingEnabled);
+        a.setVisible(true);
+    }//GEN-LAST:event_registerLabelMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -299,7 +320,7 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               new Login().setVisible(true);
+              new Login().setVisible(true);
                 // Account acc = AccountDAO.getInstance().selectById("admin");    
                 // Admin nv;
                 // try {
@@ -371,5 +392,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField loginUser;
     private javax.swing.JPasswordField passwordUser;
+    private javax.swing.JLabel registerLabel;
     // End of variables declaration//GEN-END:variables
 }

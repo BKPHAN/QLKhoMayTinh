@@ -25,6 +25,14 @@ public class AddAccount extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         homeAcc = (AccountForm) parent;
+        vaitro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Nhân viên" }));
+    }
+    
+    public AddAccount(javax.swing.JFrame parent, javax.swing.JFrame owner, boolean modal) {
+        super(owner, modal);
+        initComponents();
+        setLocationRelativeTo(null);
+        vaitro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân viên" }));
     }
 
     AddAccount() {
@@ -57,7 +65,7 @@ public class AddAccount extends javax.swing.JDialog {
         txtEmail = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Thêm tài khoản mới");
+        setTitle("Đăng ký tài khoản mới");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -87,13 +95,12 @@ public class AddAccount extends javax.swing.JDialog {
         jLabel5.setText("Vai trò");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 50, -1));
 
-        vaitro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Quản lý kho", "Nhân viên nhập", "Nhân viên xuất" }));
         vaitro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(vaitro, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 298, 38));
 
         jButton1.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Thêm");
+        jButton1.setText("Đăng ký");
         jButton1.setBorder(null);
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -121,16 +128,16 @@ public class AddAccount extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("SF Pro Display", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("THÊM TÀI KHOẢN");
+        jLabel1.setText("ĐĂNG KÝ TÀI KHOẢN MỚI");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(jLabel1)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addGap(42, 42, 42)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,13 +187,15 @@ public class AddAccount extends javax.swing.JDialog {
         if (fullName.equals("") || user.equals("") || password.equals("") || role.equals("") || email.equals("")) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin !", "Cảnh báo ", JOptionPane.WARNING_MESSAGE);
         } else {
-            if (AccountDAO.getInstance().selectById(user) != null) {
+            if (AccountDAO.getInstance().selectById(user) == null) {
                 if (isValid(email)) {
                     Account acc = new Account(fullName, user, password, role, 1, email);
                     AccountDAO.getInstance().insert(acc);
                     this.dispose();
-                    homeAcc.loadDataToTable(AccountDAO.getInstance().selectAll());
-                    JOptionPane.showMessageDialog(this, "Thêm thành công !");
+                    if (homeAcc != null) {
+                        homeAcc.loadDataToTable(AccountDAO.getInstance().selectAll());
+                    }
+                    JOptionPane.showMessageDialog(this, "Đăng ký tài khoản thành công !");
                 } else {
                     JOptionPane.showMessageDialog(this, "Vui lòng nhập email đúng định dạng !", "Cảnh báo =", JOptionPane.WARNING_MESSAGE);
                 }
