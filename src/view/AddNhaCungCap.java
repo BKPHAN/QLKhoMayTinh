@@ -172,7 +172,7 @@ public class AddNhaCungCap extends javax.swing.JDialog {
             if (maNcc.equals("") || tenNcc.equals("") || sdtNcc.equals("") || diachiNcc.equals("")) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin !", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
             } else {
-                if (NhaCungCapDAO.getInstance().selectById(maNcc) != null) {
+                if (NhaCungCapDAO.getInstance().selectById(maNcc) == null) {
                     NhaCungCap ncc = new NhaCungCap();
                     ncc.setMaNhaCungCap(maNcc);
                     ncc.setTenNhaCungCap(tenNcc);
