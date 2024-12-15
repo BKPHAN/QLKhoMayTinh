@@ -204,7 +204,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="10" width="430" height="90"/>
+              <AbsoluteConstraints x="10" y="10" width="340" height="90"/>
             </Constraint>
           </Constraints>
 
@@ -282,23 +282,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exportExcelActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="importExcel">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="SF Pro Display" size="15" style="0"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/icon/icons8_xls_40px.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Nh&#x1ead;p Excel"/>
-                <Property name="focusable" type="boolean" value="false"/>
-                <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="verticalTextPosition" type="int" value="3"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="importExcelActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JButton" name="btnDetail">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -334,7 +317,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="460" y="10" width="710" height="90"/>
+              <AbsoluteConstraints x="360" y="10" width="810" height="90"/>
             </Constraint>
           </Constraints>
 

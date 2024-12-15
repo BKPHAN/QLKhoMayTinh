@@ -161,7 +161,6 @@ public class ChamCongForm extends javax.swing.JInternalFrame {
         btnEdit = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         jButton6 = new javax.swing.JButton();
-        btnImportExcel = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jComboBoxS = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -225,27 +224,13 @@ public class ChamCongForm extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(jButton6);
 
-        btnImportExcel.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
-        btnImportExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_xls_40px.png"))); // NOI18N
-        btnImportExcel.setText("Nhập Excel");
-        btnImportExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnImportExcel.setFocusable(false);
-        btnImportExcel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnImportExcel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnImportExcel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImportExcelActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnImportExcel);
-
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm theo nhân viên"));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jComboBoxS.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
         jComboBoxS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả" }));
-        jPanel3.add(jComboBoxS, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 140, 40));
+        jPanel3.add(jComboBoxS, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 180, 40));
 
         tblChamCong.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
         tblChamCong.setModel(new javax.swing.table.DefaultTableModel(
@@ -336,9 +321,9 @@ public class ChamCongForm extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -364,8 +349,7 @@ public class ChamCongForm extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
                 .addGap(25, 25, 25))
         );
 
@@ -442,55 +426,6 @@ public class ChamCongForm extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void btnImportExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportExcelActionPerformed
-        // TODO add your handling code here:
-        File excelFile;
-        FileInputStream excelFIS = null;
-        BufferedInputStream excelBIS = null;
-        XSSFWorkbook excelJTableImport = null;
-        ArrayList<ChamCong> listAccExcel = new ArrayList<ChamCong>();
-        JFileChooser jf = new JFileChooser();
-        int result = jf.showOpenDialog(null);
-        jf.setDialogTitle("Open file");
-        Workbook workbook = null;
-        DefaultTableModel table_acc = (DefaultTableModel) tblChamCong.getModel();
-        table_acc.setRowCount(0);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            try {
-                excelFile = jf.getSelectedFile();
-                excelFIS = new FileInputStream(excelFile);
-                excelBIS = new BufferedInputStream(excelFIS);
-                excelJTableImport = new XSSFWorkbook(excelBIS);
-                XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
-                for (int row = 1; row <= excelSheet.getLastRowNum(); row++) {
-                    XSSFRow excelRow = excelSheet.getRow(row);
-                    
-                    String maChamCong = excelRow.getCell(1).getStringCellValue();
-                    String ngayChamCong = excelRow.getCell(2).getStringCellValue();
-                    String maNV = excelRow.getCell(3).getStringCellValue();
-                    String tenNV = excelRow.getCell(4).getStringCellValue();
-                    String gioVao = excelRow.getCell(5).getStringCellValue();
-                    String gioRa = excelRow.getCell(6).getStringCellValue();
-                    String trongGioHC = excelRow.getCell(7).getStringCellValue();
-                    String ngoaiGioHC = excelRow.getCell(8).getStringCellValue();
-                    String tong = excelRow.getCell(9).getStringCellValue();
-                    
-                    table_acc.addRow(new Object[]{
-                        row, maChamCong, ngayChamCong,
-                        maNV, tenNV, gioVao, gioRa,
-                        trongGioHC, ngoaiGioHC, tong
-                    });
-                }
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(ChamCongForm.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(ChamCongForm.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(ChamCongForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }//GEN-LAST:event_btnImportExcelActionPerformed
-
     private void jDateChooserToPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserToPropertyChange
         // TODO add your handling code here:
 //        searchAllCheck();
@@ -530,7 +465,6 @@ public class ChamCongForm extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
-    private javax.swing.JButton btnImportExcel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBoxS;

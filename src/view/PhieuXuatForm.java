@@ -69,7 +69,7 @@ public class PhieuXuatForm extends javax.swing.JInternalFrame {
         if (accCur.getRole().equals("Nhân viên xuất")) {
             btnDelete.setEnabled(false);
             btnEdit.setEnabled(false);
-            btnImportExcel.setEnabled(false);
+//            btnImportExcel.setEnabled(false);
             jButton6.setEnabled(false);
         }
     }
@@ -117,7 +117,6 @@ public class PhieuXuatForm extends javax.swing.JInternalFrame {
         btnDetail = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         jButton6 = new javax.swing.JButton();
-        btnImportExcel = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jComboBoxS = new javax.swing.JComboBox<>();
         jTextFieldSearch = new javax.swing.JTextField();
@@ -200,34 +199,20 @@ public class PhieuXuatForm extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(jButton6);
 
-        btnImportExcel.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
-        btnImportExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_xls_40px.png"))); // NOI18N
-        btnImportExcel.setText("Nhập Excel");
-        btnImportExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnImportExcel.setFocusable(false);
-        btnImportExcel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnImportExcel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnImportExcel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImportExcelActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnImportExcel);
-
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jComboBoxS.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
         jComboBoxS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Mã phiếu", "Người tạo", "Tên khách hàng" }));
-        jPanel3.add(jComboBoxS, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 210, 40));
+        jPanel3.add(jComboBoxS, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 210, 40));
 
         jTextFieldSearch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextFieldSearchKeyReleased(evt);
             }
         });
-        jPanel3.add(jTextFieldSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, 310, 40));
+        jPanel3.add(jTextFieldSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 310, 40));
 
         jButton7.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_reset_25px_1.png"))); // NOI18N
@@ -238,7 +223,7 @@ public class PhieuXuatForm extends javax.swing.JInternalFrame {
                 jButton7ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 30, 140, 40));
+        jPanel3.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 30, 140, 40));
 
         tblPhieuXuat.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
         tblPhieuXuat.setModel(new javax.swing.table.DefaultTableModel(
@@ -364,13 +349,13 @@ public class PhieuXuatForm extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane1)
                         .addGap(6, 6, 6))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
@@ -469,52 +454,6 @@ public class PhieuXuatForm extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void btnImportExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportExcelActionPerformed
-        // TODO add your handling code here:
-        File excelFile;
-        FileInputStream excelFIS = null;
-        BufferedInputStream excelBIS = null;
-        XSSFWorkbook excelJTableImport = null;
-        ArrayList<PhieuXuat> listAccExcel = new ArrayList<PhieuXuat>();
-        JFileChooser jf = new JFileChooser();
-        int result = jf.showOpenDialog(null);
-        jf.setDialogTitle("Open file");
-        Workbook workbook = null;
-        DefaultTableModel table_acc = (DefaultTableModel) tblPhieuXuat.getModel();
-        table_acc.setRowCount(0);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            try {
-                excelFile = jf.getSelectedFile();
-                excelFIS = new FileInputStream(excelFile);
-                excelBIS = new BufferedInputStream(excelFIS);
-                excelJTableImport = new XSSFWorkbook(excelBIS);
-                XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
-                for (int row = 1; row <= excelSheet.getLastRowNum(); row++) {
-                    XSSFRow excelRow = excelSheet.getRow(row);
-                    String maPhieu = excelRow.getCell(1).getStringCellValue();
-                    String nhaCungCap = excelRow.getCell(2).getStringCellValue();
-                    String nguoiTao = excelRow.getCell(3).getStringCellValue();
-                    String dateText = excelRow.getCell(4).getStringCellValue();
-                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                    Date dateCheck = format.parse(dateText);
-                    String giaFomat = excelRow.getCell(5).getStringCellValue().replaceAll(",", "");
-                    int viTri = giaFomat.length() - 1;
-                    String giaoke = giaFomat.substring(0, viTri) + giaFomat.substring(viTri + 1);
-                    double donGia = Double.parseDouble(giaoke);
-                    table_acc.addRow(new Object[]{
-                        row, maPhieu, nhaCungCap, nguoiTao, formatDate.format(dateCheck), formatter.format(donGia) + "đ"
-                    });
-                }
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(ProductForm.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(ProductForm.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(PhieuXuatForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }//GEN-LAST:event_btnImportExcelActionPerformed
-
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
         loadDataToTable();
@@ -580,7 +519,6 @@ public class PhieuXuatForm extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnDetail;
     private javax.swing.JButton btnEdit;
-    private javax.swing.JButton btnImportExcel;
     private javax.swing.JTextField giaDen;
     private javax.swing.JTextField giaTu;
     private javax.swing.JButton jButton6;

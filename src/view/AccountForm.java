@@ -109,7 +109,6 @@ public class AccountForm extends javax.swing.JInternalFrame {
         btnEditAccount1 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         exportExcel = new javax.swing.JButton();
-        importExcel = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         cbxLuachon = new javax.swing.JComboBox<>();
         txtSearch = new javax.swing.JTextField();
@@ -271,20 +270,7 @@ public class AccountForm extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(exportExcel);
 
-        importExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_xls_40px.png"))); // NOI18N
-        importExcel.setText("Nhập Excel");
-        importExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        importExcel.setFocusable(false);
-        importExcel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        importExcel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        importExcel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                importExcelActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(importExcel);
-
-        jPanel2.add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 400, 90));
+        jPanel2.add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 290, 90));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
@@ -330,7 +316,7 @@ public class AccountForm extends javax.swing.JInternalFrame {
         });
         jPanel3.add(btnreset, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 30, 170, 40));
 
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 720, 90));
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 850, 90));
 
         jScrollPane1.setBorder(null);
 
@@ -440,43 +426,6 @@ public class AccountForm extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_exportExcelActionPerformed
 
-    private void importExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importExcelActionPerformed
-        // TODO add your handling code here:
-        File excelFile;
-        FileInputStream excelFIS = null;
-        BufferedInputStream excelBIS = null;
-        XSSFWorkbook excelJTableImport = null;
-        ArrayList<Account> listAccExcel = new ArrayList<Account>();
-        JFileChooser jf = new JFileChooser();
-        int result = jf.showOpenDialog(null);
-        jf.setDialogTitle("Open file");
-        Workbook workbook = null;
-        if (result == JFileChooser.APPROVE_OPTION) {
-            try {
-                excelFile = jf.getSelectedFile();
-                excelFIS = new FileInputStream(excelFile);
-                excelBIS = new BufferedInputStream(excelFIS);
-
-                excelJTableImport = new XSSFWorkbook(excelBIS);
-                XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
-                System.out.println("Excel:");
-                for (int row = 1; row < excelSheet.getLastRowNum(); row++) {
-                    XSSFRow excelRow = excelSheet.getRow(row);
-                    String user = excelRow.getCell(1).getStringCellValue();
-                    Account acc = AccountDAO.getInstance().selectById(user);
-                    listAccExcel.add(acc);
-                }
-                loadDataToTable(listAccExcel);
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(AccountForm.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(AccountForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-
-    }//GEN-LAST:event_importExcelActionPerformed
-
     private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearchActionPerformed
@@ -569,7 +518,6 @@ public class AccountForm extends javax.swing.JInternalFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbxLuachon;
     private javax.swing.JButton exportExcel;
-    private javax.swing.JButton importExcel;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
