@@ -81,7 +81,7 @@ public class PhieuNhapForm extends javax.swing.JInternalFrame {
 
     public final void initTable() {
         tblModel = new DefaultTableModel();
-        String[] headerTbl = new String[]{"STT", "Mã phiếu nhập", "Nhà cung cấp", "Người tạo", "Thời gian tạo", "Tổng tiền"};
+        String[] headerTbl = new String[]{"STT", "Mã phiếu nhập", "Người tạo", "Thời gian tạo", "Tổng tiền"};
         tblModel.setColumnIdentifiers(headerTbl);
         tblPhieuNhap.setModel(tblModel);
         tblPhieuNhap.getColumnModel().getColumn(0).setPreferredWidth(1);
@@ -96,7 +96,11 @@ public class PhieuNhapForm extends javax.swing.JInternalFrame {
             tblModel.setRowCount(0);
             for (int i = 0; i < allPhieuNhap.size(); i++) {
                 tblModel.addRow(new Object[]{
-                    i + 1, allPhieuNhap.get(i).getMaPhieu(), NhaCungCapDAO.getInstance().selectById(allPhieuNhap.get(i).getNhaCungCap()).getTenNhaCungCap(), AccountDAO.getInstance().selectById(allPhieuNhap.get(i).getNguoiTao()).getFullName(), formatDate.format(allPhieuNhap.get(i).getThoiGianTao()), formatter.format(allPhieuNhap.get(i).getTongTien()) + "đ"
+                    i + 1, 
+                    allPhieuNhap.get(i).getMaPhieu(), 
+                    AccountDAO.getInstance().selectById(allPhieuNhap.get(i).getNguoiTao()).getFullName(), 
+                    formatDate.format(allPhieuNhap.get(i).getThoiGianTao()), 
+                    formatter.format(allPhieuNhap.get(i).getTongTien()) + "đ"
                 });
             }
         } catch (Exception e) {
@@ -109,7 +113,11 @@ public class PhieuNhapForm extends javax.swing.JInternalFrame {
             tblModel.setRowCount(0);
             for (int i = 0; i < result.size(); i++) {
                 tblModel.addRow(new Object[]{
-                    i + 1, result.get(i).getMaPhieu(), NhaCungCapDAO.getInstance().selectById(result.get(i).getNhaCungCap()).getTenNhaCungCap(), AccountDAO.getInstance().selectById(result.get(i).getNguoiTao()).getFullName(), formatDate.format(result.get(i).getThoiGianTao()), formatter.format(result.get(i).getTongTien()) + "đ"
+                    i + 1, 
+                    result.get(i).getMaPhieu(), 
+                    AccountDAO.getInstance().selectById(result.get(i).getNguoiTao()).getFullName(), 
+                    formatDate.format(result.get(i).getThoiGianTao()), 
+                    formatter.format(result.get(i).getTongTien()) + "đ"
                 });
             }
         } catch (Exception e) {
@@ -121,7 +129,6 @@ public class PhieuNhapForm extends javax.swing.JInternalFrame {
         ArrayList<PhieuNhap> armt = PhieuNhapDAO.getInstance().selectAll();
         for (var phieu : armt) {
             if (phieu.getMaPhieu().toLowerCase().contains(text.toLowerCase())
-                    || phieu.getNhaCungCap().toLowerCase().contains(text.toLowerCase())
                     || phieu.getNguoiTao().toLowerCase().contains(text.toLowerCase())) {
                 result.add(phieu);
             }
@@ -135,18 +142,6 @@ public class PhieuNhapForm extends javax.swing.JInternalFrame {
         ArrayList<PhieuNhap> armt = PhieuNhapDAO.getInstance().selectAll();
         for (var phieu : armt) {
             if (phieu.getMaPhieu().toLowerCase().contains(text.toLowerCase())) {
-                result.add(phieu);
-            }
-
-        }
-        return result;
-    }
-
-    public ArrayList<PhieuNhap> searchNhaCungCap(String text) {
-        ArrayList<PhieuNhap> result = new ArrayList<>();
-        ArrayList<PhieuNhap> armt = PhieuNhapDAO.getInstance().selectAll();
-        for (var phieu : armt) {
-            if (phieu.getNhaCungCap().toLowerCase().contains(text.toLowerCase())) {
                 result.add(phieu);
             }
 
@@ -319,7 +314,7 @@ public class PhieuNhapForm extends javax.swing.JInternalFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jComboBoxLuaChon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Mã phiếu", "Nhà cung cấp", "Người tạo" }));
+        jComboBoxLuaChon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Mã phiếu", "Người tạo" }));
         jComboBoxLuaChon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxLuaChonActionPerformed(evt);
@@ -753,9 +748,6 @@ public class PhieuNhapForm extends javax.swing.JInternalFrame {
                     break;
                 case "Mã phiếu":
                     result = searchMaPhieuNhap(content);
-                    break;
-                case "Nhà cung cấp":
-                    result = searchNhaCungCap(content);
                     break;
                 case "Người tạo":
                     result = searchNguoiTao(content);

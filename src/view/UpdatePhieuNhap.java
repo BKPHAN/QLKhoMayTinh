@@ -72,19 +72,6 @@ public class UpdatePhieuNhap extends javax.swing.JDialog {
         txtMaPhieu.setText(phieunhap.getMaPhieu());
         textTongTien.setText(formatter.format(phieunhap.getTongTien()) + "đ");
         txtNguoiTao.setText(AccountDAO.getInstance().selectById(phieunhap.getNguoiTao()).getUser());
-        int vitri = loadNccToComboBox();
-        cboNhaCungCap.setSelectedIndex(vitri);
-    }
-
-    private int loadNccToComboBox() {
-        int vitri = -1;
-        for (int i = 0; i < arrNcc.size(); i++) {
-            cboNhaCungCap.addItem(arrNcc.get(i).getTenNhaCungCap());
-            if (arrNcc.get(i).getMaNhaCungCap().equals(phieunhap.getNhaCungCap())) {
-                vitri = i;
-            }
-        }
-        return vitri;
     }
 
     public final void initTable() {
@@ -166,8 +153,6 @@ public class UpdatePhieuNhap extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtMaPhieu = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        cboNhaCungCap = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         txtNguoiTao = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -205,14 +190,9 @@ public class UpdatePhieuNhap extends javax.swing.JDialog {
         txtMaPhieu.setFocusable(false);
         jPanel2.add(txtMaPhieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 390, 36));
 
-        jLabel2.setText("Nhà cung cấp");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
-
-        jPanel2.add(cboNhaCungCap, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 390, 36));
-
         jLabel3.setText("Người tạo phiếu");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
-        jPanel2.add(txtNguoiTao, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 390, 36));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
+        jPanel2.add(txtNguoiTao, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 390, 36));
 
         tblNhapHang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -224,7 +204,7 @@ public class UpdatePhieuNhap extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblNhapHang);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 580, 310));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 580, 350));
 
         btnNhapHang.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
         btnNhapHang.setForeground(new java.awt.Color(255, 255, 255));
@@ -410,7 +390,7 @@ public class UpdatePhieuNhap extends javax.swing.JDialog {
             long now = System.currentTimeMillis();
             Timestamp sqlTimestamp = new Timestamp(now);
             // Tao doi tuong phieu nhap
-            PhieuNhap pn = new PhieuNhap(arrNcc.get(cboNhaCungCap.getSelectedIndex()).getMaNhaCungCap(), phieunhap.getMaPhieu(), sqlTimestamp, txtNguoiTao.getText(), CTPhieu, tinhTongTien());
+            PhieuNhap pn = new PhieuNhap(phieunhap.getMaPhieu(), sqlTimestamp, txtNguoiTao.getText(), CTPhieu, tinhTongTien());
             try {
                 PhieuNhapDAO.getInstance().update(pn);
                 ChiTietPhieuNhapDAO.getInstance().delete(CTPhieuOld.get(CTPhieuOld.size() - 1));
@@ -522,11 +502,9 @@ public class UpdatePhieuNhap extends javax.swing.JDialog {
     private javax.swing.JButton addProduct;
     private javax.swing.JButton btnNhapHang;
     private javax.swing.JButton btnReset;
-    private javax.swing.JComboBox<String> cboNhaCungCap;
     private javax.swing.JButton deleteProduct;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

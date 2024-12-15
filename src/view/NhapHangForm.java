@@ -9,7 +9,6 @@ import controller.SearchProduct;
 import controller.WritePDF;
 import dao.AccountDAO;
 import dao.ChiTietPhieuNhapDAO;
-import dao.NhaCungCapDAO;
 import dao.PhieuNhapDAO;
 import dao.PhieuXuatDAO;
 import dto.SanPhamDTO;
@@ -31,7 +30,6 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import model.Account;
 import model.ChiTietPhieu;
-import model.NhaCungCap;
 import model.Phieu;
 import model.PhieuNhap;
 import model.SanPham;
@@ -54,7 +52,6 @@ public class NhapHangForm extends javax.swing.JInternalFrame {
     private ArrayList<SanPhamDTO> allProduct;
     private String MaPhieu;
     private ArrayList<ChiTietPhieu> CTPhieu;
-    private static final ArrayList<NhaCungCap> arrNcc = NhaCungCapDAO.getInstance().selectAll();
 
     public NhapHangForm() {
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
@@ -63,18 +60,11 @@ public class NhapHangForm extends javax.swing.JInternalFrame {
         allProduct = SanPhamController.getInstance().selectAllExist();
         initTable();
         loadDataToTableProduct(allProduct);
-        loadNccToComboBox();
         tblSanPham.setDefaultEditor(Object.class, null);
         tblNhapHang.setDefaultEditor(Object.class, null);
         MaPhieu = createId(PhieuNhapDAO.getInstance().selectAll());
         txtMaPhieu.setText(MaPhieu);
         CTPhieu = new ArrayList<ChiTietPhieu>();
-    }
-
-    private void loadNccToComboBox() {
-        for (NhaCungCap i : arrNcc) {
-            cboNhaCungCap.addItem(i.getTenNhaCungCap());
-        }
     }
 
     public final void initTable() {
@@ -162,8 +152,6 @@ public class NhapHangForm extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtMaPhieu = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        cboNhaCungCap = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         txtNguoiTao = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -200,16 +188,11 @@ public class NhapHangForm extends javax.swing.JInternalFrame {
         txtMaPhieu.setFocusable(false);
         jPanel2.add(txtMaPhieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 390, 36));
 
-        jLabel2.setText("Nhà cung cấp");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
-
-        jPanel2.add(cboNhaCungCap, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 390, 36));
-
         jLabel3.setText("Người tạo phiếu");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
         txtNguoiTao.setEditable(false);
-        jPanel2.add(txtNguoiTao, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 390, 36));
+        jPanel2.add(txtNguoiTao, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 390, 36));
 
         tblNhapHang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -221,7 +204,7 @@ public class NhapHangForm extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tblNhapHang);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 580, 400));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 580, 460));
 
         btnNhapHang.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
         btnNhapHang.setForeground(new java.awt.Color(255, 255, 255));
@@ -406,7 +389,7 @@ public class NhapHangForm extends javax.swing.JInternalFrame {
                 long now = System.currentTimeMillis();
                 Timestamp sqlTimestamp = new Timestamp(now);
                 // Tao doi tuong phieu nhap
-                PhieuNhap pn = new PhieuNhap(arrNcc.get(cboNhaCungCap.getSelectedIndex()).getMaNhaCungCap(), MaPhieu, sqlTimestamp, txtNguoiTao.getText(), CTPhieu, tinhTongTien());
+                PhieuNhap pn = new PhieuNhap(MaPhieu, sqlTimestamp, txtNguoiTao.getText(), CTPhieu, tinhTongTien());
                 try {
                     PhieuNhapDAO.getInstance().insert(pn);
                     SanPhamController spController = SanPhamController.getInstance();
@@ -588,12 +571,10 @@ public class NhapHangForm extends javax.swing.JInternalFrame {
     private javax.swing.JButton addProduct;
     private javax.swing.JButton btnNhapHang;
     private javax.swing.JButton btnReset;
-    private javax.swing.JComboBox<String> cboNhaCungCap;
     private javax.swing.JButton deleteProduct;
     private javax.swing.JButton deleteProduct1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

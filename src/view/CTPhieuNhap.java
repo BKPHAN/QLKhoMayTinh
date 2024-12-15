@@ -37,7 +37,6 @@ public class CTPhieuNhap extends javax.swing.JDialog {
         labelMaPhieu.setText(pn.getMaPhieu());
         labelNguoiTao.setText(AccountDAO.getInstance().selectById(pn.getNguoiTao()).getFullName());
         labelTongTien.setText(this.parent.getFormatter().format(pn.getTongTien()) + "đ");
-        labelNhaCungCap.setText(pn.getNhaCungCap());
         labelThoiGianTao.setText(this.parent.getFormatDate().format(pn.getThoiGianTao()));
         loadDataToTableProduct();
         setWidthTable();
@@ -93,13 +92,11 @@ public class CTPhieuNhap extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblChiTietPhieu = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         labelTongTien = new javax.swing.JLabel();
         labelMaPhieu = new javax.swing.JLabel();
         labelNguoiTao = new javax.swing.JLabel();
-        labelNhaCungCap = new javax.swing.JLabel();
         labelThoiGianTao = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         exportPDF = new javax.swing.JButton();
@@ -147,8 +144,6 @@ public class CTPhieuNhap extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblChiTietPhieu);
 
-        jLabel3.setText("Nhà cung cấp:");
-
         jLabel4.setText("Người tạo:");
 
         jLabel5.setText("Thời gian tạo:");
@@ -159,8 +154,6 @@ public class CTPhieuNhap extends javax.swing.JDialog {
         labelMaPhieu.setText("jLabel7");
 
         labelNguoiTao.setText("jLabel7");
-
-        labelNhaCungCap.setText("jLabel7");
 
         labelThoiGianTao.setText("jLabel7");
 
@@ -185,21 +178,18 @@ public class CTPhieuNhap extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5))
+                        .addGap(38, 38, 38)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelMaPhieu, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelNhaCungCap, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(43, 43, 43)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelNguoiTao, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(labelMaPhieu, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(43, 43, 43)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(labelThoiGianTao, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(65, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(labelNguoiTao, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(73, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -223,10 +213,8 @@ public class CTPhieuNhap extends javax.swing.JDialog {
                     .addComponent(labelNguoiTao))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
                     .addComponent(jLabel5)
-                    .addComponent(labelThoiGianTao)
-                    .addComponent(labelNhaCungCap))
+                    .addComponent(labelThoiGianTao))
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                 .addGap(28, 28, 28)
@@ -290,7 +278,6 @@ public class CTPhieuNhap extends javax.swing.JDialog {
     private javax.swing.JButton exportPDF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
@@ -299,7 +286,6 @@ public class CTPhieuNhap extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelMaPhieu;
     private javax.swing.JLabel labelNguoiTao;
-    private javax.swing.JLabel labelNhaCungCap;
     private javax.swing.JLabel labelThoiGianTao;
     private javax.swing.JLabel labelTongTien;
     private javax.swing.JTable tblChiTietPhieu;

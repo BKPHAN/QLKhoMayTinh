@@ -144,7 +144,6 @@ public class WritePDF {
             para2.setPaddingTop(30);
             para2.setFont(fontData);
             para2.add(String.valueOf("Người tạo: " + AccountDAO.getInstance().selectById(pn.getNguoiTao()).getFullName()));
-            para2.add(String.valueOf("\nNhà cung cấp: " + NhaCungCapDAO.getInstance().selectById(pn.getNhaCungCap()).getTenNhaCungCap() + "  -  " + pn.getNhaCungCap()));
             para2.setIndentationLeft(40);
             document.add(para1);
             document.add(para2);

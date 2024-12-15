@@ -50,25 +50,21 @@
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel3" alignment="0" min="-2" pref="104" max="-2" attributes="0"/>
                               <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="labelMaPhieu" min="-2" pref="242" max="-2" attributes="0"/>
-                              <Component id="labelNhaCungCap" min="-2" pref="242" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel4" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="labelNguoiTao" min="-2" pref="234" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="labelMaPhieu" min="-2" pref="242" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                                  <Component id="jLabel4" min="-2" pref="78" max="-2" attributes="0"/>
+                              </Group>
                               <Component id="labelThoiGianTao" min="-2" pref="242" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="65" max="32767" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="labelNguoiTao" min="-2" pref="234" max="-2" attributes="0"/>
+                          <EmptySpace pref="73" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
@@ -100,10 +96,8 @@
                   </Group>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="labelThoiGianTao" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelNhaCungCap" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" pref="240" max="32767" attributes="0"/>
@@ -225,11 +219,6 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="jLabel3">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Nh&#xe0; cung c&#x1ea5;p:"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ng&#x1b0;&#x1edd;i t&#x1ea1;o:"/>
@@ -254,11 +243,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelNguoiTao">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel7"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelNhaCungCap">
           <Properties>
             <Property name="text" type="java.lang.String" value="jLabel7"/>
           </Properties>

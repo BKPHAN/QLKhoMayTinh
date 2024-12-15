@@ -25,13 +25,12 @@ public class PhieuNhapDAO implements DAOInterface<PhieuNhap> {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "INSERT INTO PhieuNhap (maPhieu, thoiGianTao, nguoiTao,maNhaCungCap, tongTien) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO PhieuNhap (maPhieu, thoiGianTao, nguoiTao, tongTien) VALUES (?,?,?,?)";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, t.getMaPhieu());
             pst.setTimestamp(2, t.getThoiGianTao());
             pst.setString(3, t.getNguoiTao());
-            pst.setString(4, t.getNhaCungCap());
-            pst.setDouble(5, t.getTongTien());
+            pst.setDouble(4, t.getTongTien());
             ketQua = pst.executeUpdate();
             JDBCUtil.closeConnection(con);
         } catch (Exception e) {
@@ -46,14 +45,13 @@ public class PhieuNhapDAO implements DAOInterface<PhieuNhap> {
         int ketQua = 0;
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "UPDATE PhieuNhap SET maPhieu=?, thoiGianTao=?, nguoiTao=?, maNhaCungCap=?, tongTien = ? WHERE maPhieu=?";
+            String sql = "UPDATE PhieuNhap SET maPhieu=?, thoiGianTao=?, nguoiTao=?, tongTien = ? WHERE maPhieu=?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, t.getMaPhieu());
             pst.setTimestamp(2, t.getThoiGianTao());
             pst.setString(3, t.getNguoiTao());
-            pst.setString(4, t.getNhaCungCap());
-            pst.setDouble(5, t.getTongTien());
-            pst.setString(6, t.getMaPhieu());
+            pst.setDouble(4, t.getTongTien());
+            pst.setString(5, t.getMaPhieu());
             ketQua = pst.executeUpdate();
             JDBCUtil.closeConnection(con);
         } catch (Exception e) {
@@ -92,9 +90,8 @@ public class PhieuNhapDAO implements DAOInterface<PhieuNhap> {
                 String maPhieu = rs.getString("maPhieu");
                 Timestamp thoiGianTao = rs.getTimestamp("thoiGianTao");
                 String nguoiTao = rs.getString("nguoiTao");
-                String maNhaCungCap = rs.getString("maNhaCungCap");
                 double tongTien = rs.getDouble("tongTien");
-                PhieuNhap p = new PhieuNhap(maNhaCungCap, maPhieu, thoiGianTao, nguoiTao, ChiTietPhieuNhapDAO.getInstance().selectAll(maPhieu), tongTien);
+                PhieuNhap p = new PhieuNhap(maPhieu, thoiGianTao, nguoiTao, ChiTietPhieuNhapDAO.getInstance().selectAll(maPhieu), tongTien);
                 ketQua.add(p);
             }
         } catch (Exception e) {
@@ -117,9 +114,8 @@ public class PhieuNhapDAO implements DAOInterface<PhieuNhap> {
                 String maPhieu = rs.getString("maPhieu");
                 Timestamp thoiGianTao = rs.getTimestamp("thoiGianTao");
                 String nguoiTao = rs.getString("nguoiTao");
-                String maNhaCungCap = rs.getString("maNhaCungCap");
                 double tongTien = rs.getDouble("tongTien");
-                ketQua = new PhieuNhap(maNhaCungCap, maPhieu, thoiGianTao, nguoiTao, ChiTietPhieuNhapDAO.getInstance().selectAll(maPhieu), tongTien);
+                ketQua = new PhieuNhap(maPhieu, thoiGianTao, nguoiTao, ChiTietPhieuNhapDAO.getInstance().selectAll(maPhieu), tongTien);
             }
         } catch (Exception e) {
             // TODO: handle exception
