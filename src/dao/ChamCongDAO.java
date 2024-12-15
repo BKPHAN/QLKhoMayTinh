@@ -277,9 +277,11 @@ public class ChamCongDAO implements DAOInterface<ChamCong>{
                 String tenNguoiChamCong = rs.getString("tenNguoiChamCong");
                 String gioVao = rs.getString("gioVao");
                 String gioRa = rs.getString("gioRa");
-                ChamCongDTO cc = new ChamCongDTO(maChamCong, ngayChamCong, maNguoiChamCong, tenNguoiChamCong, gioVao, gioRa);
-                calcWorkTime(cc);
-                result.add(cc);
+                if (gioVao != null && gioRa != null) {
+                    ChamCongDTO cc = new ChamCongDTO(maChamCong, ngayChamCong, maNguoiChamCong, tenNguoiChamCong, gioVao, gioRa);
+                    calcWorkTime(cc);
+                    result.add(cc);
+                }
             }
         } catch (Exception e) {
             // TODO: handle exception
@@ -327,7 +329,11 @@ public class ChamCongDAO implements DAOInterface<ChamCong>{
 
         Duration workOutOfShift;
         if (workStart.isBefore(shiftEnd)) {
-            workOutOfShift = workBeforeShift.plus(workAfterShift);
+            if (workEnd.isBefore(shiftStart)) {
+                workOutOfShift = Duration.between(workStart, workEnd);    
+            } else {
+                workOutOfShift = workBeforeShift.plus(workAfterShift);
+            }
         } else {
             workOutOfShift = Duration.between(workStart, workEnd);
         }
