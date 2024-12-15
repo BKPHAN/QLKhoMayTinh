@@ -107,10 +107,9 @@
               <Font name="SF Pro Display" size="16" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
-                <StringItem index="0" value="Qu&#x1ea3;n l&#xfd; kho"/>
-                <StringItem index="1" value="Nh&#xe2;n vi&#xea;n nh&#x1ead;p"/>
-                <StringItem index="2" value="Nh&#xe2;n vi&#xea;n xu&#x1ea5;t"/>
+              <StringArray count="2">
+                <StringItem index="0" value="Admin"/>
+                <StringItem index="1" value="Nh&#xe2;n vi&#xea;n"/>
               </StringArray>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">

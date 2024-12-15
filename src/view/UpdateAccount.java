@@ -94,7 +94,7 @@ public class UpdateAccount extends javax.swing.JDialog {
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 50, -1));
 
         vaitro.setFont(new java.awt.Font("SF Pro Display", 0, 16)); // NOI18N
-        vaitro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Quản lý kho", "Nhân viên nhập", "Nhân viên xuất" }));
+        vaitro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Nhân viên" }));
         vaitro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         vaitro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
