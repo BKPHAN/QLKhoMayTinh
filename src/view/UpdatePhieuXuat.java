@@ -72,6 +72,8 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
         txtMaPhieu.setText(phieuxuat.getMaPhieu());
         textTongTien.setText(formatter.format(phieuxuat.getTongTien()) + "đ");
         txtNguoiTao.setText(AccountDAO.getInstance().selectById(phieuxuat.getNguoiTao()).getUser());
+        txtTenKH.setText(phieuxuat.getKhachHang());
+        txtSdtKH.setText(phieuxuat.getSdt());
     }
 
     public final void initTable() {
@@ -162,6 +164,10 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
         textTongTien = new javax.swing.JLabel();
         deleteProduct = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtTenKH = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtSdtKH = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblSanPham = new javax.swing.JTable();
@@ -194,11 +200,11 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
 
         jLabel3.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
         jLabel3.setText("Người tạo phiếu");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
 
         txtNguoiTao.setEditable(false);
         txtNguoiTao.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
-        jPanel2.add(txtNguoiTao, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 390, 36));
+        jPanel2.add(txtNguoiTao, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 390, 36));
 
         tblNhapHang.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
         tblNhapHang.setModel(new javax.swing.table.DefaultTableModel(
@@ -211,7 +217,7 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblNhapHang);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 580, 350));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 580, 270));
 
         btnNhapHang.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
         btnNhapHang.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
@@ -256,6 +262,20 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
             }
         });
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 520, -1, 40));
+
+        jLabel2.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
+        jLabel2.setText("Tên khách hàng");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
+
+        txtTenKH.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
+        jPanel2.add(txtTenKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 390, 36));
+
+        jLabel6.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
+        jLabel6.setText("Số điện thoại khách hàng");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
+
+        txtSdtKH.setFont(new java.awt.Font("SF Pro Display", 0, 15)); // NOI18N
+        jPanel2.add(txtSdtKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 390, 36));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 630, 750));
 
@@ -403,7 +423,15 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
             long now = System.currentTimeMillis();
             Timestamp sqlTimestamp = new Timestamp(now);
             // Tao doi tuong phieu nhap
-            PhieuXuat pn = new PhieuXuat(phieuxuat.getMaPhieu(), sqlTimestamp, txtNguoiTao.getText(), CTPhieu, tinhTongTien());
+            PhieuXuat pn = new PhieuXuat(
+                    phieuxuat.getMaPhieu(), 
+                    sqlTimestamp, 
+                    txtNguoiTao.getText(), 
+                    CTPhieu, 
+                    tinhTongTien(),
+                    txtTenKH.getText(),
+                    txtSdtKH.getText()
+            );
             try {
                 PhieuXuatDAO.getInstance().update(pn);
                 ChiTietPhieuXuatDAO.getInstance().delete(CTPhieuOld.get(CTPhieuOld.size() - 1));
@@ -539,9 +567,11 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
     private javax.swing.JButton deleteProduct;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -553,7 +583,9 @@ public class UpdatePhieuXuat extends javax.swing.JDialog {
     private javax.swing.JLabel textTongTien;
     private javax.swing.JTextField txtMaPhieu;
     private javax.swing.JTextField txtNguoiTao;
+    private javax.swing.JTextField txtSdtKH;
     private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtSoLuong;
+    private javax.swing.JTextField txtTenKH;
     // End of variables declaration//GEN-END:variables
 }

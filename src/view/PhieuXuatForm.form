@@ -227,10 +227,11 @@
                   <Font name="SF Pro Display" size="15" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="3">
+                  <StringArray count="4">
                     <StringItem index="0" value="T&#x1ea5;t c&#x1ea3;"/>
                     <StringItem index="1" value="M&#xe3; phi&#x1ebf;u"/>
                     <StringItem index="2" value="Ng&#x1b0;&#x1edd;i t&#x1ea1;o"/>
+                    <StringItem index="3" value="T&#xea;n kh&#xe1;ch h&#xe0;ng"/>
                   </StringArray>
                 </Property>
               </Properties>

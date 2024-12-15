@@ -161,6 +161,10 @@ public class XuatHangForm extends javax.swing.JInternalFrame {
         deleteProduct = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         deleteProduct1 = new javax.swing.JButton();
+        cusNameLabel = new javax.swing.JLabel();
+        txtTenKH = new javax.swing.JTextField();
+        cusPhoneLabel = new javax.swing.JLabel();
+        txtSdtKH = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblSanPham = new javax.swing.JTable();
@@ -188,7 +192,7 @@ public class XuatHangForm extends javax.swing.JInternalFrame {
         jPanel2.add(txtMaPhieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 390, 36));
 
         jLabel3.setText("Người tạo phiếu");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
 
         txtNguoiTao.setEditable(false);
         txtNguoiTao.addActionListener(new java.awt.event.ActionListener() {
@@ -196,7 +200,7 @@ public class XuatHangForm extends javax.swing.JInternalFrame {
                 txtNguoiTaoActionPerformed(evt);
             }
         });
-        jPanel2.add(txtNguoiTao, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 390, 36));
+        jPanel2.add(txtNguoiTao, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 390, 36));
 
         tblNhapHang.setFont(tblNhapHang.getFont().deriveFont((float)15));
         tblNhapHang.setModel(new javax.swing.table.DefaultTableModel(
@@ -209,7 +213,7 @@ public class XuatHangForm extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tblNhapHang);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 580, 450));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 580, 370));
 
         btnNhapHang.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Green"));
         btnNhapHang.setForeground(new java.awt.Color(255, 255, 255));
@@ -260,6 +264,20 @@ public class XuatHangForm extends javax.swing.JInternalFrame {
             }
         });
         jPanel2.add(deleteProduct1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 610, -1, 40));
+
+        cusNameLabel.setText("Tên khách hàng");
+        jPanel2.add(cusNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
+        jPanel2.add(txtTenKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 390, 36));
+
+        cusPhoneLabel.setText("Số điện thoại khách hàng");
+        jPanel2.add(cusPhoneLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
+
+        txtSdtKH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSdtKHActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtSdtKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 390, 36));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 620, 750));
 
@@ -399,7 +417,15 @@ public class XuatHangForm extends javax.swing.JInternalFrame {
                 long now = System.currentTimeMillis();
                 Timestamp sqlTimestamp = new Timestamp(now);
                 // Tao doi tuong phieu nhap
-                PhieuXuat pn = new PhieuXuat(MaPhieu, sqlTimestamp, txtNguoiTao.getText(), CTPhieu, tinhTongTien());
+                PhieuXuat pn = new PhieuXuat(
+                        MaPhieu, 
+                        sqlTimestamp, 
+                        txtNguoiTao.getText(), 
+                        CTPhieu, 
+                        tinhTongTien(),
+                        txtTenKH.getText(),
+                        txtSdtKH.getText()
+                );
                 try {
                     PhieuXuatDAO.getInstance().insert(pn);
                     SanPhamController spController = SanPhamController.getInstance();
@@ -580,6 +606,10 @@ public class XuatHangForm extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSoLuongActionPerformed
 
+    private void txtSdtKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSdtKHActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSdtKHActionPerformed
+
     public String createId(ArrayList<PhieuXuat> arr) {
         int id = arr.size() + 1;
         String check = "";
@@ -608,6 +638,8 @@ public class XuatHangForm extends javax.swing.JInternalFrame {
     private javax.swing.JButton addProduct;
     private javax.swing.JButton btnNhapHang;
     private javax.swing.JButton btnReset;
+    private javax.swing.JLabel cusNameLabel;
+    private javax.swing.JLabel cusPhoneLabel;
     private javax.swing.JButton deleteProduct;
     private javax.swing.JButton deleteProduct1;
     private javax.swing.JButton jButton1;
@@ -626,7 +658,9 @@ public class XuatHangForm extends javax.swing.JInternalFrame {
     private javax.swing.JLabel textTongTien;
     private javax.swing.JTextField txtMaPhieu;
     private javax.swing.JTextField txtNguoiTao;
+    private javax.swing.JTextField txtSdtKH;
     private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtSoLuong;
+    private javax.swing.JTextField txtTenKH;
     // End of variables declaration//GEN-END:variables
 }
