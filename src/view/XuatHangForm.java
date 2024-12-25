@@ -482,7 +482,7 @@ public class XuatHangForm extends javax.swing.JInternalFrame {
                                 }
                             } else {
                                 SanPham mt = SearchProduct.getInstance().searchId((String) tblSanPham.getValueAt(i_row, 0));
-                                ChiTietPhieu ctp = new ChiTietPhieu(MaPhieu, mt.getMaMay(), soluong, mt.getGia());
+                                ChiTietPhieu ctp = new ChiTietPhieu(MaPhieu, mt.getMaMay(), soluong, mt.getGia()*(1+ mt.getTiLeLai()/100));
                                 CTPhieu.add(ctp);
                             }
                             loadDataToTableNhapHang();
