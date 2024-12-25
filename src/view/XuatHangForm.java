@@ -84,7 +84,7 @@ public class XuatHangForm extends javax.swing.JInternalFrame {
             tblModel.setRowCount(0);
             for (var i : arrProd) {
                 tblModel.addRow(new Object[]{
-                    i.getMaMay(), i.getTenMay(), i.getSoLuong(), formatter.format(i.getGia()) + "đ"
+                    i.getMaMay(), i.getTenMay(), i.getSoLuong(), formatter.format(i.getGia() + i.getGia()*i.getTiLeLai()/100) + "đ"
                 });
             }
         } catch (Exception e) {
